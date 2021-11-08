@@ -8,4 +8,5 @@ node_modules/
 .npm
 
 # Compiled binary addons
-build/Release
+build/
+public/
