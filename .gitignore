@@ -9,22 +9,12 @@ node_modules/
 # Optional npm cache directory
 .npm
 
-# Compiled binary addons
-build/
-public/
-
-build/Release# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
 
 # production
-/build
+build/
+public/
 
 # misc
 .DS_Store
@@ -34,5 +24,3 @@ build/Release# See https://help.github.com/articles/ignoring-files/ for more abo
 .env.production.local
 
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
