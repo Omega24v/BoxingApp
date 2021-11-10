@@ -1,4 +1,5 @@
 export const TIMER_DV = {
+    name: 'Default Timer',
     isActive: true,
     isRunning: false,
     rounds: 3,
