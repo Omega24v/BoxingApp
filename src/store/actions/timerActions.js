@@ -5,7 +5,7 @@ import {
     SET_DEFAULT_VALUES,
     SET_TIMER,
     START,
-    STOP,
+    STOP, TOGGLE_ADD_TIMER,
     TOGGLE_EDIT_TIMER
 } from "../types";
 
@@ -44,6 +44,12 @@ export const saveEditData = data => {
 export const toggleEditTimer = () => {
     return {
         type: TOGGLE_EDIT_TIMER
+    }
+}
+
+export const toggleAddTimer = () => {
+    return {
+        type: TOGGLE_ADD_TIMER
     }
 }
 

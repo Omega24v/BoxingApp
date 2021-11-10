@@ -1,6 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import {toggleEditTimer, pauseTimer, setDefaultValues, startTimer, stopTimer} from "../../store/actions/timerActions";
+import {
+    toggleEditTimer,
+    pauseTimer,
+    setDefaultValues,
+    startTimer,
+    stopTimer,
+    toggleAddTimer
+} from "../../store/actions/timerActions";
 import millisToMinutesAndSeconds from "../../utils/timeConverter";
 import {PHASES} from "../../constatns/timerDefaultValues";
 
@@ -95,6 +102,7 @@ const Timer = props => {
             <div>Rounds rest time: { millisToMinutesAndSeconds(props.currTimer.restTime) }</div>
             <div>Rounds prepare time: { millisToMinutesAndSeconds(props.currTimer.prepareTime) }</div>
             <div><button onClick={props.edit}>Edit</button></div>
+            <div><button onClick={props.toggleAddTimer}>Add</button></div>
         </div>
     );
 };
@@ -112,6 +120,7 @@ function mapDispatchToProps(dispatch) {
         pause: () => dispatch(pauseTimer()),
         stop: () => dispatch(stopTimer()),
         edit: () => dispatch(toggleEditTimer()),
+        toggleAddTimer: () => dispatch(toggleAddTimer()),
         setDefaultValues: () => dispatch(setDefaultValues),
     }
 }
