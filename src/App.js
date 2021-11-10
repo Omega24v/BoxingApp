@@ -5,11 +5,13 @@ import './App.sass';
 
 function App() {
   return (
-    <Container>
-      <Row>
-        <Timer/>
-      </Row>
+    <div className="App">
+      <Container>
+        <Row>
+          <Timer/>
+        </Row>
     </Container>
+    </div>
   );
 }
 
