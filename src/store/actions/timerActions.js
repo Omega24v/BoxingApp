@@ -1,4 +1,4 @@
-import {SET_DEFAULT_VALUES, START, STOP} from "../types";
+import {PAUSE, SET_DEFAULT_VALUES, START, STOP} from "../types";
 
 export const startTimer = () => {
     return {
@@ -9,6 +9,12 @@ export const startTimer = () => {
 export const stopTimer = () => {
     return {
         type: STOP
+    }
+}
+
+export const pauseTimer = () => {
+    return {
+        type: PAUSE
     }
 }
 
