@@ -6,7 +6,7 @@ import {
     SET_DEFAULT_VALUES,
     SET_TIMER,
     START,
-    STOP,
+    STOP, TOGGLE_ADD_TIMER,
     TOGGLE_EDIT_TIMER
 } from "../../types";
 import {getRandomId} from "../../../utils/getRandomId";
@@ -25,6 +25,7 @@ const defaultTimer = {
 const initialState = {
     isRunning: TIMER_DV.isRunning,
     isEdit: false,
+    isAdd: false,
     currTimer: defaultTimer,
     timers: [defaultTimer],
 }
@@ -40,6 +41,8 @@ export default function timerReducer(state = initialState, action) {
             return {...state, isRunning: false}
         case TOGGLE_EDIT_TIMER:
             return {...state, isEdit: !state.isEdit}
+        case TOGGLE_ADD_TIMER:
+            return {...state, isAdd: !state.isAdd}
         case SAVE_EDIT_DATA:
             return {...state, currTimer: action.payload.timer, timers: action.payload.timers}
         case SET_DEFAULT_VALUES:
@@ -47,7 +50,7 @@ export default function timerReducer(state = initialState, action) {
         case SET_TIMER:
             return {...state, currTimer: action.payload}
         case ADD_TIMER:
-            return {...state, timers: [...state.timers, action.payload]}
+            return {...state, timers: [...state.timers, action.payload], isAdd: false}
         default:
             return state;
     }
