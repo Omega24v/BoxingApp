@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import {pauseTimer, setDefaultValues, startTimer, stopTimer} from "../../store/actions/timerActions";
+import {toggleEditTimer, pauseTimer, setDefaultValues, startTimer, stopTimer} from "../../store/actions/timerActions";
 import millisToMinutesAndSeconds from "../../utils/timeConverter";
 import {PHASES} from "../../constatns/timerDefaultValues";
 
@@ -8,13 +8,16 @@ import {PHASES} from "../../constatns/timerDefaultValues";
 const Timer = props => {
 
     const getTotalTime = () => {
-        return (props.roundTime + props.restTime) * props.rounds + props.prepareTime - props.restTime
+        return ((props.currTimer.roundTime + props.currTimer.restTime)
+            * props.currTimer.rounds
+            + props.currTimer.prepareTime
+            - props.currTimer.restTime)
     }
 
     const totalTime = getTotalTime();
     const [currentPhase, setCurrentPhase] = useState(1);
     const [count, setCount] = useState(0);
-    const [phaseTime, setPhaseTime] = useState(props.prepareTime);
+    const [phaseTime, setPhaseTime] = useState(props.currTimer.prepareTime);
     const [timerTime, setTimerTime] = useState(totalTime);
     const [intervalId, setIntervalId] = useState(0);
     const [currentRound, setCurrentRound] = useState(1);
@@ -22,7 +25,7 @@ const Timer = props => {
     const resetTimer = () => {
         setCount(0);
         setCurrentPhase(1);
-        setPhaseTime(props.prepareTime);
+        setPhaseTime(props.currTimer.prepareTime);
         setIntervalId(0);
         setTimerTime(totalTime);
         setCurrentRound(1);
@@ -30,26 +33,26 @@ const Timer = props => {
 
     useEffect(() => {
 
-        if (currentPhase === 1 && count === props.prepareTime) {
+        if (currentPhase === 1 && count === props.currTimer.prepareTime) {
             setCount(0);
-            setPhaseTime(props.roundTime);
+            setPhaseTime(props.currTimer.roundTime);
             setCurrentPhase(2);
-        } else if (currentPhase === 2 && count === props.roundTime - props.warningTime) {
+        } else if (currentPhase === 2 && count === props.currTimer.roundTime - props.currTimer.warningTime) {
             setCurrentPhase(3);
-        } else if (currentPhase === 3 && count === props.roundTime) {
+        } else if (currentPhase === 3 && count === props.currTimer.roundTime) {
 
-            if (currentRound === props.rounds) {
+            if (currentRound === props.currTimer.rounds) {
                 props.stop();
                 clearInterval(intervalId);
                 resetTimer();
             } else {
                 setCount(0);
-                setPhaseTime(props.restTime);
+                setPhaseTime(props.currTimer.restTime);
                 setCurrentPhase(4);
             }
-        } else if (currentPhase === 4 && count === props.restTime) {
+        } else if (currentPhase === 4 && count === props.currTimer.restTime) {
             setCount(0);
-            setPhaseTime(props.roundTime);
+            setPhaseTime(props.currTimer.roundTime);
             setCurrentPhase(2);
             setCurrentRound(prevRound => prevRound + 1);
         }
@@ -78,7 +81,7 @@ const Timer = props => {
 
     return (
         <div>
-            <div>Current Round: { currentRound } / { props.rounds }</div>
+            <div>Current Round: { currentRound } / { props.currTimer.rounds }</div>
             <div>Phase: { PHASES[currentPhase] }</div>
             <div>Phase Time: { millisToMinutesAndSeconds(phaseTime) }</div>
             <div>Full Time: {millisToMinutesAndSeconds(timerTime)}</div>
@@ -89,8 +92,9 @@ const Timer = props => {
                 Rounds total time:
                 { millisToMinutesAndSeconds(getTotalTime()) }
             </div>
-            <div>Rounds rest time: { millisToMinutesAndSeconds(props.restTime) }</div>
-            <div>Rounds prepare time: { millisToMinutesAndSeconds(props.prepareTime) }</div>
+            <div>Rounds rest time: { millisToMinutesAndSeconds(props.currTimer.restTime) }</div>
+            <div>Rounds prepare time: { millisToMinutesAndSeconds(props.currTimer.prepareTime) }</div>
+            <div><button onClick={props.edit}>Edit</button></div>
         </div>
     );
 };
@@ -98,11 +102,7 @@ const Timer = props => {
 function mapStateToProps(state) {
     return {
         isRunning: state.timerReducer.isRunning,
-        rounds: state.timerReducer.rounds,
-        roundTime: state.timerReducer.roundTime,
-        restTime: state.timerReducer.restTime,
-        prepareTime:  state.timerReducer.prepareTime,
-        warningTime:  state.timerReducer.warningTime
+        currTimer: state.timerReducer.currTimer,
     }
 }
 
@@ -111,6 +111,7 @@ function mapDispatchToProps(dispatch) {
         start: () => dispatch(startTimer()),
         pause: () => dispatch(pauseTimer()),
         stop: () => dispatch(stopTimer()),
+        edit: () => dispatch(toggleEditTimer()),
         setDefaultValues: () => dispatch(setDefaultValues),
     }
 }
