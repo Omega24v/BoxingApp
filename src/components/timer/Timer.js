@@ -3,8 +3,8 @@ import {connect} from "react-redux";
 import {pauseTimer, setDefaultValues, startTimer, stopTimer} from "../../store/actions/timerActions";
 import millisToMinutesAndSeconds from "../../utils/timeConverter";
 import {PHASES} from "../../constatns/timerDefaultValues";
-import { Col, Button } from 'react-bootstrap';
-import cl from './Timer.module.sass';
+import { Row, Col, Button } from 'react-bootstrap';
+import './Timer.sass';
 
 
 const Timer = props => {
@@ -79,21 +79,53 @@ const Timer = props => {
     }
 
     return (
-        <div>
-            <div>Current Round: { currentRound } / { props.rounds }</div>
-            <div>Phase: { PHASES[currentPhase] }</div>
-            <div>Phase Time: { millisToMinutesAndSeconds(phaseTime) }</div>
-            <div>Full Time: {millisToMinutesAndSeconds(timerTime)}</div>
-            <button onClick={handleTimer}>
-                {props.isRunning ? 'Pause' : 'Start'}
-            </button>
-            <div>
-                Rounds total time:
-                { millisToMinutesAndSeconds(getTotalTime()) }
-            </div>
-            <div>Rounds rest time: { millisToMinutesAndSeconds(props.restTime) }</div>
-            <div>Rounds prepare time: { millisToMinutesAndSeconds(props.prepareTime) }</div>
-        </div>
+        <Col className="timer py-5 col-lg-12">
+            <Row className="mb-4">
+                <Col className="col-lg-6">
+                    <div className="timer-big current-round">
+                        <span className="timer-big__text">Current Round: </span>
+                        <span className="timer-big__count">{ currentRound }/{ props.rounds }</span>
+                    </div>
+                </Col>
+                <Col className="col-lg-6">
+                    <div className="timer-big full-time">
+                        <span className="timer-big__text">Full Time: </span>
+                        <span className="timer-big__count">{millisToMinutesAndSeconds(timerTime)}</span>
+                    </div>
+                </Col>
+            </Row>
+            <Row className="mb-4">
+                <Col className="col-lg-12 d-flex justify-content-between">
+                    <div className="timer-small">
+                        <span className="timer-small__count">Phase</span>
+                        <span className="timer-small__text">{ PHASES[currentPhase] }</span>
+                    </div>
+                    <div className="timer-small">
+                        <span className="timer-small__count">{ millisToMinutesAndSeconds(phaseTime) }</span>
+                        <span className="timer-small__text">Phase Time</span>
+                    </div>
+                    <div className="timer-small">
+                        <span className="timer-small__count">{ millisToMinutesAndSeconds(getTotalTime()) }</span>
+                        <span className="timer-small__text">Rounds total time</span>
+                    </div>
+                    <div className="timer-small">
+                        <span className="timer-small__count">{ millisToMinutesAndSeconds(props.restTime) }</span>
+                        <span className="timer-small__text">Rounds rest time</span> 
+                    </div>
+                    <div className="timer-small">
+                        <span className="timer-small__count">{ millisToMinutesAndSeconds(props.prepareTime) }</span>
+                        <span className="timer-small__text">Rounds prepare time </span>
+                    </div>
+                </Col>
+            </Row>
+            <Row>
+                <Col className="col-12 d-flex justify-content-center">
+                    <Button variant="success" className="btn-start" onClick={handleTimer}>
+                        {props.isRunning ? 'Pause' : 'Start'}
+                    </Button>
+                </Col>
+            </Row>
+        </Col>
     );
 };
 
