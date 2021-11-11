@@ -29,15 +29,18 @@ const TimerEdit = props => {
 
                 <div>
                     <button type='button' onClick={props.edit}>Close</button>
-                    <button type='button' onClick={() => {
-                        let updatedTimers = props.timers.map(t => {
-                            return t.id !== props.currTimer.id ? t : {...timer, id: props.currTimer.id}
-                        });
-                        props.saveEditData({timer: {...timer, id: props.currTimer.id}, timers: updatedTimers});
-                    }}>Save</button>
+                    <button type='button'
+                            onClick={() => {
+                                let updatedTimers = props.timers.map(t => {
+                                    return t.id !== props.currTimer.id ? t : {...timer, id: props.currTimer.id}
+                                });
+                                props.saveEditData({timer: {...timer, id: props.currTimer.id}, timers: updatedTimers});
+                            }}>
+                        Save
+                    </button>
                     <button type='button'
                             onClick={() => props.addTimer({...timer, id: getRandomId()})}>
-                        Save New
+                        Save As New
                     </button>
                 </div>
             </form>

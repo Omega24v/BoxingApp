@@ -92,9 +92,20 @@ const Timer = props => {
             <div>Phase: { PHASES[currentPhase] }</div>
             <div>Phase Time: { millisToMinutesAndSeconds(phaseTime) }</div>
             <div>Full Time: {millisToMinutesAndSeconds(timerTime)}</div>
-            <button onClick={handleTimer}>
-                {props.isRunning ? 'Pause' : 'Start'}
-            </button>
+            <div>
+                {props.isRunning
+                ?
+                    <button>
+                        Stop
+                    </button>
+                :
+                    ''
+                }
+                <button onClick={handleTimer}>
+                    {props.isRunning ? 'Pause' : 'Start'}
+                </button>
+
+            </div>
             <div>
                 Rounds total time:
                 { millisToMinutesAndSeconds(getTotalTime()) }
