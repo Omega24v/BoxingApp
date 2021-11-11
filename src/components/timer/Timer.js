@@ -90,15 +90,15 @@ const Timer = props => {
 
     return (
         <>
-        <Col className="timer py-5 col-lg-12">
+        <Col className="timer py-5">
             <Row className="mb-4">
-                <Col className="col-lg-6">
+                <Col lg={6}>
                     <div className="timer-big current-round">
                         <span className="timer-big__text">Current Round: </span>
-                        <span className="timer-big__count">{ currentRound } / { props.currTimer.rounds }</span>
+                        <span className="timer-big__count">{ currentRound }/{ props.currTimer.rounds }</span>
                     </div>
                 </Col>
-                <Col className="col-lg-6">
+                <Col lg={6}>
                     <div className="timer-big full-time">
                         <span className="timer-big__text">Full Time: </span>
                         <span className="timer-big__count">{millisToMinutesAndSeconds(timerTime)}</span>
@@ -106,7 +106,7 @@ const Timer = props => {
                 </Col>
             </Row>
             <Row className="mb-4">
-                <Col className="col-lg-12 d-flex justify-content-between">
+                <Col className="d-flex justify-content-between">
                     <div className="timer-small">
                         <span className="timer-small__count">Phase</span>
                         <span className="timer-small__text">{ PHASES[currentPhase] }</span>
@@ -125,39 +125,22 @@ const Timer = props => {
                     </div>
                     <div className="timer-small">
                         <span className="timer-small__count">{ millisToMinutesAndSeconds(props.currTimer.prepareTime) }</span>
-                        <span className="timer-small__text">Rounds prepare time </span>
+                        <span className="timer-small__text">Rounds prepare time</span>
                     </div>
                 </Col>
             </Row>
             <Row>
-                <Col className="col-12 d-flex justify-content-center">
-                    <ButtonGroup aria-label="">
-                        <Button variant="success" className="btn-start" onClick={handleTimer}>
+                <Col className="d-flex justify-content-center">
+                    <ButtonGroup aria-label="timer buttons">
+                        <Button variant="success" className="me-2 btn-start" onClick={handleTimer}>
                             {props.isRunning ? 'Pause' : 'Start'}
                         </Button>
-                        <Button variant="warning" className="btn-add" onClick={props.toggleAddTimer}>Add</Button>
+                        <Button variant="warning" className="me-2 btn-add" onClick={props.toggleAddTimer}>Add</Button>
                         <Button variant="secondary" className="btn-edit" onClick={props.edit}>Edit</Button>
                     </ButtonGroup>
                 </Col>
             </Row>
         </Col>
-        {/* <div> */}
-            {/* <div>Current Round: { currentRound } / { props.currTimer.rounds }</div> */}
-            {/* <div>Phase: { PHASES[currentPhase] }</div> */}
-            {/* <div>Phase Time: { millisToMinutesAndSeconds(phaseTime) }</div> */}
-            {/* <div>Full Time: {millisToMinutesAndSeconds(timerTime)}</div> */}
-            {/* <button onClick={handleTimer}>
-                {props.isRunning ? 'Pause' : 'Start'}
-            </button> */}
-            {/* <div>
-                Rounds total time:
-                { millisToMinutesAndSeconds(getTotalTime()) }
-            </div> */}
-            {/* <div>Rounds rest time: { millisToMinutesAndSeconds(props.currTimer.restTime) }</div>
-            <div>Rounds prepare time: { millisToMinutesAndSeconds(props.currTimer.prepareTime) }</div> */}
-            {/* <div><button onClick={props.edit}>Edit</button></div>
-            <div><button onClick={props.toggleAddTimer}>Add</button></div> */}
-        {/* </div> */}
         </>
     );
 };
