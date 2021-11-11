@@ -1,0 +1,54 @@
+@import '~bootstrap/scss/bootstrap';
+
+.timer
+  border-radius: 10px
+  background-color: $dark
+  color: $light
+
+.timer-big
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  font-weight: bold
+  background-color: $light
+  border-radius: 10px
+  &__text
+    color: $red
+    text-transform: uppercase
+    font-size: 32px
+  &__count
+    font-size: 180px
+    color: $dark
+
+.full-time
+  background-color: $red
+  .timer-big__text
+    color: $light
+
+.timer-small
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  flex: 1 0
+  margin-right: 15px
+  background-color: $light
+  border-radius: 10px
+  &:last-child
+    margin-right: 0
+  &__text
+    color: $dark
+    font-size: 14px
+    text-align: center
+    text-transform: uppercase
+  &__count
+    font-size: 24px
+    color: $dark
+
+.btn
+  width: 150px
+  height: 50px
+  text-transform: uppercase
+  letter-spacing: 2px
+  &-start

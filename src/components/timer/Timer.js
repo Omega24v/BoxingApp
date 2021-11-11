@@ -18,6 +18,8 @@ import {
 import millisToMinutesAndSeconds from "../../utils/timeConverter";
 import {PHASES} from "../../constatns/timerDefaultValues";
 import {getTotalTime} from "../../utils/common";
+import { Row, Col, Button, ButtonGroup } from 'react-bootstrap';
+import './Timer.sass';
 
 
 const Timer = props => {
@@ -71,34 +73,67 @@ const Timer = props => {
     }
 
     return (
-        <div>
-            <div>Current Round: { props.currentRound } / { props.currTimer.rounds }</div>
-            <div>Phase: { PHASES[props.currentPhase] }</div>
-            <div>Phase Time: { props.phaseTime }</div>
-            <div>Full Time: {props.fullTime}</div>
-            <div>
-                {props.isRunning
-                ?
-                    <button>
-                        Stop
-                    </button>
-                :
-                    ''
-                }
-                <button onClick={handleTimer}>
-                    {props.isRunning ? 'Pause' : 'Start'}
-                </button>
-
-            </div>
-            <div>
-                Rounds total time:
-                { millisToMinutesAndSeconds(getTotalTime(props.currTimer)) }
-            </div>
-            <div>Rounds rest time: { millisToMinutesAndSeconds(props.currTimer.restTime) }</div>
-            <div>Rounds prepare time: { millisToMinutesAndSeconds(props.currTimer.prepareTime) }</div>
-            <div><button onClick={props.edit}>Edit</button></div>
-            <div><button onClick={props.toggleAddTimer}>Add</button></div>
-        </div>
+        <>
+        <Col className="timer py-5">
+            <Row className="mb-4">
+                <Col lg={6}>
+                    <div className="timer-big current-round">
+                        <span className="timer-big__text">Current Round: </span>
+                        <span className="timer-big__count">{ props.currentRound }/{ props.currTimer.rounds }</span>
+                    </div>
+                </Col>
+                <Col lg={6}>
+                    <div className="timer-big full-time">
+                        <span className="timer-big__text">Full Time: </span>
+                        <span className="timer-big__count">{millisToMinutesAndSeconds(props.fullTime)}</span>
+                    </div>
+                </Col>
+            </Row>
+            <Row className="mb-4">
+                <Col className="d-flex justify-content-between">
+                    <div className="timer-small">
+                        <span className="timer-small__count">Phase</span>
+                        <span className="timer-small__text">{ PHASES[props.currentPhase] }</span>
+                    </div>
+                    <div className="timer-small">
+                        <span className="timer-small__count">{ millisToMinutesAndSeconds(props.phaseTime) }</span>
+                        <span className="timer-small__text">Phase Time</span>
+                    </div>
+                    <div className="timer-small">
+                        <span className="timer-small__count">{ millisToMinutesAndSeconds(getTotalTime(props.currTimer)) }</span>
+                        <span className="timer-small__text">Rounds total time</span>
+                    </div>
+                    <div className="timer-small">
+                        <span className="timer-small__count">{ millisToMinutesAndSeconds(props.currTimer.restTime) }</span>
+                        <span className="timer-small__text">Rounds rest time</span>
+                    </div>
+                    <div className="timer-small">
+                        <span className="timer-small__count">{ millisToMinutesAndSeconds(props.currTimer.prepareTime) }</span>
+                        <span className="timer-small__text">Rounds prepare time</span>
+                    </div>
+                </Col>
+            </Row>
+            <Row>
+                <Col className="d-flex justify-content-center">
+                    <ButtonGroup aria-label="timer buttons">
+                        {props.isRunning
+                            ?
+                            <button>
+                                Stop
+                            </button>
+                            :
+                            ''
+                        }
+                        <Button variant="success" className="me-2 btn-start" onClick={handleTimer}>
+                            {props.isRunning ? 'Pause' : 'Start'}
+                        </Button>
+                        <Button variant="warning" className="me-2 btn-add" onClick={props.toggleAddTimer}>Add</Button>
+                        <Button variant="secondary" className="btn-edit" onClick={props.edit}>Edit</Button>
+                    </ButtonGroup>
+                </Col>
+            </Row>
+        </Col>
+        </>
     );
 };
 
