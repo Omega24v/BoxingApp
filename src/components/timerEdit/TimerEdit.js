@@ -1,7 +1,10 @@
+import Button from '@restart/ui/esm/Button';
 import React, {useState} from 'react';
+import { ButtonGroup, Form } from 'react-bootstrap';
 import {connect} from "react-redux";
 import {addTimer, toggleEditTimer, startTimer, saveEditData} from "../../store/actions/timerActions";
 import {getRandomId} from "../../utils/getRandomId";
+import './TimerEdit.sass';
 
 const TimerEdit = props => {
 
@@ -18,30 +21,43 @@ const TimerEdit = props => {
     return (
         props.isEdit
         ?
-        <div style={{marginTop: '50px'}}>
-            <form>
-                <div>Timer Name: <input name='name' onChange={setTimerData} value={timer.name} type="text"/></div>
-                <div>Rounds: <input name='rounds' onChange={setTimerData} value={timer.rounds} type="number"/></div>
-                <div>Round Time: <input name='roundTime' onChange={setTimerData} value={timer.roundTime} type="number"/></div>
-                <div>Rest Time: <input name='restTime' onChange={setTimerData} value={timer.restTime} type="number"/></div>
-                <div>Prepare Time: <input name='prepareTime' onChange={setTimerData} value={timer.prepareTime} type="number"/></div>
-                <div>Warning Time: <input name='warningTime' onChange={setTimerData} value={timer.warningTime} type="number"/></div>
+        <Form>
+            <Form.Label>
+                Timer Name: 
+                <Form.Control name='name' onChange={setTimerData} value={timer.name} type="text"/>
+            </Form.Label>
+            <Form.Label>
+                Rounds: 
+                <Form.Control name='rounds' onChange={setTimerData} value={timer.rounds} type="number"/
+            ></Form.Label>
+            <Form.Label>
+                Round Time: 
+                <Form.Control name='roundTime' onChange={setTimerData} value={timer.roundTime} type="number"/>
+            </Form.Label>
+            <Form.Label>
+                Rest Time: 
+                <Form.Control name='restTime' onChange={setTimerData} value={timer.restTime} type="number"/>
+            </Form.Label>
+            <Form.Label>
+                Prepare Time: 
+                <Form.Control name='prepareTime' onChange={setTimerData} value={timer.prepareTime} type="number"/>
+            </Form.Label>
+            <Form.Label>
+                Warning Time: 
+                <Form.Control name='warningTime' onChange={setTimerData} value={timer.warningTime} type="number"/>
+            </Form.Label>
 
-                <div>
-                    <button type='button' onClick={props.edit}>Close</button>
-                    <button type='button' onClick={() => {
-                        let updatedTimers = props.timers.map(t => {
+            <ButtonGroup className="d-flex mt-2">
+                <Button variant="warning" className="me-2" onClick={props.edit}>Close</Button>
+                <Button variant="light" className="me-2" onClick={() => {
+                    let updatedTimers = props.timers.map(t => {
                             return t.id !== props.currTimer.id ? t : {...timer, id: props.currTimer.id}
                         });
                         props.saveEditData({timer: {...timer, id: props.currTimer.id}, timers: updatedTimers});
-                    }}>Save</button>
-                    <button type='button'
-                            onClick={() => props.addTimer({...timer, id: getRandomId()})}>
-                        Save New
-                    </button>
-                </div>
-            </form>
-        </div>
+                    }}>Save</Button>
+                <Button variant="light" onClick={() => props.addTimer({...timer, id: getRandomId()})}>Save New</Button>
+            </ButtonGroup>
+        </Form>
         : ''
     );
 };
