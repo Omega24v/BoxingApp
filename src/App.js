@@ -1,20 +1,16 @@
 import React from "react";
 import Timer from "./components/timer/Timer";
-import TimerEdit from "./components/timerEdit/TimerEdit";
-import TimersList from "./components/timersList/TimersList";
-import AddTimer from "./components/addTimer/AddTimer";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import './App.sass';
 
 function App() {
   return (
     <div className="App">
       <Container>
-        <Row>
-          <Timer/>
-          <TimerEdit/>
-          <AddTimer/>
-          <TimersList/>
+        <Row className="justify-content-center">
+          <Col lg={10} className="timer py-5">
+            <Timer/>
+          </Col>
         </Row>
       </Container>
     </div>
