@@ -28,7 +28,7 @@ const TimerEdit = props => {
                 <div>Warning Time: <input name='warningTime' onChange={setTimerData} value={timer.warningTime} type="number"/></div>
 
                 <div>
-                    <button type='button' onClick={props.edit}>Close</button>
+                    <button type='button' onClick={props.toggleEditTimer}>Close</button>
                     <button type='button'
                             onClick={() => {
                                 let updatedTimers = props.timers.map(t => {
@@ -60,8 +60,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         start: () => dispatch(startTimer()),
+        toggleEditTimer: () => dispatch(toggleEditTimer()),
         addTimer: timer => dispatch(addTimer(timer)),
-        toggleEditTimer: timer => dispatch(toggleEditTimer(timer)),
         saveEditData: timer => dispatch(saveEditData(timer)),
     }
 }

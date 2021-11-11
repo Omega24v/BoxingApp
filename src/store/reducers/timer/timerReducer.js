@@ -11,6 +11,7 @@ import {
 } from "../../types";
 import {getRandomId} from "../../../utils/getRandomId";
 import {getTotalTime} from "../../../utils/common";
+import {loadData, setData} from "../../../utils/localStorage/localStorage";
 
 const defaultTimer = {
     id: getRandomId(),
@@ -23,6 +24,8 @@ const defaultTimer = {
     currentRound: TIMER_DV.currentRound
 }
 
+const persistedState = loadData('data');
+
 const initialState = {
     isRunning: TIMER_DV.isRunning,
     isEdit: false,
@@ -33,8 +36,8 @@ const initialState = {
     fullTime: getTotalTime(defaultTimer),
     intervalCount: 0,
     intervalId: 0,
-    currTimer: defaultTimer,
-    timers: [defaultTimer],
+    currTimer: persistedState?.timers[0] || defaultTimer,
+    timers: persistedState?.timers || [defaultTimer],
 }
 
 export default function timerReducer(state = initialState, action) {
@@ -51,6 +54,7 @@ export default function timerReducer(state = initialState, action) {
         case TOGGLE_ADD_TIMER:
             return {...state, isAdd: !state.isAdd}
         case SAVE_EDIT_DATA:
+            setData({timers: action.payload.timers}, 'data');
             return {...state, currTimer: action.payload.timer, timers: action.payload.timers}
         case SET_DEFAULT_VALUES:
             return {...state, isRunning: false}
@@ -82,6 +86,7 @@ export default function timerReducer(state = initialState, action) {
                 intervalId: 0,
             }
         case ADD_TIMER:
+            setData({timers: [...state.timers, action.payload]}, 'data');
             return {...state, timers: [...state.timers, action.payload], isAdd: false}
         default:
             return state;
