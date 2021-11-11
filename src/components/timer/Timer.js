@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import {
     toggleEditTimer,
     pauseTimer,
@@ -8,9 +8,11 @@ import {
     stopTimer,
     toggleAddTimer
 } from "../../store/actions/timerActions";
-import millisToMinutesAndSeconds from "../../utils/timeConverter";
-import {PHASES} from "../../constatns/timerDefaultValues";
 import { Row, Col, Button, ButtonGroup } from 'react-bootstrap';
+import { PHASES } from "../../constatns/timerDefaultValues";
+import millisToMinutesAndSeconds from "../../utils/timeConverter";
+import ModalEdit from '../modal/ModalEdit';
+import TimersList from '../timersList/TimersList';
 import './Timer.sass';
 
 
@@ -30,6 +32,7 @@ const Timer = props => {
     const [timerTime, setTimerTime] = useState(totalTime);
     const [intervalId, setIntervalId] = useState(0);
     const [currentRound, setCurrentRound] = useState(1);
+    const [modalShow, setModalShow] = React.useState(false);
 
     const resetTimer = () => {
         setCount(0);
@@ -90,15 +93,14 @@ const Timer = props => {
 
     return (
         <>
-        <Col className="timer py-5">
             <Row className="mb-4">
-                <Col lg={6}>
+                <Col lg={5}>
                     <div className="timer-big current-round">
                         <span className="timer-big__text">Current Round: </span>
                         <span className="timer-big__count">{ currentRound }/{ props.currTimer.rounds }</span>
                     </div>
                 </Col>
-                <Col lg={6}>
+                <Col lg={7}>
                     <div className="timer-big full-time">
                         <span className="timer-big__text">Full Time: </span>
                         <span className="timer-big__count">{millisToMinutesAndSeconds(timerTime)}</span>
@@ -108,39 +110,43 @@ const Timer = props => {
             <Row className="mb-4">
                 <Col className="d-flex justify-content-between">
                     <div className="timer-small">
-                        <span className="timer-small__count">Phase</span>
-                        <span className="timer-small__text">{ PHASES[currentPhase] }</span>
+                        <span className="timer-small__count text-danger">{ PHASES[currentPhase] }</span>
+                        <span className="timer-small__text">Phase</span>
                     </div>
                     <div className="timer-small">
-                        <span className="timer-small__count">{ millisToMinutesAndSeconds(phaseTime) }</span>
+                        <span className="timer-small__count text-info">{ millisToMinutesAndSeconds(phaseTime) }</span>
                         <span className="timer-small__text">Phase Time</span>
                     </div>
                     <div className="timer-small">
-                        <span className="timer-small__count">{ millisToMinutesAndSeconds(getTotalTime()) }</span>
+                        <span className="timer-small__count text-success">{ millisToMinutesAndSeconds(getTotalTime()) }</span>
                         <span className="timer-small__text">Rounds total time</span>
                     </div>
                     <div className="timer-small">
-                        <span className="timer-small__count">{ millisToMinutesAndSeconds(props.currTimer.restTime) }</span>
+                        <span className="timer-small__count text-primary">{ millisToMinutesAndSeconds(props.currTimer.restTime) }</span>
                         <span className="timer-small__text">Rounds rest time</span> 
                     </div>
                     <div className="timer-small">
-                        <span className="timer-small__count">{ millisToMinutesAndSeconds(props.currTimer.prepareTime) }</span>
+                        <span className="timer-small__count text-warning">{ millisToMinutesAndSeconds(props.currTimer.prepareTime) }</span>
                         <span className="timer-small__text">Rounds prepare time</span>
                     </div>
                 </Col>
             </Row>
-            <Row>
+            <Row className="mb-4">
                 <Col className="d-flex justify-content-center">
                     <ButtonGroup aria-label="timer buttons">
                         <Button variant="success" className="me-2 btn-start" onClick={handleTimer}>
                             {props.isRunning ? 'Pause' : 'Start'}
                         </Button>
-                        <Button variant="warning" className="me-2 btn-add" onClick={props.toggleAddTimer}>Add</Button>
-                        <Button variant="secondary" className="btn-edit" onClick={props.edit}>Edit</Button>
+                        <Button variant="warning" onClick={() => {setModalShow(true); props.edit()}}>Edit</Button>
                     </ButtonGroup>
                 </Col>
             </Row>
-        </Col>
+
+            <Row>
+                <Col><TimersList/></Col>
+            </Row>
+
+            <ModalEdit show={modalShow} onHide={() => setModalShow(false)}/>
         </>
     );
 };
