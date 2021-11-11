@@ -1,6 +1,5 @@
-import Button from '@restart/ui/esm/Button';
 import React, {useState} from 'react';
-import { ButtonGroup, Form } from 'react-bootstrap';
+import { ButtonGroup, Button, Form } from 'react-bootstrap';
 import {connect} from "react-redux";
 import {addTimer, toggleEditTimer, startTimer, saveEditData} from "../../store/actions/timerActions";
 import {getRandomId} from "../../utils/getRandomId";
@@ -21,7 +20,7 @@ const TimerEdit = props => {
     return (
         props.isEdit
         ?
-        <Form>
+        <Form className="d-flex flex-column">
             <Form.Label>
                 Timer Name: 
                 <Form.Control name='name' onChange={setTimerData} value={timer.name} type="text"/>
@@ -48,14 +47,14 @@ const TimerEdit = props => {
             </Form.Label>
 
             <ButtonGroup className="d-flex mt-2">
-                <Button variant="warning" className="me-2" onClick={props.edit}>Close</Button>
-                <Button variant="light" className="me-2" onClick={() => {
+                {/* <Button variant="warning" className="me-2" onClick={props.edit}>Close</Button> */}
+                <Button variant="success" className="me-2" onClick={() => {
                     let updatedTimers = props.timers.map(t => {
                             return t.id !== props.currTimer.id ? t : {...timer, id: props.currTimer.id}
                         });
                         props.saveEditData({timer: {...timer, id: props.currTimer.id}, timers: updatedTimers});
-                    }}>Save</Button>
-                <Button variant="light" onClick={() => props.addTimer({...timer, id: getRandomId()})}>Save New</Button>
+                    }}>Save Settings</Button>
+                <Button variant="warning" onClick={() => props.addTimer({...timer, id: getRandomId()})}>To Favorite</Button>
             </ButtonGroup>
         </Form>
         : ''
