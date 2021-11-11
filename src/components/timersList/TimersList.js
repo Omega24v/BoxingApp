@@ -4,16 +4,12 @@ import {addTimer, setTimer, startTimer} from "../../store/actions/timerActions";
 
 const TimersList = props => {
     return (
-        <div style={{
-            marginTop: '50px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-        }}>
+        
+        <div>
             {props.timers.map((timer, index) =>
                 <div style={{border: '1px solid #777', padding: '7px 10px', cursor: 'pointer'}}
-                     onClick={() => props.setTimer(timer)}
-                     key={timer.id}>
+                    onClick={() => props.setTimer(timer)}
+                    key={timer.id}>
                     {index + 1} {timer.name} {timer.id === props.currTimer.id ? '*' : ''}
                 </div>
             )}
