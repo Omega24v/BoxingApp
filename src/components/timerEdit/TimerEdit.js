@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { ButtonGroup, Button, Form } from 'react-bootstrap';
 import {connect} from "react-redux";
 import {addTimer, toggleEditTimer, startTimer, saveEditData, onChangeEditData} from "../../store/actions/timerActions";
 import {getRandomId} from "../../utils/getRandomId";
@@ -19,59 +20,47 @@ const TimerEdit = props => {
     return (
         props.isEdit
         ?
-        <div style={{marginTop: '50px'}}>
-            <form>
-                <div>Timer Name:
-                    <input name='name' onChange={setTimerData}
-                           value={props.editTimerData.name}
-                           type="text"/>
-                </div>
-                <div>Rounds:
-                    <input name='rounds'
-                           onChange={setTimerData}
-                           value={props.editTimerData.rounds}
-                           type="number"/>
-                </div>
-                <div>Round Time:
-                    <input name='roundTime'
-                           onChange={setTimerData}
-                           value={props.editTimerData.roundTime}
-                           type="number"/>
-                </div>
-                <div>Rest Time:
-                    <input name='restTime' onChange={setTimerData}
-                           value={props.editTimerData.restTime}
-                           type="number"/>
-                </div>
-                <div>Prepare Time:
-                    <input name='prepareTime' onChange={setTimerData}
-                           value={props.editTimerData.prepareTime}
-                           type="number"/>
-                </div>
-                <div>Warning Time:
-                    <input name='warningTime' onChange={setTimerData}
-                           value={props.editTimerData.warningTime}
-                           type="number"/>
-                </div>
-
-                <div>
-                    <button type='button' onClick={props.toggleEditTimer}>Close</button>
-                    <button type='button'
-                            onClick={() => {
+        <Form className="d-flex flex-column">
+            <Form.Label>
+                Timer Name:
+                <Form.Control name='name' onChange={setTimerData} value={props.editTimerData.name} type="text"/>
+            </Form.Label>
+            <Form.Label>
+                Rounds:
+                <Form.Control name='rounds' onChange={setTimerData} value={props.editTimerData.rounds} type="number"/>
+            </Form.Label>
+            <Form.Label>
+                Round Time:
+                <Form.Control name='roundTime' onChange={setTimerData} value={props.editTimerData.roundTime} type="number"/>
+            </Form.Label>
+            <Form.Label>
+                Rest Time:
+                <Form.Control name='restTime' onChange={setTimerData} value={props.editTimerData.restTime} type="number"/>
+            </Form.Label>
+            <Form.Label>
+                Prepare Time:
+                <Form.Control name='prepareTime' onChange={setTimerData} value={props.editTimerData.prepareTime} type="number"/>
+            </Form.Label>
+            <Form.Label>
+                Warning Time:
+                <Form.Control name='warningTime' onChange={setTimerData} value={props.editTimerData.warningTime} type="number"/>
+            </Form.Label>
+            <ButtonGroup className="d-flex mt-2">
+                {/* <button type='button' onClick={props.toggleEditTimer}>Close</button> */}
+                <Button variant="success" className="me-2" onClick={() => {
                                 let updatedTimers = props.timers.map(t => {
                                     return t.id !== props.currTimer.id ? t : {...props.editTimerData, id: props.currTimer.id}
                                 });
                                 props.saveEditData({timer: {...props.editTimerData, id: props.currTimer.id}, timers: updatedTimers});
                             }}>
-                        Save
-                    </button>
-                    <button type='button'
-                            onClick={() => props.addTimer({...props.editTimerData, id: getRandomId()})}>
-                        Save As New
-                    </button>
-                </div>
-            </form>
-        </div>
+                        Save Settings
+                    </Button>
+                <Button variant="warning"
+                    onClick={() => props.addTimer({...props.editTimerData, id: getRandomId()})}>
+                    To Favorite
+                </Button>
+            </ButtonGroup>
+        </Form>
         : ''
     );
 };
