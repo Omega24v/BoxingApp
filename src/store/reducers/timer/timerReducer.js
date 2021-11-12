@@ -1,6 +1,6 @@
 import {TIMER_DV} from "../../../constatns/timerDefaultValues";
 import {
-    ADD_TIMER, COUNT_PHASE_TIME,
+    ADD_TIMER, COUNT_PHASE_TIME, ON_CHANGE_EDIT_DATA,
     PAUSE, RESET_TIMER,
     SAVE_EDIT_DATA, SET_CURRENT_PHASE, SET_CURRENT_ROUND,
     SET_DEFAULT_VALUES, SET_FULL_TIME, SET_INTERVAL_COUNT, SET_INTERVAL_ID, SET_PHASE_TIME,
@@ -36,6 +36,7 @@ const initialState = {
     fullTime: getTotalTime(defaultTimer),
     intervalCount: 0,
     intervalId: 0,
+    editTimerData: {},
     currTimer: persistedState?.timers[0] || defaultTimer,
     timers: persistedState?.timers || [defaultTimer],
 }
@@ -50,9 +51,11 @@ export default function timerReducer(state = initialState, action) {
         case PAUSE:
             return {...state, isRunning: false}
         case TOGGLE_EDIT_TIMER:
-            return {...state, isEdit: !state.isEdit}
+            return {...state, isEdit: !state.isEdit, editTimerData: state.currTimer}
         case TOGGLE_ADD_TIMER:
             return {...state, isAdd: !state.isAdd}
+        case ON_CHANGE_EDIT_DATA:
+            return {...state, editTimerData: action.payload}
         case SAVE_EDIT_DATA:
             setData({timers: action.payload.timers}, 'data');
             return {...state, currTimer: action.payload.timer, timers: action.payload.timers}
