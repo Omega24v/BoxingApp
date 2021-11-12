@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { ButtonGroup, Button, Form } from 'react-bootstrap';
 import {connect} from "react-redux";
-import {addTimer, toggleEditTimer, startTimer, saveEditData, onChangeEditData} from "../../store/actions/timerActions";
+import {addTimer, startTimer, saveEditData, onChangeEditData} from "../../store/actions/timerActions";
 import {getRandomId} from "../../utils/getRandomId";
 
 const TimerEdit = props => {
@@ -18,8 +18,6 @@ const TimerEdit = props => {
     }
 
     return (
-        props.isEdit
-        ?
         <Form className="d-flex flex-column">
             <Form.Label>
                 Timer Name:
@@ -46,7 +44,6 @@ const TimerEdit = props => {
                 <Form.Control name='warningTime' onChange={setTimerData} value={props.editTimerData.warningTime} type="number"/>
             </Form.Label>
             <ButtonGroup className="d-flex mt-2">
-                {/* <button type='button' onClick={props.toggleEditTimer}>Close</button> */}
                 <Button variant="success" className="me-2" onClick={() => {
                                 let updatedTimers = props.timers.map(t => {
                                     return t.id !== props.currTimer.id ? t : {...props.editTimerData, id: props.currTimer.id}
@@ -61,7 +58,6 @@ const TimerEdit = props => {
                 </Button>
             </ButtonGroup>
         </Form>
-        : ''
     );
 };
 
@@ -77,7 +73,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         start: () => dispatch(startTimer()),
-        toggleEditTimer: () => dispatch(toggleEditTimer()),
         addTimer: timer => dispatch(addTimer(timer)),
         saveEditData: timer => dispatch(saveEditData(timer)),
         onChangeEditData: data => dispatch(onChangeEditData(data)),

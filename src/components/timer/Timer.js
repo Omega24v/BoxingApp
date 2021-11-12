@@ -26,8 +26,6 @@ import './Timer.sass';
 
 const Timer = props => {
 
-    const [modalShow, setModalShow] = React.useState(false);
-
     useEffect(() => {
 
         if (props.currentPhase === 1 && props.intervalCount === props.currTimer.prepareTime) {
@@ -131,7 +129,7 @@ const Timer = props => {
                         <Button variant="success" className="me-3 btn-start" onClick={handleTimer}>
                             {props.isRunning ? 'Pause' : 'Start'}
                         </Button>
-                        <Button variant="warning" onClick={() => {setModalShow(true); props.edit()}}>Edit</Button>
+                        <Button variant="warning" onClick={() => {props.toggleEditTimer()}}>Edit</Button>
                     </ButtonGroup>
                 </Col>
             </Row>
@@ -141,13 +139,14 @@ const Timer = props => {
                 </Col>
             </Row>
 
-            <ModalEdit show={modalShow} onHide={() => setModalShow(false)}/>
+            <ModalEdit show={props.isEdit} onHide={() => props.toggleEditTimer()}/>
         </>
     );
 };
 
 function mapStateToProps(state) {
     return {
+        isEdit: state.timerReducer.isEdit,
         isRunning: state.timerReducer.isRunning,
         currTimer: state.timerReducer.currTimer,
         currentRound: state.timerReducer.currentRound,
@@ -164,7 +163,7 @@ function mapDispatchToProps(dispatch) {
         start: () => dispatch(startTimer()),
         pause: () => dispatch(pauseTimer()),
         stop: () => dispatch(stopTimer()),
-        edit: () => dispatch(toggleEditTimer()),
+        toggleEditTimer: () => dispatch(toggleEditTimer()),
         toggleAddTimer: () => dispatch(toggleAddTimer()),
         setDefaultValues: () => dispatch(setDefaultValues()),
         resetTimer: () => dispatch(resetTimer()),
