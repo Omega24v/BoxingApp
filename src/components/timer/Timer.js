@@ -79,6 +79,7 @@ const Timer = props => {
     return (
         <>
             <Row className="mb-4">
+                <Col lg={12}><h2 className="timer-title m-2">{props.currTimer.name}</h2></Col>
                 <Col lg={5}>
                     <div className="timer-big current-round">
                         <span className="timer-big__text">Current Round: </span>
@@ -121,22 +122,23 @@ const Timer = props => {
                     <ButtonGroup aria-label="timer buttons">
                         {props.isRunning
                             ?
-                            <button>
+                            <Button variant="danger" className="me-3">
                                 Stop
-                            </button>
+                            </Button>
                             :
                             ''
                         }
-                        <Button variant="success" className="me-2 btn-start" onClick={handleTimer}>
+                        <Button variant="success" className="me-3 btn-start" onClick={handleTimer}>
                             {props.isRunning ? 'Pause' : 'Start'}
                         </Button>
                         <Button variant="warning" onClick={() => {setModalShow(true); props.edit()}}>Edit</Button>
                     </ButtonGroup>
                 </Col>
             </Row>
-
             <Row>
-                <Col><TimersList/></Col>
+                <Col>
+                    <TimersList/>
+                </Col>
             </Row>
 
             <ModalEdit show={modalShow} onHide={() => setModalShow(false)}/>
