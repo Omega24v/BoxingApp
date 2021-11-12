@@ -3,7 +3,6 @@ import { ButtonGroup, Button, Form } from 'react-bootstrap';
 import {connect} from "react-redux";
 import {addTimer, toggleEditTimer, startTimer, saveEditData} from "../../store/actions/timerActions";
 import {getRandomId} from "../../utils/getRandomId";
-import './TimerEdit.sass';
 
 const TimerEdit = props => {
 
@@ -45,16 +44,20 @@ const TimerEdit = props => {
                 Warning Time: 
                 <Form.Control name='warningTime' onChange={setTimerData} value={timer.warningTime} type="number"/>
             </Form.Label>
-
             <ButtonGroup className="d-flex mt-2">
-                {/* <Button variant="warning" className="me-2" onClick={props.edit}>Close</Button> */}
+                {/* <button type='button' onClick={props.toggleEditTimer}>Close</button> */}
                 <Button variant="success" className="me-2" onClick={() => {
-                    let updatedTimers = props.timers.map(t => {
-                            return t.id !== props.currTimer.id ? t : {...timer, id: props.currTimer.id}
-                        });
-                        props.saveEditData({timer: {...timer, id: props.currTimer.id}, timers: updatedTimers});
-                    }}>Save Settings</Button>
-                <Button variant="warning" onClick={() => props.addTimer({...timer, id: getRandomId()})}>To Favorite</Button>
+                                let updatedTimers = props.timers.map(t => {
+                                    return t.id !== props.currTimer.id ? t : {...timer, id: props.currTimer.id}
+                                });
+                                props.saveEditData({timer: {...timer, id: props.currTimer.id}, timers: updatedTimers});
+                            }}>
+                        Save Settings
+                    </Button>
+                <Button variant="warning" 
+                    onClick={() => props.addTimer({...timer, id: getRandomId()})}>
+                    To Favorite
+                </Button>
             </ButtonGroup>
         </Form>
         : ''
@@ -72,8 +75,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         start: () => dispatch(startTimer()),
+        toggleEditTimer: () => dispatch(toggleEditTimer()),
         addTimer: timer => dispatch(addTimer(timer)),
-        toggleEditTimer: timer => dispatch(toggleEditTimer(timer)),
         saveEditData: timer => dispatch(saveEditData(timer)),
     }
 }

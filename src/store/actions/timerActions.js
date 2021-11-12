@@ -1,8 +1,8 @@
 import {
-    ADD_TIMER,
-    PAUSE,
-    SAVE_EDIT_DATA,
-    SET_DEFAULT_VALUES,
+    ADD_TIMER, COUNT_PHASE_TIME,
+    PAUSE, RESET_TIMER,
+    SAVE_EDIT_DATA, SET_CURRENT_PHASE, SET_CURRENT_ROUND,
+    SET_DEFAULT_VALUES, SET_FULL_TIME, SET_INTERVAL_COUNT, SET_INTERVAL_ID, SET_PHASE_TIME,
     SET_TIMER,
     START,
     STOP, TOGGLE_ADD_TIMER,
@@ -62,6 +62,61 @@ export const setDefaultValues = () => {
 export const setTimer = data => {
     return {
         type: SET_TIMER,
+        payload: data
+    }
+}
+
+export const resetTimer = () => {
+    return {
+        type: RESET_TIMER
+    }
+}
+
+export const setIntervalCount = data => {
+    return {
+        type: SET_INTERVAL_COUNT,
+        payload: data
+    }
+}
+
+export const setIntervalId = data => {
+    return {
+        type: SET_INTERVAL_ID,
+        payload: data
+    }
+}
+
+export const setPhaseTime = data => {
+    return {
+        type: SET_PHASE_TIME,
+        payload: data
+    }
+}
+
+export const countPhaseTime = data => {
+    return {
+        type: COUNT_PHASE_TIME,
+        payload: data
+    }
+}
+
+export const setCurrentPhase = data => {
+    return {
+        type: SET_CURRENT_PHASE,
+        payload: data
+    }
+}
+
+export const setCurrentRound = data => {
+    return {
+        type: SET_CURRENT_ROUND,
+        payload: data
+    }
+}
+
+export const setFullTime = data => {
+    return {
+        type: SET_FULL_TIME,
         payload: data
     }
 }

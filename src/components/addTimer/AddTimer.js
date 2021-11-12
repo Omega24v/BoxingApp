@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from "react-redux";
 import {getRandomId} from "../../utils/getRandomId";
-import {addTimer, startTimer} from "../../store/actions/timerActions";
+import {addTimer, startTimer, toggleAddTimer} from "../../store/actions/timerActions";
 
 const AddTimer = props => {
 
@@ -29,7 +29,7 @@ const AddTimer = props => {
                     <div>Warning Time: <input name='warningTime' onChange={setTimerData} value={timer.warningTime} type="number"/></div>
 
                     <div>
-                        <button type='button'>Cancel</button>
+                        <button type='button' onClick={props.toggleAddTimer}>Cancel</button>
                         <button type='button'
                                 onClick={() => props.addTimer({...timer, id: getRandomId()})}>
                             Add new timer
@@ -51,6 +51,7 @@ function mapDispatchToProps(dispatch) {
     return {
         start: () => dispatch(startTimer()),
         addTimer: timer => dispatch(addTimer(timer)),
+        toggleAddTimer: () => dispatch(toggleAddTimer()),
     }
 }
 

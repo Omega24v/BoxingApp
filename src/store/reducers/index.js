@@ -1,4 +1,4 @@
-import timerReducer from './timer'
+import timerReducer from './timer/timerReducer'
 
 export default {
     timerReducer
