@@ -44,53 +44,53 @@ const TimerEdit = props => {
                 <InputGroup.Text>Round Time</InputGroup.Text>
                 <InputGroup.Text>Min:</InputGroup.Text>
                 <Form.Control name='roundTimeMin'
-                              onChange={setTimerData}
-                              value={getMinAndSecFromMs(props.editTimerData.roundTime).min}
-                              type="number"/>
+                    onChange={setTimerData}
+                    value={getMinAndSecFromMs(props.editTimerData.roundTime).min}
+                    type="number"/>
                 <InputGroup.Text>Sec:</InputGroup.Text>
                 <Form.Control name='roundTimeSec'
-                              onChange={setTimerData}
-                              value={getMinAndSecFromMs(props.editTimerData.roundTime).sec}
-                              type="number"/>
+                    onChange={setTimerData}
+                    value={getMinAndSecFromMs(props.editTimerData.roundTime).sec}
+                    type="number"/>
             </InputGroup>
             <InputGroup className="mb-3">
                 <InputGroup.Text>Round Time</InputGroup.Text>
                 <InputGroup.Text>Min:</InputGroup.Text>
                 <Form.Control name='restTimeMin'
-                              onChange={setTimerData}
-                              value={getMinAndSecFromMs(props.editTimerData.restTime).min}
-                              type="number"/>
+                    onChange={setTimerData}
+                    value={getMinAndSecFromMs(props.editTimerData.restTime).min}
+                    type="number"/>
                 <InputGroup.Text>Sec:</InputGroup.Text>
                 <Form.Control name='restTimeSec'
-                              onChange={setTimerData}
-                              value={getMinAndSecFromMs(props.editTimerData.restTime).sec}
-                              type="number"/>
+                    onChange={setTimerData}
+                    value={getMinAndSecFromMs(props.editTimerData.restTime).sec}
+                    type="number"/>
             </InputGroup>
             <InputGroup className="mb-3">
                 <InputGroup.Text>Round Time</InputGroup.Text>
                 <InputGroup.Text>Min:</InputGroup.Text>
                 <Form.Control name='prepareTimeMin'
-                              onChange={setTimerData}
-                              value={getMinAndSecFromMs(props.editTimerData.prepareTime).min}
-                              type="number"/>
+                    onChange={setTimerData}
+                    value={getMinAndSecFromMs(props.editTimerData.prepareTime).min}
+                    type="number"/>
                 <InputGroup.Text>Sec:</InputGroup.Text>
                 <Form.Control name='prepareTimeSec'
-                              onChange={setTimerData}
-                              value={getMinAndSecFromMs(props.editTimerData.prepareTime).sec}
-                              type="number"/>
+                    onChange={setTimerData}
+                    value={getMinAndSecFromMs(props.editTimerData.prepareTime).sec}
+                    type="number"/>
             </InputGroup>
             <InputGroup className="mb-3">
                 <InputGroup.Text>Round Time</InputGroup.Text>
                 <InputGroup.Text>Min:</InputGroup.Text>
                 <Form.Control name='warningTimeMin'
-                              onChange={setTimerData}
-                              value={getMinAndSecFromMs(props.editTimerData.warningTime).min}
-                              type="number"/>
+                    onChange={setTimerData}
+                    value={getMinAndSecFromMs(props.editTimerData.warningTime).min}
+                    type="number"/>
                 <InputGroup.Text>Sec:</InputGroup.Text>
                 <Form.Control name='warningTimeSec'
-                              onChange={setTimerData}
-                              value={getMinAndSecFromMs(props.editTimerData.warningTime).sec}
-                              type="number"/>
+                    onChange={setTimerData}
+                    value={getMinAndSecFromMs(props.editTimerData.warningTime).sec}
+                    type="number"/>
             </InputGroup>
 
             <ButtonGroup className="d-flex mt-2">
