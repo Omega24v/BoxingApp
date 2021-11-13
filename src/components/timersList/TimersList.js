@@ -2,7 +2,7 @@ import React from 'react';
 import { CloseButton, Col, Row } from 'react-bootstrap';
 import {connect} from "react-redux";
 import {addTimer, resetTimer, setTimer, startTimer, stopTimer} from "../../store/actions/timerActions";
-import msToMAS from '../../utils/timeConverter';
+import {msToMAS} from "../../utils/timeConverter";
 import './TimersList.sass';
 
 const TimersList = props => {
