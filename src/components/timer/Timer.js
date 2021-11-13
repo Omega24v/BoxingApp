@@ -81,6 +81,8 @@ const Timer = props => {
         props.setIntervalId(newIntervalId);
     }
 
+    console.log(props);
+
     return (
         <>
             <Row className="mb-4">
@@ -88,7 +90,10 @@ const Timer = props => {
                 <Col lg={5}>
                     <div className="timer-big current-round">
                         <span className="timer-big__text">Current Round: </span>
-                        <span className="timer-big__count">{ props.currentRound }</span>
+                        <span className="timer-big__count">
+                            { props.currentRound > 9 ? props.currentRound : `0${props.currentRound}`}
+                        </span>
+                        <span className="timer-big__text">OF {props.currTimer.rounds} ROUNDS</span>
                     </div>
                 </Col>
                 <Col lg={7}>
