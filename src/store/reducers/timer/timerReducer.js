@@ -91,7 +91,12 @@ export default function timerReducer(state = initialState, action) {
             }
         case ADD_TIMER:
             setData({timers: [...state.timers, action.payload]}, 'data');
-            return {...state, timers: [...state.timers, action.payload], isAdd: false}
+            return {
+                ...state,
+                currTimer: action.payload,
+                timers: [...state.timers, action.payload],
+                isAdd: false
+            }
         default:
             return state;
     }

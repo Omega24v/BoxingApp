@@ -5,12 +5,12 @@ import './ModalEdit.sass'
 
 
 const Modals = props => {
-  
+  const { timerName, ...rest } = props;
   return (
-    <Modal className="edit-modal" {...props} size="lg" aria-labelledby="modal-title" centered>
+    <Modal className="edit-modal" {...rest} size="md" aria-labelledby="modal-title" centered>
       <Modal.Header closeButton>
         <Modal.Title>
-          Edit Timer
+          Edit {timerName}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
