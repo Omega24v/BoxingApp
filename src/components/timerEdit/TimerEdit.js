@@ -54,7 +54,7 @@ const TimerEdit = props => {
                               type="number"/>
             </InputGroup>
             <InputGroup className="mb-3">
-                <InputGroup.Text>Round Time</InputGroup.Text>
+                <InputGroup.Text>Rest Time</InputGroup.Text>
                 <InputGroup.Text>Min:</InputGroup.Text>
                 <Form.Control name='restTimeMin'
                               onChange={setTimerData}
@@ -67,7 +67,7 @@ const TimerEdit = props => {
                               type="number"/>
             </InputGroup>
             <InputGroup className="mb-3">
-                <InputGroup.Text>Round Time</InputGroup.Text>
+                <InputGroup.Text>Prepare Time</InputGroup.Text>
                 <InputGroup.Text>Min:</InputGroup.Text>
                 <Form.Control name='prepareTimeMin'
                               onChange={setTimerData}
@@ -80,7 +80,7 @@ const TimerEdit = props => {
                               type="number"/>
             </InputGroup>
             <InputGroup className="mb-3">
-                <InputGroup.Text>Round Time</InputGroup.Text>
+                <InputGroup.Text>Warning Time</InputGroup.Text>
                 <InputGroup.Text>Min:</InputGroup.Text>
                 <Form.Control name='warningTimeMin'
                               onChange={setTimerData}

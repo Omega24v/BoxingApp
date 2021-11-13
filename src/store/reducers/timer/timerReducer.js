@@ -18,9 +18,17 @@ const defaultTimer = {
     name: TIMER_DV.name,
     rounds: TIMER_DV.rounds,
     roundTime: TIMER_DV.roundTime,
+    roundTimeSec: TIMER_DV.roundTimeSec,
+    roundTimeMin: TIMER_DV.roundTimeMin,
     restTime: TIMER_DV.restTime,
+    restTimeSec: TIMER_DV.restTimeSec,
+    restTimeMin: TIMER_DV.restTimeMin,
     prepareTime: TIMER_DV.prepareTime,
+    prepareTimeSec: TIMER_DV.prepareTimeSec,
+    prepareTimeMin: TIMER_DV.prepareTimeMin,
     warningTime: TIMER_DV.warningTime,
+    warningTimeSec: TIMER_DV.warningTimeSec,
+    warningTimeMin: TIMER_DV.warningTimeMin,
     currentRound: TIMER_DV.currentRound
 }
 
@@ -58,7 +66,12 @@ export default function timerReducer(state = initialState, action) {
             return {...state, editTimerData: action.payload}
         case SAVE_EDIT_DATA:
             setData({timers: action.payload.timers}, 'data');
-            return {...state, currTimer: action.payload.timer, timers: action.payload.timers}
+            return {
+                ...state,
+                fullTime: getTotalTime(action.payload.timer),
+                currTimer: action.payload.timer,
+                timers: action.payload.timers
+            }
         case SET_DEFAULT_VALUES:
             return {...state, isRunning: false}
         case SET_TIMER:
@@ -93,6 +106,7 @@ export default function timerReducer(state = initialState, action) {
             setData({timers: [...state.timers, action.payload]}, 'data');
             return {
                 ...state,
+                fullTime: getTotalTime(action.payload),
                 currTimer: action.payload,
                 timers: [...state.timers, action.payload],
                 isAdd: false
