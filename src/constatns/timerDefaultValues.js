@@ -13,8 +13,9 @@ export const TIMER_DV = {
 }
 
 export const PHASES = {
-    1: 'PREPARE',
-    2: 'ROUND',
-    3: 'WARNING',
-    4: 'REST'
+    0: 'Default',
+    1: 'Prepare',
+    2: 'Round',
+    3: 'Warning',
+    4: 'Rest'
 }

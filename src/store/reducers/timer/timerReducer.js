@@ -31,12 +31,12 @@ const initialState = {
     isEdit: false,
     isAdd: false,
     currentRound: 1,
-    currentPhase: 1,
-    phaseTime: defaultTimer.prepareTime,
-    fullTime: getTotalTime(defaultTimer),
+    currentPhase: 0,
     intervalCount: 0,
     intervalId: 0,
     editTimerData: {},
+    phaseTime: persistedState?.timers[0].prepareTime || defaultTimer.prepareTime,
+    fullTime: getTotalTime(persistedState?.timers[0] || defaultTimer),
     currTimer: persistedState?.timers[0] || defaultTimer,
     timers: persistedState?.timers || [defaultTimer],
 }
@@ -62,7 +62,7 @@ export default function timerReducer(state = initialState, action) {
         case SET_DEFAULT_VALUES:
             return {...state, isRunning: false}
         case SET_TIMER:
-            return {...state, currTimer: action.payload}
+            return {...state, currTimer: action.payload, fullTime: getTotalTime(action.payload)}
         case SET_INTERVAL_COUNT:
             const val = action.payload === 0 ? 0 : state.intervalCount + action.payload;
             return {...state, intervalCount: val}
@@ -81,10 +81,11 @@ export default function timerReducer(state = initialState, action) {
         case RESET_TIMER:
             return {
                 ...state,
+                isRunning: false,
                 currentRound: 1,
-                currentPhase: 1,
-                phaseTime: defaultTimer.prepareTime,
-                fullTime: getTotalTime(defaultTimer),
+                currentPhase: 0,
+                phaseTime: state.currTimer.prepareTime,
+                fullTime: getTotalTime(state.currTimer),
                 intervalCount: 0,
                 intervalId: 0,
             }

@@ -15,10 +15,10 @@ import {
     setIntervalId,
     setFullTime, countPhaseTime
 } from "../../store/actions/timerActions";
-import { getTotalTime } from "../../utils/common";
+import {getPhaseColor, getTotalTime} from "../../utils/common";
 import { Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 import { PHASES } from "../../constatns/timerDefaultValues";
-import millisToMinutesAndSeconds from "../../utils/timeConverter";
+import msToMAS from "../../utils/timeConverter";
 import ModalEdit from '../modal/ModalEdit';
 import TimersList from '../timersList/TimersList';
 import './Timer.sass';
@@ -26,9 +26,17 @@ import './Timer.sass';
 
 const Timer = props => {
 
+    const stopResetAndTimer = () => {
+        props.stop();
+        clearInterval(props.intervalId);
+        props.resetTimer();
+    }
+
     useEffect(() => {
 
-        if (props.currentPhase === 1 && props.intervalCount === props.currTimer.prepareTime) {
+        if (props.currentPhase === 0 && props.intervalCount !== 0) {
+            props.setCurrentPhase(1);
+        } else if ((props.currentPhase === 1) && props.intervalCount === props.currTimer.prepareTime) {
             props.setIntervalCount(0);
             props.setPhaseTime(props.currTimer.roundTime);
             props.setCurrentPhase(2);
@@ -37,9 +45,7 @@ const Timer = props => {
         } else if (props.currentPhase === 3 && props.intervalCount === props.currTimer.roundTime) {
 
             if (props.currentRound === props.currTimer.rounds) {
-                props.stop();
-                clearInterval(props.intervalId);
-                props.resetTimer();
+                stopResetAndTimer()
             } else {
                 props.setIntervalCount(0);
                 props.setPhaseTime(props.currTimer.restTime);
@@ -85,9 +91,19 @@ const Timer = props => {
                     </div>
                 </Col>
                 <Col lg={7}>
-                    <div className="timer-big full-time">
-                        <span className="timer-big__text">Full Time: </span>
-                        <span className="timer-big__count">{millisToMinutesAndSeconds(props.fullTime)}</span>
+                    <div className={'timer-big full-time full-time' + getPhaseColor(props.currentPhase)}>
+                        <span className="timer-big__text">
+                            { props.isRunning
+                                ? `${PHASES[props.currentPhase]} time`
+                                : 'Full Time:'
+                            }
+                        </span>
+                        <span className="timer-big__count">
+                            { props.isRunning
+                            ? msToMAS(props.phaseTime)
+                            : msToMAS(props.fullTime)
+                            }
+                        </span>
                     </div>
                 </Col>
             </Row>
@@ -98,19 +114,19 @@ const Timer = props => {
                         <span className="timer-small__text">Phase</span>
                     </div>
                     <div className="timer-small">
-                        <span className="timer-small__count text-info">{ millisToMinutesAndSeconds(props.phaseTime) }</span>
+                        <span className="timer-small__count text-info">{ msToMAS(props.phaseTime) }</span>
                         <span className="timer-small__text">Phase Time</span>
                     </div>
                     <div className="timer-small">
-                        <span className="timer-small__count text-success">{ millisToMinutesAndSeconds(getTotalTime(props.currTimer)) }</span>
+                        <span className="timer-small__count text-success">{ msToMAS(getTotalTime(props.currTimer)) }</span>
                         <span className="timer-small__text">Rounds total time</span>
                     </div>
                     <div className="timer-small">
-                        <span className="timer-small__count text-primary">{ millisToMinutesAndSeconds(props.currTimer.restTime) }</span>
+                        <span className="timer-small__count text-primary">{ msToMAS(props.currTimer.restTime) }</span>
                         <span className="timer-small__text">Rounds rest time</span>
                     </div>
                     <div className="timer-small">
-                        <span className="timer-small__count text-warning">{ millisToMinutesAndSeconds(props.currTimer.prepareTime) }</span>
+                        <span className="timer-small__count text-warning">{ msToMAS(props.currTimer.prepareTime) }</span>
                         <span className="timer-small__text">Rounds prepare time</span>
                     </div>
                 </Col>
@@ -120,7 +136,9 @@ const Timer = props => {
                     <ButtonGroup aria-label="timer buttons">
                         {props.isRunning
                             ?
-                            <Button variant="danger" className="me-3">
+                            <Button variant="danger"
+                                    className="me-3"
+                                    onClick={stopResetAndTimer}>
                                 Stop
                             </Button>
                             :
