@@ -2,7 +2,7 @@ import React from 'react';
 import { CloseButton, Col, Row } from 'react-bootstrap';
 import {connect} from "react-redux";
 import {addTimer, resetTimer, setTimer, startTimer, stopTimer} from "../../store/actions/timerActions";
-import millisToMinutesAndSeconds from '../../utils/timeConverter';
+import msToMAS from '../../utils/timeConverter';
 import './TimersList.sass';
 
 const TimersList = props => {
@@ -25,9 +25,9 @@ const TimersList = props => {
                         <Col lg={9}>
                             <div className={`timer-list__item mb-2 ${timer.id === props.currTimer.id ? 'text-danger' : ''}`}>{timer.name}</div>
                             <div className="timer-list__item text-warning">Rounds: {timer.rounds}</div>
-                            <div className="timer-list__item text-warning">Rounds Time: { millisToMinutesAndSeconds((timer.roundTime)) }</div>
-                            <div className="timer-list__item text-warning">Rest Time: { millisToMinutesAndSeconds((timer.restTime)) }</div>
-                            <div className="timer-list__item text-warning">Prepare Time: { millisToMinutesAndSeconds((timer.prepareTime)) }</div>
+                            <div className="timer-list__item text-warning">Rounds Time: { msToMAS((timer.roundTime)) }</div>
+                            <div className="timer-list__item text-warning">Rest Time: { msToMAS((timer.restTime)) }</div>
+                            <div className="timer-list__item text-warning">Prepare Time: { msToMAS((timer.prepareTime)) }</div>
                         </Col>
                         <Col lg={3} className="d-flex justify-content-end">
                             <CloseButton variant="white" />
