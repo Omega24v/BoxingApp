@@ -18,7 +18,7 @@ import {
 import {getPhaseColor, getTotalTime} from "../../utils/common";
 import { Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 import { PHASES } from "../../constatns/timerDefaultValues";
-import msToMAS from "../../utils/timeConverter";
+import {msToMAS} from "../../utils/timeConverter";
 import ModalEdit from '../modal/ModalEdit';
 import TimersList from '../timersList/TimersList';
 import './Timer.sass';
@@ -34,7 +34,7 @@ const Timer = props => {
 
     useEffect(() => {
 
-        if ((props.currentPhase === 1) && props.intervalCount === props.currTimer.prepareTime) {
+        if (props.currentPhase === 1 && props.intervalCount === props.currTimer.prepareTime) {
             props.setIntervalCount(0);
             props.setPhaseTime(props.currTimer.roundTime);
             props.setCurrentPhase(2);
@@ -70,7 +70,10 @@ const Timer = props => {
         }
 
         props.start();
-        props.setCurrentPhase(1);
+
+        if (props.currentPhase === 0) {
+            props.setCurrentPhase(1);
+        }
 
         const newIntervalId = setInterval(() => {
             props.setIntervalCount(1000);
@@ -163,7 +166,11 @@ const Timer = props => {
                 </Col>
             </Row>
 
-            <ModalEdit show={props.isEdit} onHide={() => props.toggleEditTimer()}/>
+            <ModalEdit
+                show={props.isEdit}
+                timerName={props.currTimer.name}
+                onHide={() => props.toggleEditTimer()}
+            />
         </>
     );
 };

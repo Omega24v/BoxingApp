@@ -1,10 +1,19 @@
-import React, {useState} from 'react';
-import { ButtonGroup, Button, Form } from 'react-bootstrap';
+import React from 'react';
+import {ButtonGroup, Button, Form, InputGroup} from 'react-bootstrap';
 import {connect} from "react-redux";
-import {addTimer, startTimer, saveEditData, onChangeEditData} from "../../store/actions/timerActions";
+import {addTimer, startTimer, saveEditData, onChangeEditData, toggleEditTimer} from "../../store/actions/timerActions";
 import {getRandomId} from "../../utils/getRandomId";
+import {getMinAndSecFromMs, getMsFromMinAndSec} from "../../utils/timeConverter";
 
 const TimerEdit = props => {
+
+    const saveFormData = () => {
+        let updatedTimers = props.timers.map(t => {
+            return t.id !== props.currTimer.id ? t : {...props.editTimerData, id: props.currTimer.id}
+        });
+        props.toggleEditTimer();
+        props.saveEditData({timer: {...props.editTimerData, id: props.currTimer.id}, timers: updatedTimers});
+    }
 
     const setTimerData = e => {
 
@@ -13,6 +22,10 @@ const TimerEdit = props => {
         const value = target.type === 'number' ? +target.value : target.value;
         const name = target.name;
         editableTimer = {...props.editTimerData, [name]: value};
+        editableTimer.roundTime = getMsFromMinAndSec(editableTimer.roundTimeMin, editableTimer.roundTimeSec);
+        editableTimer.restTime = getMsFromMinAndSec(editableTimer.restTimeMin, editableTimer.restTimeSec);
+        editableTimer.prepareTime = getMsFromMinAndSec(editableTimer.prepareTimeMin, editableTimer.prepareTimeSec);
+        editableTimer.warningTime = getMsFromMinAndSec(editableTimer.warningTimeMin, editableTimer.warningTimeSec);
 
         props.onChangeEditData(editableTimer);
     }
@@ -27,34 +40,69 @@ const TimerEdit = props => {
                 Rounds:
                 <Form.Control name='rounds' onChange={setTimerData} value={props.editTimerData.rounds} type="number"/>
             </Form.Label>
-            <Form.Label>
-                Round Time:
-                <Form.Control name='roundTime' onChange={setTimerData} value={props.editTimerData.roundTime} type="number"/>
-            </Form.Label>
-            <Form.Label>
-                Rest Time:
-                <Form.Control name='restTime' onChange={setTimerData} value={props.editTimerData.restTime} type="number"/>
-            </Form.Label>
-            <Form.Label>
-                Prepare Time:
-                <Form.Control name='prepareTime' onChange={setTimerData} value={props.editTimerData.prepareTime} type="number"/>
-            </Form.Label>
-            <Form.Label>
-                Warning Time:
-                <Form.Control name='warningTime' onChange={setTimerData} value={props.editTimerData.warningTime} type="number"/>
-            </Form.Label>
+            <InputGroup className="mb-3">
+                <InputGroup.Text>Round Time</InputGroup.Text>
+                <InputGroup.Text>Min:</InputGroup.Text>
+                <Form.Control name='roundTimeMin'
+                              onChange={setTimerData}
+                              value={getMinAndSecFromMs(props.editTimerData.roundTime).min}
+                              type="number"/>
+                <InputGroup.Text>Sec:</InputGroup.Text>
+                <Form.Control name='roundTimeSec'
+                              onChange={setTimerData}
+                              value={getMinAndSecFromMs(props.editTimerData.roundTime).sec}
+                              type="number"/>
+            </InputGroup>
+            <InputGroup className="mb-3">
+                <InputGroup.Text>Round Time</InputGroup.Text>
+                <InputGroup.Text>Min:</InputGroup.Text>
+                <Form.Control name='restTimeMin'
+                              onChange={setTimerData}
+                              value={getMinAndSecFromMs(props.editTimerData.restTime).min}
+                              type="number"/>
+                <InputGroup.Text>Sec:</InputGroup.Text>
+                <Form.Control name='restTimeSec'
+                              onChange={setTimerData}
+                              value={getMinAndSecFromMs(props.editTimerData.restTime).sec}
+                              type="number"/>
+            </InputGroup>
+            <InputGroup className="mb-3">
+                <InputGroup.Text>Round Time</InputGroup.Text>
+                <InputGroup.Text>Min:</InputGroup.Text>
+                <Form.Control name='prepareTimeMin'
+                              onChange={setTimerData}
+                              value={getMinAndSecFromMs(props.editTimerData.prepareTime).min}
+                              type="number"/>
+                <InputGroup.Text>Sec:</InputGroup.Text>
+                <Form.Control name='prepareTimeSec'
+                              onChange={setTimerData}
+                              value={getMinAndSecFromMs(props.editTimerData.prepareTime).sec}
+                              type="number"/>
+            </InputGroup>
+            <InputGroup className="mb-3">
+                <InputGroup.Text>Round Time</InputGroup.Text>
+                <InputGroup.Text>Min:</InputGroup.Text>
+                <Form.Control name='warningTimeMin'
+                              onChange={setTimerData}
+                              value={getMinAndSecFromMs(props.editTimerData.warningTime).min}
+                              type="number"/>
+                <InputGroup.Text>Sec:</InputGroup.Text>
+                <Form.Control name='warningTimeSec'
+                              onChange={setTimerData}
+                              value={getMinAndSecFromMs(props.editTimerData.warningTime).sec}
+                              type="number"/>
+            </InputGroup>
+
             <ButtonGroup className="d-flex mt-2">
-                <Button variant="success" className="me-2" onClick={() => {
-                                let updatedTimers = props.timers.map(t => {
-                                    return t.id !== props.currTimer.id ? t : {...props.editTimerData, id: props.currTimer.id}
-                                });
-                                props.saveEditData({timer: {...props.editTimerData, id: props.currTimer.id}, timers: updatedTimers});
-                            }}>
+                <Button variant="success" className="me-2" onClick={saveFormData}>
                         Save Settings
                     </Button>
                 <Button variant="warning"
-                    onClick={() => props.addTimer({...props.editTimerData, id: getRandomId()})}>
-                    To Favorite
+                    onClick={() => {
+                        props.toggleEditTimer();
+                        props.addTimer({...props.editTimerData, id: getRandomId()});
+                    }}>
+                    Save as new timer
                 </Button>
             </ButtonGroup>
         </Form>
@@ -76,6 +124,7 @@ function mapDispatchToProps(dispatch) {
         addTimer: timer => dispatch(addTimer(timer)),
         saveEditData: timer => dispatch(saveEditData(timer)),
         onChangeEditData: data => dispatch(onChangeEditData(data)),
+        toggleEditTimer: () => dispatch(toggleEditTimer()),
     }
 }
 
