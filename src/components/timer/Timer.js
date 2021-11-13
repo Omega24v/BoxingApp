@@ -34,9 +34,7 @@ const Timer = props => {
 
     useEffect(() => {
 
-        if (props.currentPhase === 0 && props.intervalCount !== 0) {
-            props.setCurrentPhase(1);
-        } else if ((props.currentPhase === 1) && props.intervalCount === props.currTimer.prepareTime) {
+        if ((props.currentPhase === 1) && props.intervalCount === props.currTimer.prepareTime) {
             props.setIntervalCount(0);
             props.setPhaseTime(props.currTimer.roundTime);
             props.setCurrentPhase(2);
@@ -45,7 +43,9 @@ const Timer = props => {
         } else if (props.currentPhase === 3 && props.intervalCount === props.currTimer.roundTime) {
 
             if (props.currentRound === props.currTimer.rounds) {
-                stopResetAndTimer()
+                setTimeout(() => {
+                    stopResetAndTimer();
+                }, 0);
             } else {
                 props.setIntervalCount(0);
                 props.setPhaseTime(props.currTimer.restTime);
@@ -70,6 +70,7 @@ const Timer = props => {
         }
 
         props.start();
+        props.setCurrentPhase(1);
 
         const newIntervalId = setInterval(() => {
             props.setIntervalCount(1000);
