@@ -37,12 +37,12 @@ const TimerEdit = props => {
                 Timer Name:
                 <Form.Control name='name' onChange={setTimerData} value={props.editTimerData.name} type="text"/>
             </Form.Label>
-            <Form.Label>
-                Rounds:
-                <Form.Control name='rounds' onChange={setTimerData} value={props.editTimerData.rounds} type="number"/>
-            </Form.Label>
 
             <InputGroup className="edit-form__group my-3">
+                <InputGroup.Text className="rounds">Rounds:</InputGroup.Text>
+                <Form.Control name='rounds' onChange={setTimerData} value={props.editTimerData.rounds} type="number"/>
+            </InputGroup>
+            <InputGroup className="edit-form__group mb-3">
                 <InputGroup.Text>Round Time</InputGroup.Text>
                 <Form.Control name='roundTimeMin'
                     onChange={setTimerData}
@@ -54,7 +54,7 @@ const TimerEdit = props => {
                     type="number"/>
             </InputGroup>
             <InputGroup className="edit-form__group mb-3">
-                <InputGroup.Text>Rest Time</InputGroup.Text>
+                <InputGroup.Text className="group-item">Rest Time</InputGroup.Text>
                 <Form.Control name='restTimeMin'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.restTime).min}
@@ -64,7 +64,7 @@ const TimerEdit = props => {
                     value={getMinAndSecFromMs(props.editTimerData.restTime).sec}
                     type="number"/>
             </InputGroup>
-            <InputGroup className="edit-form__group mb-3 align-items-center">
+            <InputGroup className="edit-form__group mb-3">
                 <InputGroup.Text className="group-item">Prepare Time</InputGroup.Text>
                 <Form.Control 
                     name='prepareTimeMin'
