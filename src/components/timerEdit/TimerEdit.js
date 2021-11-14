@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {addTimer, startTimer, saveEditData, onChangeEditData, toggleEditTimer} from "../../store/actions/timerActions";
 import {getRandomId} from "../../utils/getRandomId";
 import {getMinAndSecFromMs, getMsFromMinAndSec} from "../../utils/timeConverter";
+import './TimerEdit.sass'
 
 const TimerEdit = props => {
 
@@ -31,7 +32,7 @@ const TimerEdit = props => {
     }
 
     return (
-        <Form className="d-flex flex-column">
+        <Form className="edit-form d-flex flex-column">
             <Form.Label>
                 Timer Name:
                 <Form.Control name='name' onChange={setTimerData} value={props.editTimerData.name} type="text"/>
@@ -40,53 +41,48 @@ const TimerEdit = props => {
                 Rounds:
                 <Form.Control name='rounds' onChange={setTimerData} value={props.editTimerData.rounds} type="number"/>
             </Form.Label>
-            <InputGroup className="mb-3">
+
+            <InputGroup className="edit-form__group my-3">
                 <InputGroup.Text>Round Time</InputGroup.Text>
-                <InputGroup.Text>Min:</InputGroup.Text>
                 <Form.Control name='roundTimeMin'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.roundTime).min}
-                    type="number"/>
-                <InputGroup.Text>Sec:</InputGroup.Text>
+                    type="number"/><span className="mx-1">:</span>
                 <Form.Control name='roundTimeSec'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.roundTime).sec}
                     type="number"/>
             </InputGroup>
-            <InputGroup className="mb-3">
-                <InputGroup.Text>Round Time</InputGroup.Text>
-                <InputGroup.Text>Min:</InputGroup.Text>
+            <InputGroup className="edit-form__group mb-3">
+                <InputGroup.Text>Rest Time</InputGroup.Text>
                 <Form.Control name='restTimeMin'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.restTime).min}
-                    type="number"/>
-                <InputGroup.Text>Sec:</InputGroup.Text>
+                    type="number"/><span className="mx-1">:</span>
                 <Form.Control name='restTimeSec'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.restTime).sec}
                     type="number"/>
             </InputGroup>
-            <InputGroup className="mb-3">
-                <InputGroup.Text>Round Time</InputGroup.Text>
-                <InputGroup.Text>Min:</InputGroup.Text>
-                <Form.Control name='prepareTimeMin'
+            <InputGroup className="edit-form__group mb-3 align-items-center">
+                <InputGroup.Text className="group-item">Prepare Time</InputGroup.Text>
+                <Form.Control 
+                    name='prepareTimeMin'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.prepareTime).min}
-                    type="number"/>
-                <InputGroup.Text>Sec:</InputGroup.Text>
-                <Form.Control name='prepareTimeSec'
+                    type="number"/><span className="mx-1">:</span>
+                <Form.Control 
+                    name='prepareTimeSec'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.prepareTime).sec}
                     type="number"/>
             </InputGroup>
-            <InputGroup className="mb-3">
-                <InputGroup.Text>Round Time</InputGroup.Text>
-                <InputGroup.Text>Min:</InputGroup.Text>
+            <InputGroup className="edit-form__group mb-3">
+                <InputGroup.Text>Warning Time</InputGroup.Text>
                 <Form.Control name='warningTimeMin'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.warningTime).min}
-                    type="number"/>
-                <InputGroup.Text>Sec:</InputGroup.Text>
+                    type="number"/><span className="mx-1">:</span>
                 <Form.Control name='warningTimeSec'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.warningTime).sec}
