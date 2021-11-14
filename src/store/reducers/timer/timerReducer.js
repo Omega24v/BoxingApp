@@ -9,21 +9,11 @@ import {
     STOP, TOGGLE_ADD_TIMER,
     TOGGLE_EDIT_TIMER
 } from "../../types";
-import {getRandomId} from "../../../utils/getRandomId";
 import {getTotalTime} from "../../../utils/common";
 import {loadData, setData} from "../../../utils/localStorage/localStorage";
+import {defaultTimerModel} from "../../../models/Timer";
 
-const defaultTimer = {
-    id: getRandomId(),
-    name: TIMER_DV.name,
-    rounds: TIMER_DV.rounds,
-    roundTime: TIMER_DV.roundTime,
-    restTime: TIMER_DV.restTime,
-    prepareTime: TIMER_DV.prepareTime,
-    warningTime: TIMER_DV.warningTime,
-    currentRound: TIMER_DV.currentRound
-}
-
+const defaultTimer = defaultTimerModel;
 const persistedState = loadData('data');
 
 const initialState = {
@@ -35,9 +25,9 @@ const initialState = {
     intervalCount: 0,
     intervalId: 0,
     editTimerData: {},
-    phaseTime: persistedState?.timers[0].prepareTime || defaultTimer.prepareTime,
-    fullTime: getTotalTime(persistedState?.timers[0] || defaultTimer),
-    currTimer: persistedState?.timers[0] || defaultTimer,
+    phaseTime: persistedState?.currTimer?.prepareTime || defaultTimer.prepareTime,
+    fullTime: getTotalTime(persistedState?.currTimer || defaultTimer),
+    currTimer: persistedState?.currTimer || defaultTimer,
     timers: persistedState?.timers || [defaultTimer],
 }
 
@@ -57,11 +47,23 @@ export default function timerReducer(state = initialState, action) {
         case ON_CHANGE_EDIT_DATA:
             return {...state, editTimerData: action.payload}
         case SAVE_EDIT_DATA:
-            setData({timers: action.payload.timers}, 'data');
-            return {...state, currTimer: action.payload.timer, timers: action.payload.timers}
+            setData({
+                currTimer: action.payload.timer,
+                timers: action.payload.timers
+            }, 'data');
+            return {
+                ...state,
+                fullTime: getTotalTime(action.payload.timer),
+                currTimer: action.payload.timer,
+                timers: action.payload.timers
+            }
         case SET_DEFAULT_VALUES:
             return {...state, isRunning: false}
         case SET_TIMER:
+            setData({
+                timers: state.timers,
+                currTimer: action.payload
+            }, 'data');
             return {...state, currTimer: action.payload, fullTime: getTotalTime(action.payload)}
         case SET_INTERVAL_COUNT:
             const val = action.payload === 0 ? 0 : state.intervalCount + action.payload;
@@ -90,9 +92,13 @@ export default function timerReducer(state = initialState, action) {
                 intervalId: 0,
             }
         case ADD_TIMER:
-            setData({timers: [...state.timers, action.payload]}, 'data');
+            setData({
+                currTimer: action.payload,
+                timers: [...state.timers, action.payload]
+            }, 'data');
             return {
                 ...state,
+                fullTime: getTotalTime(action.payload),
                 currTimer: action.payload,
                 timers: [...state.timers, action.payload],
                 isAdd: false
