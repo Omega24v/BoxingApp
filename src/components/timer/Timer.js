@@ -123,8 +123,8 @@ const Timer = props => {
                         <span className="timer-small__text">Phase</span>
                     </div>
                     <div className="timer-small">
-                        <span className="timer-small__count text-info">{ msToMAS(props.phaseTime) }</span>
-                        <span className="timer-small__text">Phase Time</span>
+                        <span className="timer-small__count text-info">{ msToMAS(props.currTimer.roundTime) }</span>
+                        <span className="timer-small__text">Round Time</span>
                     </div>
                     <div className="timer-small">
                         <span className="timer-small__count text-success">{ msToMAS(getTotalTime(props.currTimer)) }</span>
