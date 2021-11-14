@@ -17,5 +17,6 @@ export const defaultTimerModel = {
     warningTime: TIMER_DV.warningTime,
     warningTimeSec: TIMER_DV.warningTimeSec,
     warningTimeMin: TIMER_DV.warningTimeMin,
-    currentRound: TIMER_DV.currentRound
+    currentRound: TIMER_DV.currentRound,
+    alerts: TIMER_DV.alerts
 }

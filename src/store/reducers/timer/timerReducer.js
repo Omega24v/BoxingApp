@@ -1,7 +1,7 @@
 import {TIMER_DV} from "../../../constatns/timerDefaultValues";
 import {
     ADD_TIMER, COUNT_PHASE_TIME, ON_CHANGE_EDIT_DATA,
-    PAUSE, RESET_TIMER,
+    PAUSE, RESET_TIMER, RESET_TIMER_ALERTS,
     SAVE_EDIT_DATA, SET_CURRENT_PHASE, SET_CURRENT_ROUND,
     SET_DEFAULT_VALUES, SET_FULL_TIME, SET_INTERVAL_COUNT, SET_INTERVAL_ID, SET_PHASE_TIME,
     SET_TIMER,
@@ -102,6 +102,11 @@ export default function timerReducer(state = initialState, action) {
                 currTimer: action.payload,
                 timers: [...state.timers, action.payload],
                 isAdd: false
+            }
+        case RESET_TIMER_ALERTS:
+            return {
+                ...state,
+                currTimer: {...action.payload, alerts: action.payload.alerts.map(alert => {return {...alert, isActive: false}})}
             }
         default:
             return state;

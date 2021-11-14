@@ -6,7 +6,7 @@ class TimerDV {
         this.isActive = true;
         this.isRunning = false;
         this.rounds = 3;
-        this.roundTime = 3000; // 3 minutes = 180000 ms
+        this.roundTime = 20000; // 3 minutes = 180000 ms
         this.roundTimeSec = getMinAndSecFromMs(this.roundTime).sec;
         this.roundTimeMin = getMinAndSecFromMs(this.roundTime).min;
         this.restTime = 2000; // 1 minutes = 60000 ms
@@ -21,6 +21,18 @@ class TimerDV {
         this.currentTime = 0;
         this.currentRound = 1;
         this.remainingTime = 0;
+        this.alerts = [
+            {
+                time: 5,
+                label: 'Speed stage',
+                isActive: false
+            },
+            {
+                time: 0,
+                label: 'Slow stage',
+                isActive: false
+            }
+        ]
     }
 }
 

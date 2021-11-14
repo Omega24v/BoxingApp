@@ -13,6 +13,7 @@ export const SET_TIMER = 'SET_TIMER';
 
 export const COUNT_PHASE_TIME = 'COUNT_PHASE_TIME';
 export const RESET_TIMER = 'RESET_TIMER';
+export const RESET_TIMER_ALERTS = 'RESET_TIMER_ALERTS';
 
 export const TOGGLE_EDIT_TIMER = 'TOGGLE_EDIT_TIMER';
 export const TOGGLE_ADD_TIMER = 'TOGGLE_ADD_TIMER';

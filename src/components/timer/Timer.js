@@ -13,7 +13,7 @@ import {
     setCurrentPhase,
     setCurrentRound,
     setIntervalId,
-    setFullTime, countPhaseTime
+    setFullTime, countPhaseTime, resetTimerAlerts
 } from "../../store/actions/timerActions";
 import {getPhaseColor, getTotalTime} from "../../utils/common";
 import { Row, Col, Button, ButtonGroup } from 'react-bootstrap';
@@ -34,6 +34,29 @@ const Timer = props => {
 
     useEffect(() => {
 
+        if (props.currTimer.alerts.length > 0) {
+
+            const isCircleFinished = props.currTimer.alerts.filter(alert => {
+                return !alert.isActive
+            });
+
+            if (isCircleFinished.length === 0) {
+                props.resetTimerAlerts(props.currTimer);
+            }
+
+            props.currTimer.alerts.reduce((prevAlert, alert) => {
+                if (props.intervalCount !== 0
+                    && (props.currentPhase === 2 || props.currentPhase === 3)
+                    && !alert.isActive
+                    && alert.time
+                    && (props.intervalCount / 1000) % (alert.time + (prevAlert.time || 0)) === 0) {
+                        alert.isActive = true;
+                        // show alert here
+                }
+                return props.currTimer.alerts.length > 1 ? alert : {};
+            }, {})
+        }
+
         if (props.currentPhase === 1 && props.intervalCount === props.currTimer.prepareTime) {
             props.setIntervalCount(0);
             props.setPhaseTime(props.currTimer.roundTime);
@@ -52,6 +75,7 @@ const Timer = props => {
                 props.setCurrentPhase(4);
             }
         } else if (props.currentPhase === 4 && props.intervalCount === props.currTimer.restTime) {
+            props.resetTimerAlerts(props.currTimer);
             props.setIntervalCount(0);
             props.setPhaseTime(props.currTimer.roundTime);
             props.setCurrentPhase(2);
@@ -200,6 +224,7 @@ function mapDispatchToProps(dispatch) {
         setCurrentPhase: phase => dispatch(setCurrentPhase(phase)),
         setCurrentRound: round => dispatch(setCurrentRound(round)),
         setFullTime: fullTime => dispatch(setFullTime(fullTime)),
+        resetTimerAlerts: currTimer => dispatch(resetTimerAlerts(currTimer)),
     }
 }
 
