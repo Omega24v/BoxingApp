@@ -22,14 +22,14 @@ const TimersList = props => {
                     onClick={() => selectTimer(timer)}
                     key={timer.id}>
                     <Row>
-                        <Col lg={9}>
+                        <Col xs={9}>
                             <div className={`timer-list__item mb-2 ${timer.id === props.currTimer.id ? 'text-danger' : ''}`}>{timer.name}</div>
                             <div className="timer-list__item text-warning">Rounds: {timer.rounds}</div>
                             <div className="timer-list__item text-warning">Rounds Time: { msToMAS((timer.roundTime)) }</div>
                             <div className="timer-list__item text-warning">Rest Time: { msToMAS((timer.restTime)) }</div>
                             <div className="timer-list__item text-warning">Prepare Time: { msToMAS((timer.prepareTime)) }</div>
                         </Col>
-                        <Col lg={3} className="d-flex justify-content-end">
+                        <Col xs={3} className="d-flex justify-content-end">
                             <CloseButton variant="white" />
                         </Col>
                     </Row>
