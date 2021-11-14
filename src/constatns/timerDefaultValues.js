@@ -1,24 +1,30 @@
-export const TIMER_DV = {
-    name: 'Default Timer',
-    isActive: true,
-    isRunning: false,
-    rounds: 3,
-    roundTime: 3000, // 3 minutes = 180000 ms
-    roundTimeSec: 3,
-    roundTimeMin: 0,
-    restTime: 2000, // 1 minutes = 60000 ms
-    restTimeSec: 2,
-    restTimeMin: 0,
-    prepareTime: 1000, // 10 seconds = 10000 ms
-    prepareTimeSec: 1,
-    prepareTimeMin: 0,
-    warningTime: 2000, // 10 seconds = 10000 ms
-    warningTimeSec: 2,
-    warningTimeMin: 0,
-    currentTime: 0,
-    currentRound: 1,
-    remainingTime: 0
+import {getMinAndSecFromMs} from "../utils/timeConverter";
+
+class TimerDV {
+    constructor() {
+        this.name = 'Default Timer';
+        this.isActive = true;
+        this.isRunning = false;
+        this.rounds = 3;
+        this.roundTime = 3000; // 3 minutes = 180000 ms
+        this.roundTimeSec = getMinAndSecFromMs(this.roundTime).sec;
+        this.roundTimeMin = getMinAndSecFromMs(this.roundTime).min;
+        this.restTime = 2000; // 1 minutes = 60000 ms
+        this.restTimeSec = getMinAndSecFromMs(this.restTime).sec;
+        this.restTimeMin = getMinAndSecFromMs(this.restTime).min;
+        this.prepareTime = 1000; // 10 seconds = 10000 ms
+        this.prepareTimeSec = getMinAndSecFromMs(this.prepareTime).sec;
+        this.prepareTimeMin = getMinAndSecFromMs(this.prepareTime).min;
+        this.warningTime = 2000; // 10 seconds = 10000 ms
+        this.warningTimeSec = getMinAndSecFromMs(this.warningTime).sec;
+        this.warningTimeMin = getMinAndSecFromMs(this.warningTime).min;
+        this.currentTime = 0;
+        this.currentRound = 1;
+        this.remainingTime = 0;
+    }
 }
+
+export const TIMER_DV = new TimerDV();
 
 export const PHASES = {
     0: 'Default',
