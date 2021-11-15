@@ -24,13 +24,13 @@ const TimersList = props => {
                     <Row>
                         <Col xs={9}>
                             <div className={`timer-list__item mb-2 ${timer.id === props.currTimer.id ? 'text-danger' : ''}`}>{timer.name}</div>
-                            <div className="timer-list__item text-warning">Rounds: {timer.rounds}</div>
-                            <div className="timer-list__item text-warning">Rounds Time: { msToMAS((timer.roundTime)) }</div>
-                            <div className="timer-list__item text-warning">Rest Time: { msToMAS((timer.restTime)) }</div>
-                            <div className="timer-list__item text-warning">Prepare Time: { msToMAS((timer.prepareTime)) }</div>
+                            <div className="timer-list__item">Rounds: {timer.rounds}</div>
+                            <div className="timer-list__item">Rounds Time: { msToMAS((timer.roundTime)) }</div>
+                            <div className="timer-list__item">Rest Time: { msToMAS((timer.restTime)) }</div>
+                            <div className="timer-list__item">Prepare Time: { msToMAS((timer.prepareTime)) }</div>
                         </Col>
                         <Col xs={3} className="d-flex justify-content-end">
-                            <CloseButton variant="white" />
+                            <CloseButton/>
                         </Col>
                     </Row>
                 </div>
