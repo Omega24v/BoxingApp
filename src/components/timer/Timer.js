@@ -72,6 +72,7 @@ const Timer = props => {
         props.start();
 
         if (props.currentPhase === 0) {
+            props.setPhaseTime(props.currTimer.prepareTime);
             props.setCurrentPhase(1);
         }
 
@@ -102,15 +103,15 @@ const Timer = props => {
                 <Col lg={7}>
                     <div className={'timer-big full-time full-time' + getPhaseColor(props.currentPhase)}>
                         <span className="timer-big__text">
-                            { props.isRunning
-                                ? `${PHASES[props.currentPhase]} time`
-                                : 'Full Time:'
+                            { props.currentPhase === 0
+                                ? 'Full Time:'
+                                : `${PHASES[props.currentPhase]} time`
                             }
                         </span>
                         <span className="timer-big__count">
-                            { props.isRunning
-                            ? msToMAS(props.phaseTime)
-                            : msToMAS(props.fullTime)
+                            { props.currentPhase === 0
+                                ? msToMAS(props.fullTime)
+                                : msToMAS(props.phaseTime)
                             }
                         </span>
                     </div>
