@@ -21,3 +21,5 @@ export const SAVE_EDIT_DATA = 'SAVE_EDIT_DATA';
 export const ADD_TIMER = 'ADD_TIMER';
 
 export const ON_CHANGE_EDIT_DATA = 'ON_CHANGE_EDIT_DATA';
+
+export const TOGGLE_THEME = 'TOGGLE_THEME';
