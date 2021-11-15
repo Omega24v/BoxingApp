@@ -1,8 +1,6 @@
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import TimerEdit from '../timerEdit/TimerEdit';
-import './ModalEdit.sass'
-
 
 const Modals = props => {
   const { timerName, ...rest } = props;
