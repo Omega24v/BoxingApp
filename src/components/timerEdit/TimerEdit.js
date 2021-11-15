@@ -99,13 +99,20 @@ const TimerEdit = props => {
             {
                 props.editTimerData.alerts.map(item => {
                     return item.isShown
-                    ?   <Form.Label key={item.id}>
-                            {item.label} seconds
+                    ? <InputGroup className="edit-form__group mb-3" key={item.id}>
+                            <InputGroup.Text className="rounds">
+                                {
+                                    item.time > 0
+                                    ? <div>{item.label} cyclic round alert after {item.time} seconds:</div>
+                                    : <div>Set {item.label} cyclic round alert: </div>
+                                }
+
+                            </InputGroup.Text>
                             <Form.Control name={item.name}
                                           onChange={setTimerData}
                                           value={item.time}
                                           type="number"/>
-                        </Form.Label>
+                        </InputGroup>
                     : ''
                 })
             }
