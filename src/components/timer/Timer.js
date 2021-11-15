@@ -90,7 +90,7 @@ const Timer = props => {
     return (
         <>
             <Row className="mb-4">
-                <Col lg={12}><h2 className="timer-title m-2">{props.currTimer.name}</h2></Col>
+                <Col lg={12}><h2 className="timer-title mb-2">{props.currTimer.name}</h2></Col>
                 <Col lg={5}>
                     <div className="timer-big current-round">
                         <span className="timer-big__text">Current Round: </span>
