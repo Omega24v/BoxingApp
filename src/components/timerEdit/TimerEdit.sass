@@ -11,7 +11,6 @@
   .form-control,
   .input-group-text
     background-color: transparent
-    color: $light
   .input-group-text
     flex-grow: 3
     flex-basis: 300px
@@ -21,7 +20,6 @@
     flex-grow: 1
     &:focus
       background-color: transparent
-      color: $light
   .edit-form__group
     align-items: center
 
@@ -32,4 +30,39 @@
 
 .input-group-text
   &.rounds
+    flex-basis: 130px
+
+[data-theme="dark"]
+  .edit-form
+    .form-control
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button
+        -webkit-appearance: none
+        margin: 0
+      &[type=number]
+        -moz-appearance: textfield
+    .form-control,
+    .input-group-text
+      background-color: transparent
+      color: $light
+    .input-group-text
+      flex-grow: 3
+      flex-basis: 300px
+      margin-right: 5px
+      border: 0
+    .form-control
+      flex-grow: 1
+      &:focus
+        background-color: transparent
+        color: $light
+    .edit-form__group
+      align-items: center
+
+  .edit-form__group
+    align-items: center
+    .form-control
+      text-align: center
+
+  .input-group-text
+    &.rounds
     flex-basis: 130px
