@@ -21,11 +21,18 @@ const TimerEdit = props => {
         const target = e.target;
         const value = target.type === 'number' ? +target.value : target.value;
         const name = target.name;
+
         editableTimer = {...props.editTimerData, [name]: value};
         editableTimer.roundTime = getMsFromMinAndSec(editableTimer.roundTimeMin, editableTimer.roundTimeSec);
         editableTimer.restTime = getMsFromMinAndSec(editableTimer.restTimeMin, editableTimer.restTimeSec);
         editableTimer.prepareTime = getMsFromMinAndSec(editableTimer.prepareTimeMin, editableTimer.prepareTimeSec);
         editableTimer.warningTime = getMsFromMinAndSec(editableTimer.warningTimeMin, editableTimer.warningTimeSec);
+        editableTimer.alerts = editableTimer.alerts.map(alert => {
+            if (alert.name === name) {
+                alert.time = value;
+            }
+            return alert;
+        })
 
         props.onChangeEditData(editableTimer);
     }
@@ -92,6 +99,20 @@ const TimerEdit = props => {
                               value={getMinAndSecFromMs(props.editTimerData.warningTime).sec}
                               type="number"/>
             </InputGroup>
+
+            {
+                props.editTimerData.alerts.map(item => {
+                    return item.isShown
+                    ?   <Form.Label key={item.id}>
+                            {item.label} seconds
+                            <Form.Control name={item.name}
+                                          onChange={setTimerData}
+                                          value={item.time}
+                                          type="number"/>
+                        </Form.Label>
+                    : ''
+                })
+            }
 
             <ButtonGroup className="d-flex mt-2">
                 <Button variant="success" className="me-2" onClick={saveFormData}>
