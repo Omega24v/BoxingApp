@@ -7,6 +7,21 @@
   background-color: $black
   color: $light
 
+.modal-header .btn-close
+  margin: 0
+  background-color: $light
+  opacity: 1
+
 // Dark Theme
 [data-theme="dark"]
   background-color: $black
+  .modal-header,
+  .modal-content,
+  .modal-footer
+    border-color: $dark
+  .modal-content
+    background-color: $dark
+    color: $light
+
+  .edit-form__group 
+    .input-group-text

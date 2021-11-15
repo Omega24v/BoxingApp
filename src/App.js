@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <Container>
         <Row className="justify-content-center">
-          <Col lg={10} className="timer mt-3 py-3">
+          <Col lg={10} className="timer my-3 py-3">
             <Timer/>
           </Col>
         </Row>
