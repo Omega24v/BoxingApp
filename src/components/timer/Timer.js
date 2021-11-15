@@ -37,7 +37,7 @@ const Timer = props => {
         if (props.currTimer.alerts.length > 0) {
 
             const isCircleFinished = props.currTimer.alerts.filter(alert => {
-                return alert.time !== 0 && !alert.isActive
+                return alert.time !== 0 && !alert.isActivated
             });
 
             if (isCircleFinished.length === 0) {
@@ -47,11 +47,12 @@ const Timer = props => {
             props.currTimer.alerts.reduce((prevAlertTime, alert) => {
                 if (props.intervalCount !== 0
                     && (props.currentPhase === 2 || props.currentPhase === 3)
-                    && !alert.isActive
+                    && !alert.isActivated
                     && alert.time !== 0
                     && (props.intervalCount / 1000) % (alert.time + (prevAlertTime || 0)) === 0) {
-                        alert.isActive = true;
+                        alert.isActivated = true;
                         // show alert here
+                    console.log(props.intervalCount)
                 }
                 return props.currTimer.alerts.length > 1 ? alert.time + prevAlertTime : 0;
             }, 0)

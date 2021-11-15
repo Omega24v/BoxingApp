@@ -27,7 +27,7 @@ class TimerDV {
                 time: 10,
                 name: 'alert1',
                 label: 'First inner round alert',
-                isActive: false,
+                isActivated: false,
                 isShown: true
             },
             {
@@ -35,7 +35,7 @@ class TimerDV {
                 time: 20,
                 name: 'alert2',
                 label: 'First inner round alert',
-                isActive: false,
+                isActivated: false,
                 isShown: true
             },
             {
@@ -43,7 +43,7 @@ class TimerDV {
                 time: 30,
                 name: 'alert3',
                 label: 'First inner round alert',
-                isActive: false,
+                isActivated: false,
                 isShown: true
             }
         ]

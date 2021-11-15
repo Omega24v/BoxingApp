@@ -106,7 +106,7 @@ export default function timerReducer(state = initialState, action) {
         case RESET_TIMER_ALERTS:
             return {
                 ...state,
-                currTimer: {...action.payload, alerts: action.payload.alerts.map(alert => {return {...alert, isActive: false}})}
+                currTimer: {...action.payload, alerts: action.payload.alerts.map(alert => {return {...alert, isActivated: false}})}
             }
         default:
             return state;
