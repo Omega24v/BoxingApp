@@ -1,9 +1,16 @@
 @import "~bootstrap/scss/bootstrap-utilities"
 
+html,
+body,
+#root
+  height: 100%
+
 .App
   display: flex
   justify-content: center
   align-items: center
+  height: 100%
+  background-color: $gray-300
   color: $light
 
 .modal-header .btn-close
@@ -14,6 +21,52 @@
 // Dark Theme
 [data-theme="dark"]
   background-color: $black
+
+  .App
+    background-color: $black
+
+  .timer
+    background-color: $dark
+    color: $light
+    &-title
+      font-weight: bold
+
+  .timer-big
+    background-color: $light
+    &__text
+      color: $red
+    &__count
+      color: $black
+
+  .full-time
+    background-color: $red
+    &__rest
+      background-color: $blue
+    &__prepare
+      background-color: $yellow
+    &__round
+      background-color: $green
+    &__warning
+      background-color: darken($orange, 10%)
+    &__default
+      background-color: $red
+    .timer-big__text
+      color: $light
+    .timer-big__count
+      color: $light
+
+  .timer-small
+    background-color: $gray-800
+    &__text
+      color: $light
+    &__count
+      color: $black
+
+  .timer-list
+    background-color: $gray-800
+    &__item
+      color: $warning
+
   .modal-header,
   .modal-content,
   .modal-footer
@@ -21,3 +74,13 @@
   .modal-content
     background-color: $dark
     color: $light
+
+  .edit-form
+    .input-group-text
+      background-color: transparent
+      color: $light
+    .form-control
+      color: $light
+      &:focus
+        background-color: transparent
+        color: $light
