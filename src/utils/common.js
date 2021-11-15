@@ -8,7 +8,7 @@ export const getTotalTime = currTimer => {
 export const getPhaseColor = phase => {
     switch (phase) {
         case 1:
-            return '__warning'
+            return '__prepare'
         case 2:
             return '__round'
         case 3:
