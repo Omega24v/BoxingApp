@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {loadData, setData} from "../../utils/localStorage/localStorage";
 import {THEME_DARK, THEME_LIGHT} from "../../constatns/theme";
-import './ToggleTheme.sass'
+import './ToggleTheme.sass';
 
 const ToggleTheme = () => {
     const [currTheme, setCurrTheme] = useState(THEME_DARK);
