@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {Form} from "react-bootstrap";
 import {loadData, setData} from "../../utils/localStorage/localStorage";
 import {THEME_DARK, THEME_LIGHT} from "../../constatns/theme";
 import './ToggleTheme.sass'
