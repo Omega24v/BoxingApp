@@ -14,7 +14,7 @@ function App() {
           </Col>
         </Row>
         <Row className="justify-content-center">
-          <Col lg={12} className="timer my-3 p-4">
+          <Col lg={12} className="timer my-3 p-3">
             <Timer/>
           </Col>
         </Row>

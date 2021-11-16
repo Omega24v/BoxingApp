@@ -81,3 +81,14 @@ body
       &:focus
         background-color: transparent
         color: $light
+
+  .ico
+    fill: $light
+    &:hover
+      fill: #DC3545
+
+body:not([data-theme="dark"])
+  .ico
+    fill: $dark
+    &:hover
+      fill: #DC3545
