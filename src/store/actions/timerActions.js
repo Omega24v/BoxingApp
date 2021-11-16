@@ -6,7 +6,7 @@ import {
     SET_TIMER,
     START,
     STOP, TOGGLE_ADD_TIMER,
-    TOGGLE_EDIT_TIMER
+    TOGGLE_EDIT_TIMER, TOGGLE_SOUND
 } from "../types";
 
 export const startTimer = () => {
@@ -50,6 +50,12 @@ export const toggleEditTimer = () => {
 export const toggleAddTimer = () => {
     return {
         type: TOGGLE_ADD_TIMER
+    }
+}
+
+export const toggleSound = () => {
+    return {
+        type: TOGGLE_SOUND
     }
 }
 
@@ -107,10 +113,9 @@ export const setCurrentPhase = data => {
     }
 }
 
-export const setCurrentRound = data => {
+export const setCurrentRound = () => {
     return {
         type: SET_CURRENT_ROUND,
-        payload: data
     }
 }
 

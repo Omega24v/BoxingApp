@@ -22,9 +22,22 @@ import {msToMAS} from "../../utils/timeConverter";
 import ModalEdit from '../modal/ModalEdit';
 import TimersList from '../timersList/TimersList';
 import './Timer.sass';
+import useSound from 'use-sound';
+import bell1x from '../../sounds/bell-1x.mp3';
+import bell3x from '../../sounds/bell-3x.mp3';
+import warning from '../../sounds/warning.mp3';
 
 
 const Timer = props => {
+
+    const [playBell1x] = useSound(bell1x);
+    const [playBell3x] = useSound(bell3x);
+    const [playWarning] = useSound(warning);
+
+    const playSound = cb => {
+        if (!cb) {return}
+        return props.isSound ? cb() : null;
+    }
 
     const stopResetAndTimer = () => {
         props.stop();
@@ -37,11 +50,12 @@ const Timer = props => {
         if (props.currentPhase === 1 && props.intervalCount === props.currTimer.prepareTime) {
             props.setIntervalCount(0);
             props.setPhaseTime(props.currTimer.roundTime);
+            playSound(playBell1x);
             props.setCurrentPhase(2);
         } else if (props.currentPhase === 2 && props.intervalCount === props.currTimer.roundTime - props.currTimer.warningTime) {
             props.setCurrentPhase(3);
+            playSound(playWarning);
         } else if (props.currentPhase === 3 && props.intervalCount === props.currTimer.roundTime) {
-
             if (props.currentRound === props.currTimer.rounds) {
                 setTimeout(() => {
                     stopResetAndTimer();
@@ -50,12 +64,14 @@ const Timer = props => {
                 props.setIntervalCount(0);
                 props.setPhaseTime(props.currTimer.restTime);
                 props.setCurrentPhase(4);
+                playSound(playBell3x);
             }
         } else if (props.currentPhase === 4 && props.intervalCount === props.currTimer.restTime) {
             props.setIntervalCount(0);
             props.setPhaseTime(props.currTimer.roundTime);
             props.setCurrentPhase(2);
             props.setCurrentRound();
+            playSound(playBell1x);
         }
 
     }, [props.intervalCount]);
@@ -175,6 +191,7 @@ function mapStateToProps(state) {
     return {
         isEdit: state.timerReducer.isEdit,
         isRunning: state.timerReducer.isRunning,
+        isSound: state.timerReducer.isSound,
         currTimer: state.timerReducer.currTimer,
         currentRound: state.timerReducer.currentRound,
         currentPhase: state.timerReducer.currentPhase,
@@ -199,7 +216,7 @@ function mapDispatchToProps(dispatch) {
         setPhaseTime: time => dispatch(setPhaseTime(time)),
         countPhaseTime: time => dispatch(countPhaseTime(time)),
         setCurrentPhase: phase => dispatch(setCurrentPhase(phase)),
-        setCurrentRound: round => dispatch(setCurrentRound(round)),
+        setCurrentRound: () => dispatch(setCurrentRound()),
         setFullTime: fullTime => dispatch(setFullTime(fullTime)),
     }
 }
