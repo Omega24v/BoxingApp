@@ -105,6 +105,7 @@ export default function timerReducer(state = initialState, action) {
                 isAdd: false
             }
         case TOGGLE_SOUND:
+            setData(!state.isSound, 'isSound');
             return {...state, isSound: !state.isSound}
         default:
             return state;
