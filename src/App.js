@@ -8,9 +8,13 @@ function App() {
   return (
     <div className="App">
       <Container>
+        <Row className="mt-2">
+          <Col lg={12}>
+            <ToggleTheme/>
+          </Col>
+        </Row>
         <Row className="justify-content-center">
-          <ToggleTheme/>
-          <Col lg={10} className="timer my-3 p-4">
+          <Col lg={12} className="timer my-3 p-4">
             <Timer/>
           </Col>
         </Row>
