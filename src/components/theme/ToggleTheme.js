@@ -13,7 +13,6 @@ const ToggleTheme = () => {
     }
 
     const switchChecked = (currTheme) => {
-        console.log(currTheme)
         const switchBtn = document.querySelector("#custom-switch");
         currTheme === "dark" ? switchBtn.checked = true : switchBtn.checked = false
     }
@@ -37,8 +36,8 @@ const ToggleTheme = () => {
 
     return (
         <div className="theme-switch">
-            <input type="checkbox" id="custom-switch" name="theme-switch" class="theme-switch__input" onChange={() => toggleTheme()}/>
-            <label for="custom-switch" class="theme-switch__label" label={currTheme}>
+            <input type="checkbox" id="custom-switch" name="theme-switch" className="theme-switch__input" onChange={() => toggleTheme()}/>
+            <label htmlFor="custom-switch" className="theme-switch__label" label={currTheme}>
                 <span></span>
             </label>
         </div>

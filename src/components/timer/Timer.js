@@ -85,8 +85,6 @@ const Timer = props => {
         props.setIntervalId(newIntervalId);
     }
 
-    console.log(props);
-
     return (
         <>
             <Row className="mb-4">
