@@ -1,8 +1,10 @@
 import React from 'react';
-import { CloseButton, Col, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import {connect} from "react-redux";
 import {addTimer, resetTimer, setTimer, startTimer, stopTimer} from "../../store/actions/timerActions";
 import {msToMAS} from "../../utils/timeConverter";
+import IconClose from '../icons/IconClose';
+import IconEdit from '../icons/IconEdit';
 import './TimersList.sass';
 
 const TimersList = props => {
@@ -29,8 +31,9 @@ const TimersList = props => {
                             <div className="timer-list__item">Rest Time: { msToMAS((timer.restTime)) }</div>
                             <div className="timer-list__item">Prepare Time: { msToMAS((timer.prepareTime)) }</div>
                         </Col>
-                        <Col xs={3} className="d-flex justify-content-end">
-                            <CloseButton/>
+                        <Col xs={3} className="d-flex flex-column align-items-end">
+                            <IconEdit className="mb-2"/>
+                            <IconClose/>
                         </Col>
                     </Row>
                 </div>
