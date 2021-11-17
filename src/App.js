@@ -10,10 +10,10 @@ function App() {
     <div className="App">
       <Container>
         <Row className="mt-2">
-          <Col lg={12}>
+          <Col lg={12} className="d-flex justify-content-between">
             <ToggleTheme/>
+            <SoundSwitcher/>
           </Col>
-        <SoundSwitcher/>
         </Row>
         <div className="justify-content-center">
           <Col lg={12} className="timer my-3 p-3">
