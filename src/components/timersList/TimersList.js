@@ -17,19 +17,19 @@ const TimersList = props => {
     }
 
     return (
-        <div className="d-flex flex-wrap gap-3">
+        <div className="d-flex flex-wrap flex-grow-1 gap-3">
             {props.timers.map((timer) =>
                 <div 
-                    className="timer-list flex-grow-1 p-2"
+                    className={`timer-list flex-grow-1 p-2 ${timer.id === props.currTimer.id ? 'active text-danger' : ''}`}
                     onClick={() => selectTimer(timer)}
                     key={timer.id}>
                     <Row>
                         <Col xs={9}>
-                            <div className={`timer-list__item mb-2 ${timer.id === props.currTimer.id ? 'text-danger' : ''}`}>{timer.name}</div>
+                            <div className="timer-list__item item-title mb-2">{timer.name}</div>
                             <div className="timer-list__item">Rounds: {timer.rounds}</div>
-                            <div className="timer-list__item">Rounds Time: { msToMAS((timer.roundTime)) }</div>
-                            <div className="timer-list__item">Rest Time: { msToMAS((timer.restTime)) }</div>
-                            <div className="timer-list__item">Prepare Time: { msToMAS((timer.prepareTime)) }</div>
+                            <div className="timer-list__item text-info">Round Time: { msToMAS((timer.roundTime)) }</div>
+                            <div className="timer-list__item text-primary">Rest Time: { msToMAS((timer.restTime)) }</div>
+                            <div className="timer-list__item text-warning">Prepare Time: { msToMAS((timer.prepareTime)) }</div>
                         </Col>
                         <Col xs={3} className="d-flex flex-column align-items-end">
                             <IconEdit className="mb-2"/>

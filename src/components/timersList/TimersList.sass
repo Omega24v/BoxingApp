@@ -1,4 +1,13 @@
 .timer-list
-  flex-basis: 240px
-  border: 1px solid #777
+  flex-basis: 230px
+  border: 2px solid #777
   cursor: pointer
+  font-weight: bold
+  text-transform: uppercase
+  text-shadow: 0 1px 1px #000
+  transition: border-color .3s ease
+  &.active
+    border-color: #DC3545
+    .item-title
+      color: #DC3545
+      transition: color .3s ease
