@@ -3,8 +3,8 @@ import { Col, Row } from 'react-bootstrap';
 import {connect} from "react-redux";
 import {addTimer, resetTimer, setTimer, startTimer, stopTimer} from "../../store/actions/timerActions";
 import {msToMAS} from "../../utils/timeConverter";
-import IconClose from '../icons/IconClose';
-import IconEdit from '../icons/IconEdit';
+import IconClose from '../../icons/IconClose';
+import IconEdit from '../../icons/IconEdit';
 import './TimersList.sass';
 
 const TimersList = props => {

@@ -19,7 +19,7 @@ import {getPhaseColor} from "../../utils/common";
 import { Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 import { PHASES } from "../../constatns/timerDefaultValues";
 import {msToMAS} from "../../utils/timeConverter";
-import ModalEdit from '../modal/ModalEdit';
+import ModalEdit from '../modals/ModalEdit';
 import TimersList from '../timersList/TimersList';
 import './Timer.sass';
 import useSound from 'use-sound';
