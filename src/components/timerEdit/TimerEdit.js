@@ -3,8 +3,9 @@ import {ButtonGroup, Button, Form, InputGroup} from 'react-bootstrap';
 import {connect} from "react-redux";
 import {addTimer, startTimer, saveEditData, onChangeEditData, toggleEditTimer} from "../../store/actions/timerActions";
 import {getRandomId} from "../../utils/getRandomId";
-import {getMinAndSecFromMs, getMsFromMinAndSec} from "../../utils/timeConverter";
+import {getMinAndSecFromMs, getMsFromMinAndSec, msToMAS} from "../../utils/timeConverter";
 import './TimerEdit.sass'
+import {getTotalTime} from "../../utils/common";
 
 const TimerEdit = props => {
 
@@ -27,6 +28,7 @@ const TimerEdit = props => {
         editableTimer.restTime = getMsFromMinAndSec(editableTimer.restTimeMin, editableTimer.restTimeSec);
         editableTimer.prepareTime = getMsFromMinAndSec(editableTimer.prepareTimeMin, editableTimer.prepareTimeSec);
         editableTimer.warningTime = getMsFromMinAndSec(editableTimer.warningTimeMin, editableTimer.warningTimeSec);
+        editableTimer.fullTime = getTotalTime(editableTimer);
 
         props.onChangeEditData(editableTimer);
     }
@@ -40,29 +42,33 @@ const TimerEdit = props => {
 
             <InputGroup className="edit-form__group my-3">
                 <InputGroup.Text className="rounds">Rounds:</InputGroup.Text>
-                <Form.Control name='rounds' onChange={setTimerData} value={props.editTimerData.rounds} type="number"/>
+                <Form.Control name='rounds'
+                              onChange={setTimerData}
+                              value={props.editTimerData.rounds}
+                              type="number"
+                              min="0"/>
             </InputGroup>
             <InputGroup className="edit-form__group mb-3">
                 <InputGroup.Text>Round Time</InputGroup.Text>
                 <Form.Control name='roundTimeMin'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.roundTime).min}
-                    type="number"/><span className="mx-1">:</span>
+                    type="number" min="0"/><span className="mx-1">:</span>
                 <Form.Control name='roundTimeSec'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.roundTime).sec}
-                    type="number"/>
+                    type="number" min="0"/>
             </InputGroup>
             <InputGroup className="edit-form__group mb-3">
                 <InputGroup.Text className="group-item">Rest Time</InputGroup.Text>
                 <Form.Control name='restTimeMin'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.restTime).min}
-                    type="number"/><span className="mx-1">:</span>
+                    type="number" min="0"/><span className="mx-1">:</span>
                 <Form.Control name='restTimeSec'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.restTime).sec}
-                    type="number"/>
+                    type="number" min="0"/>
             </InputGroup>
             <InputGroup className="edit-form__group mb-3">
                 <InputGroup.Text className="group-item">Prepare Time</InputGroup.Text>
@@ -70,24 +76,26 @@ const TimerEdit = props => {
                     name='prepareTimeMin'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.prepareTime).min}
-                    type="number"/><span className="mx-1">:</span>
+                    type="number" min="0"/><span className="mx-1">:</span>
                 <Form.Control 
                     name='prepareTimeSec'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.prepareTime).sec}
-                    type="number"/>
+                    type="number" min="0"/>
             </InputGroup>
             <InputGroup className="edit-form__group mb-3">
                 <InputGroup.Text>Warning Time</InputGroup.Text>
                 <Form.Control name='warningTimeMin'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.warningTime).min}
-                    type="number"/><span className="mx-1">:</span>
+                    type="number" min="0"/><span className="mx-1">:</span>
                 <Form.Control name='warningTimeSec'
                     onChange={setTimerData}
                     value={getMinAndSecFromMs(props.editTimerData.warningTime).sec}
-                    type="number"/>
+                    type="number" min="0"/>
             </InputGroup>
+
+            <div>Total time: {msToMAS(props.editTimerData.fullTime)}</div>
 
             <ButtonGroup className="d-flex mt-2">
                 <Button variant="success" className="me-2" onClick={saveFormData}>
@@ -111,6 +119,7 @@ function mapStateToProps(state) {
         timers: state.timerReducer.timers,
         isEdit: state.timerReducer.isEdit,
         editTimerData: state.timerReducer.editTimerData,
+        fullTime: state.timerReducer.fullTime,
     }
 }
 

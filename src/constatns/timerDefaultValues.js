@@ -1,4 +1,5 @@
 import {getMinAndSecFromMs} from "../utils/timeConverter";
+import {getTotalTime} from "../utils/common";
 
 class TimerDV {
     constructor() {
@@ -21,6 +22,12 @@ class TimerDV {
         this.currentTime = 0;
         this.currentRound = 1;
         this.remainingTime = 0;
+        this.fullTime = getTotalTime({
+            roundTime: this.roundTime,
+            restTime: this.restTime,
+            rounds: this.rounds,
+            prepareTime: this.prepareTime,
+        })
     }
 }
 
