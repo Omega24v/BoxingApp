@@ -1,18 +1,18 @@
-.theme-switch
+.switch
 	position: relative
 	width: 70px
 	height: 25px
 
-.theme-switch__input:checked ~ main,
-.theme-switch__input:checked ~ label 
+.switch__input:checked ~ main,
+.switch__input:checked ~ label 
 	--text: white 
-.theme-switch__input 
+.switch__input 
 	opacity: 0 
 	&:checked 
 		& ~ main 
 			--gradDark: hsl(198, 44%, 11%) 
 			--gradLight: hsl(198, 39%, 29%) 
-		& ~ .theme-switch__label 
+		& ~ .switch__label 
 			background-color: lightSlateGray 
 			&::before 
 				color: lightSlateGray 
@@ -22,25 +22,21 @@
 				&::after 
 					transform: translate3d(43px, 0, 0)
 
-.theme-switch__input,
-.theme-switch__label 
+.switch__input,
+.switch__label 
 	position: absolute 
 	z-index: 1 
 
-.theme-switch__input:hover 
-	+ .theme-switch__label, 
-	.theme-switch__input:focus 
-	+ .theme-switch__label 
+.switch__input:hover
+	+ .switch__label 
 		background-color: lightSlateGray
 
-.theme-switch__input:hover 
-	+ .theme-switch__label span::after, 
-	.theme-switch__input:focus 
-	+ .theme-switch__label span::after 
+.switch__input:hover
+	+ .switch__label span::after 
 		background-color: #d4ebf2 
 
-.theme-switch__label 
-	transition: background-color 200ms ease-in-out
+.switch__label 
+	transition: background-color 200ms ease-in-out 
 	width: 70px
 	height: 25px
 	border-radius: 50px 
@@ -49,14 +45,13 @@
 	box-shadow: -4px 4px 15px inset rgba(0, 0, 0, .4) 
 	cursor: pointer
 	&::before 
-		content: "☼" 
-		right: 100% 
-		margin-right: 10px 
+		right: 100%
+		margin-right: 5px 
 		color: orange 
+		opacity: .5
 	&::after 
-		content: "☾" 
-		left: 100% 
-		margin-left: 10px 
+		left: 100%
+		margin-left: 5px 
 		color: lightSlateGray 
 	span 
 		position: absolute 
@@ -64,9 +59,9 @@
 		left: 0 
 		width: 100% 
 		&::after 
-			position: absolute
+			position: absolute 
 			top: calc(100% + 13px)
-			left: 3px
+			left: 3px 
 			width: 20px
 			height: 20px
 			content: "" 
@@ -75,9 +70,22 @@
 			transition: transform 200ms, background-color 200ms 
 			box-shadow: -3px 3px 8px rgba(0, 0, 0, .4) 
 
-.theme-switch__label::before, 
-.theme-switch__label::after 
+.switch__label::before, 
+.switch__label::after 
 	font-size: 1.5rem 
 	position: absolute 
 	transform: translate3d(0, -50%, 0) 
-	top: 50% 
+	top: 50%
+
+.sound-switcher
+	.switch__label
+		&::before
+			content: "\01F509"
+		&::after
+			content: "\01F50A"
+.theme-switcher
+	.switch__label
+		&::before
+			content: "☼"
+		&::after
+			content: "☾"

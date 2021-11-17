@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {loadData, setData} from "../../utils/localStorage/localStorage";
 import {THEME_DARK, THEME_LIGHT} from "../../constatns/theme";
-import './ToggleTheme.sass';
+import Switcher from "../UI/switcher/Switcher";
+import "../UI/switcher/Switcher.sass";
 
 const ToggleTheme = () => {
     const [currTheme, setCurrTheme] = useState(THEME_DARK);
@@ -25,19 +26,10 @@ const ToggleTheme = () => {
     }, []);
 
     return (
-        <div className="theme-switch ms-4">
-            <input type="checkbox"
-                   id="custom-switch"
-                   name="theme-switch"
-                   checked={currTheme === THEME_DARK}
-                   className="theme-switch__input"
-                   onChange={() => toggleTheme()}/>
-            <label htmlFor="custom-switch"
-                   className="theme-switch__label"
-                   label={currTheme}>
-                <span></span>
-            </label>
-        </div>
+        <Switcher isChecked={currTheme === THEME_DARK}
+                  toggle={toggleTheme}
+                  type="theme-switcher"
+        />
     );
 };
 
