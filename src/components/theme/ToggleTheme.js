@@ -25,22 +25,16 @@ const ToggleTheme = () => {
     }, []);
 
     return (
-<<<<<<< HEAD
         <div className="theme-switch ms-5">
-            <input type="checkbox" id="custom-switch" name="theme-switch" className="theme-switch__input" onChange={() => toggleTheme()}/>
-            <label htmlFor="custom-switch" className="theme-switch__label" label={currTheme}>
-=======
-        <div className="theme-switch ms-4">
             <input type="checkbox"
-                   id="custom-switch"
-                   name="theme-switch"
-                   checked={currTheme === THEME_DARK}
-                   className="theme-switch__input"
-                   onChange={() => toggleTheme()}/>
+                id="custom-switch"
+                name="theme-switch"
+                checked={currTheme === THEME_DARK}
+                className="theme-switch__input"
+                onChange={() => toggleTheme()}/>
             <label htmlFor="custom-switch"
-                   className="theme-switch__label"
-                   label={currTheme}>
->>>>>>> 33c3dd42d3a832827b864b588963de60f3557ca0
+                className="theme-switch__label"
+                label={currTheme}>
                 <span></span>
             </label>
         </div>
