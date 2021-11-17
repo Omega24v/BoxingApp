@@ -15,7 +15,7 @@ import {
     setIntervalId,
     setFullTime, countPhaseTime
 } from "../../store/actions/timerActions";
-import {getPhaseColor, getTotalTime} from "../../utils/common";
+import {getPhaseColor} from "../../utils/common";
 import { Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 import { PHASES } from "../../constatns/timerDefaultValues";
 import {msToMAS} from "../../utils/timeConverter";
@@ -26,6 +26,7 @@ import useSound from 'use-sound';
 import bell1x from '../../sounds/bell-1x.mp3';
 import bell3x from '../../sounds/bell-3x.mp3';
 import warning from '../../sounds/warning.mp3';
+import TimerInfo from "../timerInfo/TimerInfo";
 
 
 const Timer = props => {
@@ -152,26 +153,11 @@ const Timer = props => {
             </Row>
             <Row className="mb-4">
                 <Col className="d-flex justify-content-between">
-                    <div className="timer-small">
-                        <span className="timer-small__count text-danger">{ PHASES[props.currentPhase] }</span>
-                        <span className="timer-small__text">Phase</span>
-                    </div>
-                    <div className="timer-small">
-                        <span className="timer-small__count text-success">{ msToMAS(getTotalTime(props.currTimer)) }</span>
-                        <span className="timer-small__text">Total time</span>
-                    </div>
-                    <div className="timer-small">
-                        <span className="timer-small__count text-info">{ msToMAS(props.currTimer.roundTime) }</span>
-                        <span className="timer-small__text">Round Time</span>
-                    </div>
-                    <div className="timer-small">
-                        <span className="timer-small__count text-primary">{ msToMAS(props.currTimer.restTime) }</span>
-                        <span className="timer-small__text">Rest time</span>
-                    </div>
-                    <div className="timer-small">
-                        <span className="timer-small__count text-warning">{ msToMAS(props.currTimer.prepareTime) }</span>
-                        <span className="timer-small__text">Prepare time</span>
-                    </div>
+                    <TimerInfo type='danger' label='Phase' val={PHASES[props.currentPhase]}/>
+                    <TimerInfo type='success' label='Total time' val={props.currTimer}/>
+                    <TimerInfo type='info' label='Round Time' val={props.currTimer.roundTime}/>
+                    <TimerInfo type='primary' label='Rest time' val={props.currTimer.restTime}/>
+                    <TimerInfo type='warning' label='Prepare time' val={props.currTimer.prepareTime}/>
                 </Col>
             </Row>
             <Row className="mb-4">
