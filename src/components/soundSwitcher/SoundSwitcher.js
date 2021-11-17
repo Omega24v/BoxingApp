@@ -15,7 +15,7 @@ const SoundSwitcher = props => {
 
     return (
         <>
-            <div className="sound-switch me-4">
+            <div className="sound-switch me-5">
                 <input 
                 type="checkbox" 
                 id="sd-switch" 

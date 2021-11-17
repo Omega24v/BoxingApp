@@ -31,7 +31,7 @@ const ToggleTheme = () => {
     }, []);
 
     return (
-        <div className="theme-switch ms-4">
+        <div className="theme-switch ms-5">
             <input type="checkbox" id="custom-switch" name="theme-switch" className="theme-switch__input" onChange={() => toggleTheme()}/>
             <label htmlFor="custom-switch" className="theme-switch__label" label={currTheme}>
                 <span></span>
