@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import { Form } from 'react-bootstrap';
 import {connect} from "react-redux";
 import {toggleSound} from "../../store/actions/timerActions";
 import {loadData} from "../../utils/localStorage/localStorage";
@@ -18,14 +17,14 @@ const SoundSwitcher = props => {
         <>
             <div className="sound-switch me-4">
                 <input 
-                    type="checkbox" 
-                    id="sd-switch" 
-                    name="sound-switch" 
-                    className="sound-switch__input" 
-                    onChange={() => props.toggleSound()}
-                    checked={props.isSound}
-                    />
-                <label htmlFor="sd-switch" className="sound-switch__label" label={props.isSound ? 'Sound on' : 'Sound off' }>
+                type="checkbox" 
+                id="sd-switch" 
+                name="sound-switch" 
+                className="sound-switch__input" 
+                onChange={() => props.toggleSound()}
+                checked={props.isSound}
+                />
+                <label htmlFor="sd-switch" className="sound-switch__label">
                     <span></span>
                 </label>
             </div>
