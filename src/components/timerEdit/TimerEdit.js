@@ -36,17 +36,17 @@ const TimerEdit = props => {
     return (
         <Form className="edit-form d-flex flex-column">
             <Form.Label>
-                Timer Name:
+                <div className="mb-2">Timer Name:</div>
                 <Form.Control name='name' onChange={setTimerData} value={props.editTimerData.name} type="text"/>
             </Form.Label>
 
             <InputGroup className="edit-form__group my-3">
                 <InputGroup.Text className="rounds">Rounds:</InputGroup.Text>
                 <Form.Control name='rounds'
-                              onChange={setTimerData}
-                              value={props.editTimerData.rounds}
-                              type="number"
-                              min="0"/>
+                    onChange={setTimerData}
+                    value={props.editTimerData.rounds}
+                    type="number"
+                    min="0"/>
             </InputGroup>
             <InputGroup className="edit-form__group mb-3">
                 <InputGroup.Text>Round Time</InputGroup.Text>
@@ -95,7 +95,7 @@ const TimerEdit = props => {
                     type="number" min="0"/>
             </InputGroup>
 
-            <div>Total time: {msToMAS(props.editTimerData.fullTime)}</div>
+            <div className="edit-form__total text-center my-2">Total time: {msToMAS(props.editTimerData.fullTime)}</div>
 
             <ButtonGroup className="d-flex mt-2">
                 <Button variant="success" className="me-2" onClick={saveFormData}>
