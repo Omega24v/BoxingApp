@@ -1,7 +1,7 @@
 .sound-switch
 	position: relative
-	width: 100px
-	height: 35px
+	width: 70px
+	height: 25px
 
 .sound-switch__input:checked ~ main,
 .sound-switch__input:checked ~ label 
@@ -20,7 +20,7 @@
 				color: turquoise 
 			span 
 				&::after 
-					transform: translate3d(70px, 0, 0) 
+					transform: translate3d(43px, 0, 0)
 
 .sound-switch__input,
 .sound-switch__label 
@@ -41,15 +41,15 @@
 
 .sound-switch__label 
 	transition: background-color 200ms ease-in-out 
-	width: 100px 
-	height: 35px 
+	width: 70px
+	height: 25px
 	border-radius: 50px 
 	text-align: center 
 	background-color: slateGray 
 	box-shadow: -4px 4px 15px inset rgba(0, 0, 0, .4) 
 	cursor: pointer
 	&::before 
-		content: "\01F509" 
+		content: "\01F509"
 		right: 100% 
 		margin-right: 5px 
 		color: orange 
@@ -61,15 +61,15 @@
 		color: lightSlateGray 
 	span 
 		position: absolute 
-		bottom: calc(100% + 10px) 
+		bottom: calc(100% + 11px)
 		left: 0 
 		width: 100% 
 		&::after 
 			position: absolute 
-			top: calc(100% + 15px) 
+			top: calc(100% + 13px)
 			left: 3px 
-			width: 25px 
-			height: 25px 
+			width: 20px
+			height: 20px
 			content: "" 
 			border-radius: 50% 
 			background-color: lightBlue 

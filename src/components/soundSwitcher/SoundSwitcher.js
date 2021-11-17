@@ -8,7 +8,7 @@ const SoundSwitcher = props => {
 
     useEffect(() => {
         const isSound = loadData('isSound');
-        if (isSound !== props.isSound) {
+        if (isSound !== undefined && isSound !== props.isSound) {
             props.toggleSound();
         }
     }, []);

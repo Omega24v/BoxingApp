@@ -11,11 +11,6 @@ const ToggleTheme = () => {
         body.setAttribute("data-theme", theme);
     }
 
-    const switchChecked = (currTheme) => {
-        const switchBtn = document.querySelector("#custom-switch");
-        currTheme === "dark" ? switchBtn.checked = true : switchBtn.checked = false
-    }
-
     const toggleTheme = () => {
         const theme = currTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK;
         setCurrTheme(theme);
@@ -24,16 +19,28 @@ const ToggleTheme = () => {
     }
 
     useEffect(() => {
-        const currTheme = loadData('theme');
-        setCurrTheme(currTheme || THEME_DARK);
-        setThemeToBody(currTheme || THEME_DARK);
-        switchChecked(currTheme);
+        const theme = loadData('theme');
+        setCurrTheme(theme || THEME_DARK);
+        setThemeToBody(theme || THEME_DARK);
     }, []);
 
     return (
+<<<<<<< HEAD
         <div className="theme-switch ms-5">
             <input type="checkbox" id="custom-switch" name="theme-switch" className="theme-switch__input" onChange={() => toggleTheme()}/>
             <label htmlFor="custom-switch" className="theme-switch__label" label={currTheme}>
+=======
+        <div className="theme-switch ms-4">
+            <input type="checkbox"
+                   id="custom-switch"
+                   name="theme-switch"
+                   checked={currTheme === THEME_DARK}
+                   className="theme-switch__input"
+                   onChange={() => toggleTheme()}/>
+            <label htmlFor="custom-switch"
+                   className="theme-switch__label"
+                   label={currTheme}>
+>>>>>>> 33c3dd42d3a832827b864b588963de60f3557ca0
                 <span></span>
             </label>
         </div>
