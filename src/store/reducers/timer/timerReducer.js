@@ -7,7 +7,7 @@ import {
     SET_TIMER,
     START,
     STOP, TOGGLE_ADD_TIMER,
-    TOGGLE_EDIT_TIMER
+    TOGGLE_EDIT_TIMER, TOGGLE_SOUND
 } from "../../types";
 import {getTotalTime} from "../../../utils/common";
 import {loadData, setData} from "../../../utils/localStorage/localStorage";
@@ -20,6 +20,7 @@ const initialState = {
     isRunning: TIMER_DV.isRunning,
     isEdit: false,
     isAdd: false,
+    isSound: true,
     currentRound: 1,
     currentPhase: 0,
     intervalCount: 0,
@@ -103,6 +104,9 @@ export default function timerReducer(state = initialState, action) {
                 timers: [...state.timers, action.payload],
                 isAdd: false
             }
+        case TOGGLE_SOUND:
+            setData(!state.isSound, 'isSound');
+            return {...state, isSound: !state.isSound}
         default:
             return state;
     }

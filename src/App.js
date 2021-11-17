@@ -3,6 +3,7 @@ import Timer from "./components/timer/Timer";
 import {Container, Row, Col} from "react-bootstrap";
 import ToggleTheme from "./components/theme/ToggleTheme";
 import './App.sass';
+import SoundSwitcher from "./components/soundSwitcher/SoundSwitcher";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Col lg={12}>
             <ToggleTheme/>
           </Col>
+        <SoundSwitcher/>
         </Row>
         <div className="justify-content-center">
           <Col lg={12} className="timer my-3 p-3">
