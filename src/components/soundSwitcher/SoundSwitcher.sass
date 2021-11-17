@@ -1,0 +1,84 @@
+.sound-switch
+	position: relative
+	width: 100px
+	height: 35px
+
+.sound-switch__input:checked ~ main,
+.sound-switch__input:checked ~ label 
+	--text: white 
+.sound-switch__input 
+	opacity: 0 
+	&:checked 
+		& ~ main 
+			--gradDark: hsl(198, 44%, 11%) 
+			--gradLight: hsl(198, 39%, 29%) 
+		& ~ .sound-switch__label 
+			background-color: lightSlateGray 
+			&::before 
+				color: lightSlateGray 
+			&::after 
+				color: turquoise 
+			span 
+				&::after 
+					transform: translate3d(70px, 0, 0) 
+
+.sound-switch__input,
+.sound-switch__label 
+	position: absolute 
+	z-index: 1 
+
+.sound-switch__input:hover 
+	+ .sound-switch__label, 
+	.sound-switch__input:focus 
+	+ .sound-switch__label 
+		background-color: lightSlateGray
+
+.sound-switch__input:hover 
+	+ .sound-switch__label span::after, 
+	.sound-switch__input:focus 
+	+ .sound-switch__label span::after 
+		background-color: #d4ebf2 
+
+.sound-switch__label 
+	transition: background-color 200ms ease-in-out 
+	width: 100px 
+	height: 35px 
+	border-radius: 50px 
+	text-align: center 
+	background-color: slateGray 
+	box-shadow: -4px 4px 15px inset rgba(0, 0, 0, .4) 
+	cursor: pointer
+	&::before 
+		content: "\01F509" 
+		right: 100% 
+		margin-right: 5px 
+		color: orange 
+		opacity: .5
+	&::after 
+		content: "\01F50A" 
+		left: 100% 
+		margin-left: 5px 
+		color: lightSlateGray 
+	span 
+		position: absolute 
+		bottom: calc(100% + 10px) 
+		left: 0 
+		width: 100% 
+		&::after 
+			position: absolute 
+			top: calc(100% + 15px) 
+			left: 3px 
+			width: 25px 
+			height: 25px 
+			content: "" 
+			border-radius: 50% 
+			background-color: lightBlue 
+			transition: transform 200ms, background-color 200ms 
+			box-shadow: -3px 3px 8px rgba(0, 0, 0, .4) 
+
+.sound-switch__label::before, 
+.sound-switch__label::after 
+	font-size: 1.5rem 
+	position: absolute 
+	transform: translate3d(0, -50%, 0) 
+	top: 50%
