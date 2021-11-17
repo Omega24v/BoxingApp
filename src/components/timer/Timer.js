@@ -34,26 +34,27 @@ const Timer = props => {
 
     useEffect(() => {
 
-        if (props.currentPhase === 1 && props.intervalCount === props.currTimer.prepareTime) {
-            props.setIntervalCount(0);
-            props.setPhaseTime(props.currTimer.roundTime);
-            props.setCurrentPhase(2);
-        } else if (props.currentPhase === 2 && props.intervalCount === props.currTimer.roundTime - props.currTimer.warningTime) {
-            props.setCurrentPhase(3);
-        } else if (props.currentPhase === 3 && props.intervalCount === props.currTimer.roundTime) {
+        const CT = props.currTimer;
+        const CP = props.currentPhase;
+        const IC = props.intervalCount;
 
-            if (props.currentRound === props.currTimer.rounds) {
-                setTimeout(() => {
-                    stopResetAndTimer();
-                }, 0);
-            } else {
-                props.setIntervalCount(0);
-                props.setPhaseTime(props.currTimer.restTime);
-                props.setCurrentPhase(4);
-            }
-        } else if (props.currentPhase === 4 && props.intervalCount === props.currTimer.restTime) {
+        if (CP === 1 && IC === CT.prepareTime) {
             props.setIntervalCount(0);
-            props.setPhaseTime(props.currTimer.roundTime);
+            props.setPhaseTime(CT.roundTime);
+            props.setCurrentPhase(2);
+        } else if (CP === 2 && CT.roundTime === 0) {
+            onRoundPhase();
+        } else if (CP === 2 && IC === CT.roundTime - CT.warningTime) {
+            if (CT.warningTime === 0) {
+                onRoundPhase();
+            } else {
+                props.setCurrentPhase(3);
+            }
+        } else if (CP === 3 && IC === CT.roundTime) {
+            onRoundPhase();
+        } else if (CP === 4 && ((IC === CT.restTime) || CT.restTime === 0)) {
+            props.setIntervalCount(0);
+            props.setPhaseTime(CT.roundTime);
             props.setCurrentPhase(2);
             props.setCurrentRound();
         }
@@ -72,8 +73,13 @@ const Timer = props => {
         props.start();
 
         if (props.currentPhase === 0) {
-            props.setPhaseTime(props.currTimer.prepareTime);
-            props.setCurrentPhase(1);
+            if (props.currTimer.prepareTime === 0) {
+                props.setCurrentPhase(2);
+                props.setPhaseTime(props.currTimer.roundTime);
+            } else {
+                props.setCurrentPhase(1);
+                props.setPhaseTime(props.currTimer.prepareTime);
+            }
         }
 
         const newIntervalId = setInterval(() => {
@@ -83,6 +89,18 @@ const Timer = props => {
         }, 1000);
 
         props.setIntervalId(newIntervalId);
+    }
+
+    function onRoundPhase() {
+        if (props.currentRound === props.currTimer.rounds) {
+            setTimeout(() => {
+                stopResetAndTimer();
+            }, 0);
+        } else {
+            props.setIntervalCount(0);
+            props.setPhaseTime(props.currTimer.restTime);
+            props.setCurrentPhase(4);
+        }
     }
 
     return (
