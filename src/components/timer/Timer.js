@@ -89,7 +89,7 @@ const Timer = props => {
         <>
             <Row className="mb-4">
                 <Col lg={12}><h2 className="timer-title mb-2">{props.currTimer.name}</h2></Col>
-                <Col lg={5}>
+                <Col lg={5} className="current-round-col">
                     <div className="timer-big current-round">
                         <span className="timer-big__text">Current Round: </span>
                         <span className="timer-big__count">
@@ -122,20 +122,20 @@ const Timer = props => {
                         <span className="timer-small__text">Phase</span>
                     </div>
                     <div className="timer-small">
+                        <span className="timer-small__count text-success">{ msToMAS(getTotalTime(props.currTimer)) }</span>
+                        <span className="timer-small__text">Total time</span>
+                    </div>
+                    <div className="timer-small">
                         <span className="timer-small__count text-info">{ msToMAS(props.currTimer.roundTime) }</span>
                         <span className="timer-small__text">Round Time</span>
                     </div>
                     <div className="timer-small">
-                        <span className="timer-small__count text-success">{ msToMAS(getTotalTime(props.currTimer)) }</span>
-                        <span className="timer-small__text">Rounds total time</span>
-                    </div>
-                    <div className="timer-small">
                         <span className="timer-small__count text-primary">{ msToMAS(props.currTimer.restTime) }</span>
-                        <span className="timer-small__text">Rounds rest time</span>
+                        <span className="timer-small__text">Rest time</span>
                     </div>
                     <div className="timer-small">
                         <span className="timer-small__count text-warning">{ msToMAS(props.currTimer.prepareTime) }</span>
-                        <span className="timer-small__text">Rounds prepare time</span>
+                        <span className="timer-small__text">Prepare time</span>
                     </div>
                 </Col>
             </Row>

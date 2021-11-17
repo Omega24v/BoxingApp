@@ -26,10 +26,18 @@ const TimersList = props => {
                     <Row>
                         <Col xs={9}>
                             <div className="timer-list__item item-title mb-2">{timer.name}</div>
-                            <div className="timer-list__item">Rounds: {timer.rounds}</div>
-                            <div className="timer-list__item text-info">Round Time: { msToMAS((timer.roundTime)) }</div>
-                            <div className="timer-list__item text-primary">Rest Time: { msToMAS((timer.restTime)) }</div>
-                            <div className="timer-list__item text-warning">Prepare Time: { msToMAS((timer.prepareTime)) }</div>
+                            <div className="timer-list__item">
+                                <i className="text-success">&#9632;</i> Rounds: {timer.rounds}
+                            </div>
+                            <div className="timer-list__item">
+                                <i className="text-info">&#9632;</i> Round Time: { msToMAS((timer.roundTime)) }
+                            </div>
+                            <div className="timer-list__item">
+                                <i className="text-primary">&#9632;</i> Rest Time: { msToMAS((timer.restTime)) }
+                            </div>
+                            <div className="timer-list__item">
+                                <i className="text-warning">&#9632;</i> Prepare Time: { msToMAS((timer.prepareTime)) }
+                            </div>
                         </Col>
                         <Col xs={3} className="d-flex flex-column align-items-end">
                             <IconEdit className="mb-2"/>

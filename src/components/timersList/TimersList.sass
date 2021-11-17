@@ -1,13 +1,16 @@
+@import "~bootstrap/scss/bootstrap-utilities"
+
 .timer-list
   flex-basis: 230px
-  border: 2px solid #777
+  border: 1px solid $gray-500
   cursor: pointer
-  font-weight: bold
-  text-transform: uppercase
+  font-weight: 500
   text-shadow: 0 1px 1px #000
   transition: border-color .3s ease
+  max-width: 300px
+  .item-title
+    font-weight: bold
   &.active
-    border-color: #DC3545
+    border-color: #62a1ff
     .item-title
-      color: #DC3545
       transition: color .3s ease
