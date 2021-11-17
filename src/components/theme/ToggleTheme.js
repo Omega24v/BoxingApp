@@ -20,17 +20,14 @@ const ToggleTheme = () => {
         const theme = currTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK;
         setCurrTheme(theme);
         setThemeToBody(theme);
-        
         setData(theme, 'theme');
     }
-    
-
 
     useEffect(() => {
         const currTheme = loadData('theme');
         setCurrTheme(currTheme || THEME_DARK);
         setThemeToBody(currTheme || THEME_DARK);
-        switchChecked(currTheme)
+        switchChecked(currTheme);
     }, []);
 
     return (
