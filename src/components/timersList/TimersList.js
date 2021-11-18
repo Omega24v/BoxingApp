@@ -1,7 +1,15 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import {connect} from "react-redux";
-import {addTimer, resetTimer, setTimer, startTimer, stopTimer} from "../../store/actions/timerActions";
+import {
+    addTimer,
+    deleteTimer,
+    resetTimer,
+    setTimer,
+    startTimer,
+    stopTimer,
+    toggleEditTimer
+} from "../../store/actions/timerActions";
 import {msToMAS} from "../../utils/timeConverter";
 import IconClose from '../../icons/IconClose';
 import IconEdit from '../../icons/IconEdit';
@@ -14,6 +22,15 @@ const TimersList = props => {
         props.setTimer(timer)
         clearInterval(props.intervalId);
         props.resetTimer();
+    }
+
+    const deleteTimer = (e, timer) => {
+        e.stopPropagation();
+        let filteredTimers = props.timers.filter(item => item.id !== timer.id)
+        if (timer.id === props.currTimer.id) {
+            props.setTimer(filteredTimers[0]);
+        }
+        props.deleteTimer(filteredTimers);
     }
 
     return (
@@ -40,8 +57,13 @@ const TimersList = props => {
                             </div>
                         </Col>
                         <Col xs={3} className="d-flex flex-column align-items-end">
-                            <IconEdit className="mb-2"/>
-                            <IconClose/>
+                            <span className="mb-2" onClick={() => props.toggleEditTimer()}>
+                                <IconEdit  />
+                            </span>
+
+                            <span onClick={(e) => deleteTimer(e, timer)}>
+                                <IconClose />
+                            </span>
                         </Col>
                     </Row>
                 </div>
@@ -65,6 +87,8 @@ function mapDispatchToProps(dispatch) {
         resetTimer: () => dispatch(resetTimer()),
         addTimer: timer => dispatch(addTimer(timer)),
         setTimer: timer => dispatch(setTimer(timer)),
+        toggleEditTimer: () => dispatch(toggleEditTimer()),
+        deleteTimer: timers => dispatch(deleteTimer(timers)),
     }
 }
 

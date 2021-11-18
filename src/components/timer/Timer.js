@@ -176,7 +176,7 @@ const Timer = props => {
                         <Button variant="success" className="me-3 btn-start" onClick={handleTimer}>
                             {props.isRunning ? 'Pause' : 'Start'}
                         </Button>
-                        <Button variant="warning" onClick={() => {props.toggleEditTimer()}}>Edit</Button>
+                        <Button variant="warning" onClick={() => {props.toggleEditTimer()}}>Edit/Add</Button>
                     </ButtonGroup>
                 </Col>
             </Row>
