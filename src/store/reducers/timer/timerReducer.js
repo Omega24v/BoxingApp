@@ -1,6 +1,6 @@
 import {TIMER_DV} from "../../../constatns/timerDefaultValues";
 import {
-    ADD_TIMER, COUNT_PHASE_TIME, ON_CHANGE_EDIT_DATA,
+    ADD_TIMER, COUNT_PHASE_TIME, DELETE_TIMER, ON_CHANGE_EDIT_DATA,
     PAUSE, RESET_TIMER,
     SAVE_EDIT_DATA, SET_CURRENT_PHASE, SET_CURRENT_ROUND,
     SET_DEFAULT_VALUES, SET_FULL_TIME, SET_INTERVAL_COUNT, SET_INTERVAL_ID, SET_PHASE_TIME,
@@ -11,10 +11,14 @@ import {
 } from "../../types";
 import {getTotalTime} from "../../../utils/common";
 import {loadData, setData} from "../../../utils/localStorage/localStorage";
-import {defaultTimerModel} from "../../../models/Timer";
+import {defaultCurrTimerModel, defaultTimersModel} from "../../../models/Timer";
 
-const defaultTimer = defaultTimerModel;
 const persistedState = loadData('data');
+const currTimer = persistedState?.currTimer && persistedState?.currTimer !== 'null'
+    ? persistedState?.currTimer : defaultCurrTimerModel;
+const timers = persistedState?.timers && persistedState?.timers.length > 0
+    ? persistedState?.timers
+    : defaultTimersModel
 
 const initialState = {
     isRunning: TIMER_DV.isRunning,
@@ -26,10 +30,10 @@ const initialState = {
     intervalCount: 0,
     intervalId: 0,
     editTimerData: {},
-    phaseTime: persistedState?.currTimer?.prepareTime || defaultTimer.prepareTime,
-    fullTime: getTotalTime(persistedState?.currTimer || defaultTimer),
-    currTimer: persistedState?.currTimer || defaultTimer,
-    timers: persistedState?.timers || [defaultTimer],
+    phaseTime: currTimer.prepareTime,
+    fullTime: getTotalTime(currTimer),
+    currTimer: currTimer,
+    timers: timers,
 }
 
 export default function timerReducer(state = initialState, action) {
@@ -107,6 +111,15 @@ export default function timerReducer(state = initialState, action) {
         case TOGGLE_SOUND:
             setData(!state.isSound, 'isSound');
             return {...state, isSound: !state.isSound}
+        case DELETE_TIMER:
+            setData({
+                currTimer: action.payload.length > 0 ? state.currTimer : null,
+                timers: action.payload
+            }, 'data');
+            return {
+                ...state,
+                timers: action.payload
+            }
         default:
             return state;
     }

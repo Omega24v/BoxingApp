@@ -18,7 +18,7 @@ import {
 import {getPhaseColor} from "../../utils/common";
 import { Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 import { PHASES } from "../../constatns/timerDefaultValues";
-import {msToMAS} from "../../utils/timeConverter";
+import {msToHMS} from "../../utils/timeConverter";
 import ModalEdit from '../modals/ModalEdit';
 import TimersList from '../timersList/TimersList';
 import './Timer.sass';
@@ -144,8 +144,8 @@ const Timer = props => {
                         </span>
                         <span className="timer-big__count">
                             { props.currentPhase === 0
-                                ? msToMAS(props.fullTime)
-                                : msToMAS(props.phaseTime)
+                                ? msToHMS(props.fullTime)
+                                : msToHMS(props.phaseTime)
                             }
                         </span>
                     </div>
@@ -153,11 +153,11 @@ const Timer = props => {
             </Row>
             <Row md={12} className="d-none d-sm-block mb-4">
                 <Col className="d-flex justify-content-between">
-                    <TimerInfo type='danger' label='Phase' val={PHASES[props.currentPhase]}/>
-                    <TimerInfo type='success' label='Total time' val={props.currTimer}/>
+                    <TimerInfo type='total' label='Total time' val={props.currTimer}/>
+                    <TimerInfo type='warning' label='Prepare time' val={props.currTimer.prepareTime}/>
                     <TimerInfo type='info' label='Round Time' val={props.currTimer.roundTime}/>
                     <TimerInfo type='primary' label='Rest time' val={props.currTimer.restTime}/>
-                    <TimerInfo type='warning' label='Prepare time' val={props.currTimer.prepareTime}/>
+                    <TimerInfo type='warning' label='Last seconds alert' val={props.currTimer.warningTime}/>
                 </Col>
             </Row>
             <Row className="mb-4">
@@ -176,7 +176,7 @@ const Timer = props => {
                         <Button variant="success" className="me-1 me-sm-3 btn-start" onClick={handleTimer}>
                             {props.isRunning ? 'Pause' : 'Start'}
                         </Button>
-                        <Button variant="warning" onClick={() => {props.toggleEditTimer()}}>Edit</Button>
+                        <Button variant="warning" onClick={() => {props.toggleEditTimer()}}>Edit/Add</Button>
                     </ButtonGroup>
                 </Col>
             </Row>

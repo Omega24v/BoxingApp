@@ -49,10 +49,8 @@ body
 
   .timer-small
     background-color: $gray-800
-    &__text
+    &__text, &__count
       color: $light
-    &__count
-      color: $black
 
   .timer-list
     background-color: $gray-800
@@ -80,14 +78,10 @@ body
 
   .ico
     fill: $light
-    &:hover
-      fill: #DC3545
 
 body:not([data-theme="dark"])
   .ico
     fill: $dark
-    &:hover
-      fill: #DC3545
   .timer-list
     text-shadow: 1px 0px 1px rgba(255, 255, 255, .5)
 

@@ -1,19 +1,48 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Col, Row } from 'react-bootstrap';
 import {connect} from "react-redux";
-import {addTimer, resetTimer, setTimer, startTimer, stopTimer} from "../../store/actions/timerActions";
-import {msToMAS} from "../../utils/timeConverter";
+import {
+    addTimer,
+    deleteTimer,
+    resetTimer,
+    setTimer,
+    startTimer,
+    stopTimer,
+    toggleEditTimer
+} from "../../store/actions/timerActions";
+import {msToHMS} from "../../utils/timeConverter";
 import IconClose from '../../icons/IconClose';
 import IconEdit from '../../icons/IconEdit';
 import './TimersList.sass';
+import ConfirmAlert from "../UI/confirmAlert/ConfirmAlert";
 
 const TimersList = props => {
+
+    const [isDelete, setIsDelete] = useState(false);
+    const [timerToDelete, setTimerToDelete] = useState(null);
 
     const selectTimer = timer => {
         props.stop();
         props.setTimer(timer)
         clearInterval(props.intervalId);
         props.resetTimer();
+    }
+
+    const showDeleteConfirm = (e, timer) => {
+        e.stopPropagation();
+        setIsDelete(true);
+        setTimerToDelete(timer);
+    }
+
+    const deleteTimer = (e, timer) => {
+
+        let filteredTimers = props.timers.filter(item => item.id !== timer.id)
+        if (timer.id === props.currTimer.id) {
+            props.setTimer(filteredTimers[0]);
+        }
+        props.deleteTimer(filteredTimers);
+        setIsDelete(false);
+        setTimerToDelete(null);
     }
 
     return (
@@ -30,22 +59,40 @@ const TimersList = props => {
                                 <i className="text-success">&#9632;</i> Rounds: {timer.rounds}
                             </div>
                             <div className="timer-list__item">
-                                <i className="text-info">&#9632;</i> Round Time: { msToMAS((timer.roundTime)) }
+                                <i className="text-warning">&#9632;</i> Prepare Time: { msToHMS((timer.prepareTime)) }
                             </div>
                             <div className="timer-list__item">
-                                <i className="text-primary">&#9632;</i> Rest Time: { msToMAS((timer.restTime)) }
+                                <i className="text-info">&#9632;</i> Round Time: { msToHMS((timer.roundTime)) }
                             </div>
                             <div className="timer-list__item">
-                                <i className="text-warning">&#9632;</i> Prepare Time: { msToMAS((timer.prepareTime)) }
+                                <i className="text-primary">&#9632;</i> Rest Time: { msToHMS((timer.restTime)) }
+                            </div>
+                            <div className="timer-list__item">
+                                <i className="text-warning">&#9632;</i> Last seconds alert: { msToHMS((timer.warningTime)) }
                             </div>
                         </Col>
                         <Col xs={3} className="d-flex flex-column align-items-end">
-                            <IconEdit className="mb-2"/>
-                            <IconClose/>
+                            <span className="mb-2" onClick={() => {props.setTimer(timer); props.toggleEditTimer()}}>
+                                <IconEdit  />
+                            </span>
+                            {
+                                props.timers.length > 1
+                                ?
+                                    <span onClick={(e) => showDeleteConfirm(e, timer)}>
+                                        <IconClose />
+                                    </span>
+                                : ''
+                            }
                         </Col>
                     </Row>
                 </div>
             )}
+            <ConfirmAlert
+                show={isDelete}
+                itemName={timerToDelete ? timerToDelete.name : ''}
+                onHide={() => setIsDelete(false)}
+                confirmAction={e => deleteTimer(e, timerToDelete)}
+            />
         </div>
     );
 };
@@ -65,6 +112,8 @@ function mapDispatchToProps(dispatch) {
         resetTimer: () => dispatch(resetTimer()),
         addTimer: timer => dispatch(addTimer(timer)),
         setTimer: timer => dispatch(setTimer(timer)),
+        toggleEditTimer: () => dispatch(toggleEditTimer()),
+        deleteTimer: timers => dispatch(deleteTimer(timers)),
     }
 }
 

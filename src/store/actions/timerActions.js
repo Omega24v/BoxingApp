@@ -1,5 +1,5 @@
 import {
-    ADD_TIMER, COUNT_PHASE_TIME, ON_CHANGE_EDIT_DATA,
+    ADD_TIMER, COUNT_PHASE_TIME, DELETE_TIMER, ON_CHANGE_EDIT_DATA,
     PAUSE, RESET_TIMER,
     SAVE_EDIT_DATA, SET_CURRENT_PHASE, SET_CURRENT_ROUND,
     SET_DEFAULT_VALUES, SET_FULL_TIME, SET_INTERVAL_COUNT, SET_INTERVAL_ID, SET_PHASE_TIME,
@@ -129,6 +129,13 @@ export const setFullTime = data => {
 export const onChangeEditData = data => {
     return {
         type: ON_CHANGE_EDIT_DATA,
+        payload: data
+    }
+}
+
+export const deleteTimer = data => {
+    return {
+        type: DELETE_TIMER,
         payload: data
     }
 }

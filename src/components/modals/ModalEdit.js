@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Button, CloseButton } from 'react-bootstrap'
+import { Modal, CloseButton } from 'react-bootstrap'
 import IconClose from '../../icons/IconClose';
 import TimerEdit from '../timerEdit/TimerEdit';
 import './ModalEdit.sass';
@@ -17,9 +17,6 @@ const Modals = props => {
       <Modal.Body>
         <TimerEdit/>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="danger" onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
     </Modal>
   )
 }

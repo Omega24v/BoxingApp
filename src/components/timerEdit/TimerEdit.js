@@ -3,7 +3,7 @@ import {ButtonGroup, Button, Form, InputGroup} from 'react-bootstrap';
 import {connect} from "react-redux";
 import {addTimer, startTimer, saveEditData, onChangeEditData, toggleEditTimer} from "../../store/actions/timerActions";
 import {getRandomId} from "../../utils/getRandomId";
-import {getMinAndSecFromMs, getMsFromMinAndSec, msToMAS} from "../../utils/timeConverter";
+import {getMinAndSecFromMs, getMsFromMinAndSec, msToHMS} from "../../utils/timeConverter";
 import './TimerEdit.sass'
 import {getTotalTime} from "../../utils/common";
 
@@ -95,9 +95,9 @@ const TimerEdit = props => {
                     type="number" min="0"/>
             </InputGroup>
 
-            <div className="edit-form__total text-center my-2">Total time: {msToMAS(props.editTimerData.fullTime)}</div>
+            <div className="edit-form__total text-center my-2">Total time: {msToHMS(props.editTimerData.fullTime)}</div>
 
-            <ButtonGroup className="d-flex mt-2">
+            <ButtonGroup className="d-flex mt-2 timer-actions-btn">
                 <Button variant="success" className="me-2" onClick={saveFormData}>
                         Save Settings
                     </Button>
