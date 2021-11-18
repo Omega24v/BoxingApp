@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import TimerEdit from '../timerEdit/TimerEdit';
 
 const Modals = props => {
@@ -14,9 +14,6 @@ const Modals = props => {
       <Modal.Body>
         <TimerEdit/>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="danger" onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
     </Modal>
   )
 }

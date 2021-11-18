@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Col, Row } from 'react-bootstrap';
 import {connect} from "react-redux";
 import {
@@ -14,8 +14,12 @@ import {msToMAS} from "../../utils/timeConverter";
 import IconClose from '../../icons/IconClose';
 import IconEdit from '../../icons/IconEdit';
 import './TimersList.sass';
+import ConfirmAlert from "../UI/confirmAlert/ConfirmAlert";
 
 const TimersList = props => {
+
+    const [isDelete, setIsDelete] = useState(false);
+    const [timerToDelete, setTimerToDelete] = useState(null);
 
     const selectTimer = timer => {
         props.stop();
@@ -24,13 +28,21 @@ const TimersList = props => {
         props.resetTimer();
     }
 
-    const deleteTimer = (e, timer) => {
+    const showDeleteConfirm = (e, timer) => {
         e.stopPropagation();
+        setIsDelete(true);
+        setTimerToDelete(timer);
+    }
+
+    const deleteTimer = (e, timer) => {
+
         let filteredTimers = props.timers.filter(item => item.id !== timer.id)
         if (timer.id === props.currTimer.id) {
             props.setTimer(filteredTimers[0]);
         }
         props.deleteTimer(filteredTimers);
+        setIsDelete(false);
+        setTimerToDelete(null);
     }
 
     return (
@@ -57,17 +69,27 @@ const TimersList = props => {
                             </div>
                         </Col>
                         <Col xs={3} className="d-flex flex-column align-items-end">
-                            <span className="mb-2" onClick={() => props.toggleEditTimer()}>
+                            <span className="mb-2" onClick={() => {props.setTimer(timer); props.toggleEditTimer()}}>
                                 <IconEdit  />
                             </span>
-
-                            <span onClick={(e) => deleteTimer(e, timer)}>
-                                <IconClose />
-                            </span>
+                            {
+                                props.timers.length > 1
+                                ?
+                                    <span onClick={(e) => showDeleteConfirm(e, timer)}>
+                                        <IconClose />
+                                    </span>
+                                : ''
+                            }
                         </Col>
                     </Row>
                 </div>
             )}
+            <ConfirmAlert
+                show={isDelete}
+                itemName={timerToDelete ? timerToDelete.name : ''}
+                onHide={() => setIsDelete(false)}
+                confirmAction={e => deleteTimer(e, timerToDelete)}
+            />
         </div>
     );
 };

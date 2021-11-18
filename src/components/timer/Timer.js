@@ -161,7 +161,7 @@ const Timer = props => {
                 </Col>
             </Row>
             <Row className="mb-4">
-                <Col className="d-flex justify-content-center">
+                <Col className="timer-actions-btn d-flex justify-content-center">
                     <ButtonGroup aria-label="timer buttons">
                         {props.isRunning
                             ?

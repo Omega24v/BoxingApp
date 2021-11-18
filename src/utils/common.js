@@ -1,4 +1,5 @@
 export const getTotalTime = currTimer => {
+    if (!currTimer) {return 0}
     return ((currTimer.roundTime + currTimer.restTime)
         * currTimer.rounds
         + currTimer.prepareTime

@@ -15,6 +15,11 @@ import {defaultTimerModel} from "../../../models/Timer";
 
 const defaultTimer = defaultTimerModel;
 const persistedState = loadData('data');
+const currTimer = persistedState?.currTimer && persistedState?.currTimer !== 'null'
+    ? persistedState?.currTimer : defaultTimer;
+const timers = persistedState?.timers && persistedState?.timers.length > 0
+    ? persistedState?.timers
+    : [defaultTimer]
 
 const initialState = {
     isRunning: TIMER_DV.isRunning,
@@ -26,10 +31,10 @@ const initialState = {
     intervalCount: 0,
     intervalId: 0,
     editTimerData: {},
-    phaseTime: persistedState?.currTimer?.prepareTime || defaultTimer.prepareTime,
-    fullTime: getTotalTime(persistedState?.currTimer || defaultTimer),
-    currTimer: persistedState?.currTimer || defaultTimer,
-    timers: persistedState?.timers || [defaultTimer],
+    phaseTime: currTimer.prepareTime,
+    fullTime: getTotalTime(currTimer),
+    currTimer: currTimer,
+    timers: timers,
 }
 
 export default function timerReducer(state = initialState, action) {
@@ -109,7 +114,7 @@ export default function timerReducer(state = initialState, action) {
             return {...state, isSound: !state.isSound}
         case DELETE_TIMER:
             setData({
-                currTimer: state.currTimer,
+                currTimer: action.payload.length > 0 ? state.currTimer : null,
                 timers: action.payload
             }, 'data');
             return {

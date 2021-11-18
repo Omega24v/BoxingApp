@@ -3,7 +3,7 @@ import './Icon.sass';
 
 function IconEdit(props) {
   return (
-    <div className={`ico ico-edit ${props.className}`}>
+    <div className={`ico ico-edit ${props.className || ''}`}>
       <svg
         enableBackground="new 0 0 490.337 490.337"
         version="1.1"
