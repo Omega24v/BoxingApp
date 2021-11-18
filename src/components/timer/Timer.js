@@ -124,8 +124,8 @@ const Timer = props => {
     return (
         <>
             <Row className="mb-4">
-                <Col lg={12}><h2 className="timer-title mb-2">{props.currTimer.name}</h2></Col>
-                <Col lg={5} className="current-round-col">
+                <Col xs={12}><h2 className="timer-title mb-2">{props.currTimer.name}</h2></Col>
+                <Col md={5} className="current-round-col">
                     <div className="timer-big current-round">
                         <span className="timer-big__text">Current Round: </span>
                         <span className="timer-big__count">
@@ -134,7 +134,7 @@ const Timer = props => {
                         <span className="timer-big__text">OF {props.currTimer.rounds} ROUNDS</span>
                     </div>
                 </Col>
-                <Col lg={7}>
+                <Col md={7}>
                     <div className={'timer-big full-time full-time' + getPhaseColor(props.currentPhase)}>
                         <span className="timer-big__text">
                             { props.currentPhase === 0
@@ -151,7 +151,7 @@ const Timer = props => {
                     </div>
                 </Col>
             </Row>
-            <Row className="mb-4">
+            <Row md={12} className="d-none d-sm-block mb-4">
                 <Col className="d-flex justify-content-between">
                     <TimerInfo type='danger' label='Phase' val={PHASES[props.currentPhase]}/>
                     <TimerInfo type='success' label='Total time' val={props.currTimer}/>
