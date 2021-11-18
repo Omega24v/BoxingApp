@@ -17,10 +17,10 @@ const TimersList = props => {
     }
 
     return (
-        <div className="d-flex flex-wrap flex-grow-1 gap-3">
+        <div className="d-flex flex-wrap gap-3">
             {props.timers.map((timer) =>
                 <div 
-                    className={`timer-list flex-grow-1 p-2 ${timer.id === props.currTimer.id ? 'active text-danger' : ''}`}
+                    className={`timer-list flex-grow-1 flex-md-grow-0 p-2 ${timer.id === props.currTimer.id ? 'active text-danger' : ''}`}
                     onClick={() => selectTimer(timer)}
                     key={timer.id}>
                     <Row>
