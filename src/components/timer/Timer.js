@@ -162,18 +162,18 @@ const Timer = props => {
             </Row>
             <Row className="mb-4">
                 <Col className="d-flex justify-content-center">
-                    <ButtonGroup aria-label="timer buttons">
+                    <ButtonGroup className="control-btn" aria-label="timer buttons">
                         {props.isRunning
                             ?
                             <Button variant="danger"
-                                    className="me-3"
+                                    className="me-1 me-sm-3"
                                     onClick={stopResetAndTimer}>
                                 Stop
                             </Button>
                             :
                             ''
                         }
-                        <Button variant="success" className="me-3 btn-start" onClick={handleTimer}>
+                        <Button variant="success" className="me-1 me-sm-3 btn-start" onClick={handleTimer}>
                             {props.isRunning ? 'Pause' : 'Start'}
                         </Button>
                         <Button variant="warning" onClick={() => {props.toggleEditTimer()}}>Edit</Button>
