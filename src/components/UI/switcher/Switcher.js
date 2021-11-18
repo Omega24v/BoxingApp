@@ -3,7 +3,7 @@ import React from 'react';
 const Switcher = ({isChecked, toggle, type}) => {
 
     return (
-        <div className={`switch me-4 ${type}`}>
+        <div className={`switch ${type}`}>
             <input
                 type="checkbox"
                 id={`sd-switch-${type}`}
