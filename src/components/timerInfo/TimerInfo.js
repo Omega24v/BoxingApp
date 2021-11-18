@@ -6,10 +6,8 @@ const TimerInfo = ({label, type, val}) => {
 
     let formattedVal;
 
-    if (type === 'success') {
+    if (type === 'total') {
         formattedVal = msToMAS(getTotalTime(val))
-    }   else if (type === 'danger') {
-        formattedVal = val
     } else {
         formattedVal = msToMAS(val)
     }

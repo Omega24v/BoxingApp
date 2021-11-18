@@ -11,15 +11,14 @@ import {
 } from "../../types";
 import {getTotalTime} from "../../../utils/common";
 import {loadData, setData} from "../../../utils/localStorage/localStorage";
-import {defaultTimerModel} from "../../../models/Timer";
+import {defaultCurrTimerModel, defaultTimersModel} from "../../../models/Timer";
 
-const defaultTimer = defaultTimerModel;
 const persistedState = loadData('data');
 const currTimer = persistedState?.currTimer && persistedState?.currTimer !== 'null'
-    ? persistedState?.currTimer : defaultTimer;
+    ? persistedState?.currTimer : defaultCurrTimerModel;
 const timers = persistedState?.timers && persistedState?.timers.length > 0
     ? persistedState?.timers
-    : [defaultTimer]
+    : defaultTimersModel
 
 const initialState = {
     isRunning: TIMER_DV.isRunning,

@@ -153,11 +153,11 @@ const Timer = props => {
             </Row>
             <Row className="mb-4">
                 <Col className="d-flex justify-content-between">
-                    <TimerInfo type='danger' label='Phase' val={PHASES[props.currentPhase]}/>
-                    <TimerInfo type='success' label='Total time' val={props.currTimer}/>
+                    <TimerInfo type='total' label='Total time' val={props.currTimer}/>
+                    <TimerInfo type='warning' label='Prepare time' val={props.currTimer.prepareTime}/>
                     <TimerInfo type='info' label='Round Time' val={props.currTimer.roundTime}/>
                     <TimerInfo type='primary' label='Rest time' val={props.currTimer.restTime}/>
-                    <TimerInfo type='warning' label='Prepare time' val={props.currTimer.prepareTime}/>
+                    <TimerInfo type='warning' label='Last seconds alert' val={props.currTimer.warningTime}/>
                 </Col>
             </Row>
             <Row className="mb-4">
