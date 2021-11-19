@@ -1,23 +1,24 @@
-import React, { useEffect } from 'react';
-import { connect } from "react-redux";
+import React, {useEffect} from 'react';
+import {connect} from "react-redux";
 import {
-    toggleEditTimer,
+    countPhaseTime,
     pauseTimer,
+    resetTimer,
+    setCurrentPhase,
+    setCurrentRound,
     setDefaultValues,
+    setFullTime,
+    setIntervalCount,
+    setIntervalId,
+    setPhaseTime,
     startTimer,
     stopTimer,
     toggleAddTimer,
-    resetTimer,
-    setIntervalCount,
-    setPhaseTime,
-    setCurrentPhase,
-    setCurrentRound,
-    setIntervalId,
-    setFullTime, countPhaseTime
+    toggleEditTimer
 } from "../../store/actions/timerActions";
 import {getPhaseColor} from "../../utils/common";
-import { Row, Col, Button, ButtonGroup } from 'react-bootstrap';
-import { PHASES } from "../../constatns/timerDefaultValues";
+import {Button, ButtonGroup, Col, Row} from 'react-bootstrap';
+import {PHASES} from "../../constatns/timerDefaultValues";
 import {msToHMS} from "../../utils/timeConverter";
 import ModalEdit from '../modals/ModalEdit';
 import TimersList from '../timersList/TimersList';
@@ -48,32 +49,18 @@ const Timer = props => {
 
     useEffect(() => {
 
-        const CT = props.currTimer;
-        const CP = props.currentPhase;
-        const IC = props.intervalCount;
-
-        if (CP === 1 && IC === CT.prepareTime) {
-            props.setIntervalCount(0);
-            props.setPhaseTime(CT.roundTime);
-            props.setCurrentPhase(2);
-            playSound(playBell1x);
-        } else if (CP === 2 && CT.roundTime === 0) {
-            onRoundPhase();
-        } else if (CP === 2 && IC === CT.roundTime - CT.warningTime) {
-            playSound(playWarning);
-            if (CT.warningTime === 0) {
-                onRoundPhase();
+        if (preparationFinished()) {
+            startFight();
+        } else if (isWarningPhase()) {
+            startWarning();
+        } else if (roundFinished() || warningFinished()) {
+            if (isLastRound()) {
+                stopFight();
             } else {
-                props.setCurrentPhase(3);
+                startRest();
             }
-        } else if (CP === 3 && IC === CT.roundTime) {
-            onRoundPhase();
-        } else if (CP === 4 && ((IC === CT.restTime) || CT.restTime === 0)) {
-            props.setIntervalCount(0);
-            props.setPhaseTime(CT.roundTime);
-            props.setCurrentPhase(2);
-            props.setCurrentRound();
-            playSound(playBell1x);
+        } else if (isRestFinished()) {
+            startRound();
         }
 
     }, [props.intervalCount]);
@@ -108,17 +95,72 @@ const Timer = props => {
         props.setIntervalId(newIntervalId);
     }
 
-    function onRoundPhase() {
-        if (props.currentRound === props.currTimer.rounds) {
-            setTimeout(() => {
-                stopResetAndTimer();
-            }, 0);
-        } else {
-            props.setIntervalCount(0);
-            props.setPhaseTime(props.currTimer.restTime);
-            props.setCurrentPhase(4);
-            playSound(playBell3x);
-        }
+    function preparationFinished() {
+        return props.currentPhase === 1 && props.intervalCount === props.currTimer.prepareTime
+    }
+
+    function startFight() {
+        props.setIntervalCount(0);
+        props.setPhaseTime(props.currTimer.roundTime);
+        props.setCurrentPhase(2);
+        playSound(playBell1x);
+    }
+
+    function isRoundPhase() {
+        return props.currentPhase === 2;
+    }
+
+    function isLastRound() {
+        return props.currentRound === props.currTimer.rounds;
+    }
+
+    function startRest() {
+        props.setIntervalCount(0);
+        props.setPhaseTime(props.currTimer.restTime);
+        props.setCurrentPhase(4);
+        playSound(playBell3x);
+    }
+
+    function startRound() {
+        props.setIntervalCount(0);
+        props.setPhaseTime(props.currTimer.roundTime);
+        props.setCurrentPhase(2);
+        props.setCurrentRound();
+        playSound(playBell1x);
+    }
+
+    function stopFight() {
+        setTimeout(() => {
+            stopResetAndTimer();
+        }, 0);
+    }
+
+    function isWarningPhase() {
+        const isWarningTime = props.intervalCount === props.currTimer.roundTime - props.currTimer.warningTime;
+        const isWarningSet = props.currTimer.warningTime !== 0;
+        return isRoundPhase() && isWarningTime && isWarningSet;
+    }
+
+    function startWarning() {
+        playSound(playWarning);
+        props.setCurrentPhase(3);
+    }
+
+    function isRestFinished() {
+        const isRestPhase = props.currentPhase === 4;
+        const isRestFinished = props.intervalCount === props.currTimer.restTime;
+        const isRestNotSet = props.currTimer.restTime === 0;
+        return isRestPhase && (isRestFinished || isRestNotSet);
+    }
+
+    function warningFinished() {
+        const isWarningPhase = props.currentPhase === 3;
+        const isRoundFinished = props.intervalCount === props.currTimer.roundTime;
+        return isWarningPhase && isRoundFinished;
+    }
+
+    function roundFinished() {
+        return isRoundPhase() && props.currTimer.roundTime === 0
     }
 
     return (
