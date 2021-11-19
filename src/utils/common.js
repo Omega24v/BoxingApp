@@ -1,9 +1,9 @@
 export const getTotalTime = currTimer => {
     if (!currTimer) {return 0}
-    return ((currTimer.roundTime + currTimer.restTime)
+    return ((currTimer.roundTime.time + currTimer.restTime.time)
         * currTimer.rounds
-        + currTimer.prepareTime
-        - currTimer.restTime)
+        + currTimer.prepareTime.time
+        - currTimer.restTime.time)
 }
 
 export const getPhaseColor = phase => {

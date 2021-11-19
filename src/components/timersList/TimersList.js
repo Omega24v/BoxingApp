@@ -59,16 +59,16 @@ const TimersList = props => {
                                 <i className="text-success">&#9632;</i> Rounds: {timer.rounds}
                             </div>
                             <div className="timer-list__item">
-                                <i className="text-warning">&#9632;</i> Prepare Time: { msToHMS((timer.prepareTime)) }
+                                <i className="text-warning">&#9632;</i> Prepare Time: { msToHMS((timer.prepareTime.time)) }
                             </div>
                             <div className="timer-list__item">
-                                <i className="text-info">&#9632;</i> Round Time: { msToHMS((timer.roundTime)) }
+                                <i className="text-info">&#9632;</i> Round Time: { msToHMS((timer.roundTime.time)) }
                             </div>
                             <div className="timer-list__item">
-                                <i className="text-primary">&#9632;</i> Rest Time: { msToHMS((timer.restTime)) }
+                                <i className="text-primary">&#9632;</i> Rest Time: { msToHMS((timer.restTime.time)) }
                             </div>
                             <div className="timer-list__item">
-                                <i className="text-warning">&#9632;</i> Last seconds alert: { msToHMS((timer.warningTime)) }
+                                <i className="text-warning">&#9632;</i> Last seconds alert: { msToHMS((timer.warningTime.time)) }
                             </div>
                         </Col>
                         <Col xs={3} className="d-flex flex-column align-items-end">

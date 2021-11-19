@@ -3,17 +3,18 @@ import {
     ADD_TIMER, COUNT_PHASE_TIME, DELETE_TIMER, ON_CHANGE_EDIT_DATA,
     PAUSE, RESET_TIMER,
     SAVE_EDIT_DATA, SET_CURRENT_PHASE, SET_CURRENT_ROUND,
-    SET_DEFAULT_VALUES, SET_FULL_TIME, SET_INTERVAL_COUNT, SET_INTERVAL_ID, SET_PHASE_TIME,
+    SET_DEFAULT_VALUES, SET_INTERVAL_COUNT, SET_INTERVAL_ID, SET_PHASE_TIME,
     SET_TIMER,
     START,
     STOP, TOGGLE_ADD_TIMER,
     TOGGLE_EDIT_TIMER, TOGGLE_SOUND
 } from "../../types";
-import {getTotalTime} from "../../../utils/common";
 import {loadData, setData} from "../../../utils/localStorage/localStorage";
 import {defaultCurrTimerModel, defaultTimersModel} from "../../../models/Timer";
+import {transformData} from "../../../utils/localStorage/transformData";
 
-const persistedState = loadData('data');
+const persistedState = transformData(loadData('data'));
+
 const currTimer = persistedState?.currTimer && persistedState?.currTimer !== 'null'
     ? persistedState?.currTimer : defaultCurrTimerModel;
 const timers = persistedState?.timers && persistedState?.timers.length > 0
@@ -31,7 +32,6 @@ const initialState = {
     intervalId: 0,
     editTimerData: {},
     phaseTime: currTimer.prepareTime,
-    fullTime: getTotalTime(currTimer),
     currTimer: currTimer,
     timers: timers,
 }
@@ -58,7 +58,6 @@ export default function timerReducer(state = initialState, action) {
             }, 'data');
             return {
                 ...state,
-                fullTime: getTotalTime(action.payload.timer),
                 currTimer: action.payload.timer,
                 timers: action.payload.timers
             }
@@ -69,12 +68,10 @@ export default function timerReducer(state = initialState, action) {
                 timers: state.timers,
                 currTimer: action.payload
             }, 'data');
-            return {...state, currTimer: action.payload, fullTime: getTotalTime(action.payload)}
+            return {...state, currTimer: action.payload}
         case SET_INTERVAL_COUNT:
             const val = action.payload === 0 ? 0 : state.intervalCount + action.payload;
             return {...state, intervalCount: val}
-        case SET_FULL_TIME:
-            return {...state, fullTime: state.fullTime - action.payload}
         case SET_PHASE_TIME:
             return {...state, phaseTime: action.payload}
         case COUNT_PHASE_TIME:
@@ -92,7 +89,6 @@ export default function timerReducer(state = initialState, action) {
                 currentRound: 1,
                 currentPhase: 0,
                 phaseTime: state.currTimer.prepareTime,
-                fullTime: getTotalTime(state.currTimer),
                 intervalCount: 0,
                 intervalId: 0,
             }
@@ -103,7 +99,6 @@ export default function timerReducer(state = initialState, action) {
             }, 'data');
             return {
                 ...state,
-                fullTime: getTotalTime(action.payload),
                 currTimer: action.payload,
                 timers: [...state.timers, action.payload],
                 isAdd: false
