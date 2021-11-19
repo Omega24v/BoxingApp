@@ -7,7 +7,6 @@ import {
     setCurrentPhase,
     setCurrentRound,
     setDefaultValues,
-    setFullTime,
     setIntervalCount,
     setIntervalId,
     setPhaseTime,
@@ -16,9 +15,9 @@ import {
     toggleAddTimer,
     toggleEditTimer
 } from "../../store/actions/timerActions";
-import {getPhaseColor} from "../../utils/common";
+import {getPhaseColor, getTotalTime} from "../../utils/common";
 import {Button, ButtonGroup, Col, Row} from 'react-bootstrap';
-import {PHASES} from "../../constatns/timerDefaultValues";
+import {DEFAULT, PHASES, PREPARE, REST, ROUND, WARNING} from "../../constatns/timerDefaultValues";
 import {msToHMS} from "../../utils/timeConverter";
 import ModalEdit from '../modals/ModalEdit';
 import TimersList from '../timersList/TimersList';
@@ -76,38 +75,37 @@ const Timer = props => {
 
         props.start();
 
-        if (props.currentPhase === 0) {
-            if (props.currTimer.prepareTime === 0) {
-                props.setCurrentPhase(2);
-                props.setPhaseTime(props.currTimer.roundTime);
+        if (props.currentPhase === DEFAULT) {
+            if (props.currTimer.prepareTime.time === 0) {
+                props.setCurrentPhase(ROUND);
+                props.setPhaseTime(props.currTimer.roundTime.time);
             } else {
-                props.setCurrentPhase(1);
-                props.setPhaseTime(props.currTimer.prepareTime);
+                props.setCurrentPhase(PREPARE);
+                props.setPhaseTime(props.currTimer.prepareTime.time);
             }
         }
 
         const newIntervalId = setInterval(() => {
             props.setIntervalCount(1000);
             props.countPhaseTime(1000);
-            props.setFullTime(1000);
         }, 1000);
 
         props.setIntervalId(newIntervalId);
     }
 
     function preparationFinished() {
-        return props.currentPhase === 1 && props.intervalCount === props.currTimer.prepareTime
+        return props.currentPhase === PREPARE && props.intervalCount === props.currTimer.prepareTime.time
     }
 
     function startFight() {
         props.setIntervalCount(0);
-        props.setPhaseTime(props.currTimer.roundTime);
-        props.setCurrentPhase(2);
+        props.setPhaseTime(props.currTimer.roundTime.time);
+        props.setCurrentPhase(ROUND);
         playSound(playBell1x);
     }
 
     function isRoundPhase() {
-        return props.currentPhase === 2;
+        return props.currentPhase === ROUND;
     }
 
     function isLastRound() {
@@ -116,15 +114,15 @@ const Timer = props => {
 
     function startRest() {
         props.setIntervalCount(0);
-        props.setPhaseTime(props.currTimer.restTime);
-        props.setCurrentPhase(4);
+        props.setPhaseTime(props.currTimer.restTime.time);
+        props.setCurrentPhase(REST);
         playSound(playBell3x);
     }
 
     function startRound() {
         props.setIntervalCount(0);
-        props.setPhaseTime(props.currTimer.roundTime);
-        props.setCurrentPhase(2);
+        props.setPhaseTime(props.currTimer.roundTime.time);
+        props.setCurrentPhase(ROUND);
         props.setCurrentRound();
         playSound(playBell1x);
     }
@@ -136,31 +134,31 @@ const Timer = props => {
     }
 
     function isWarningPhase() {
-        const isWarningTime = props.intervalCount === props.currTimer.roundTime - props.currTimer.warningTime;
-        const isWarningSet = props.currTimer.warningTime !== 0;
+        const isWarningTime = props.intervalCount === props.currTimer.roundTime.time - props.currTimer.warningTime.time;
+        const isWarningSet = props.currTimer.warningTime.time !== 0;
         return isRoundPhase() && isWarningTime && isWarningSet;
     }
 
     function startWarning() {
         playSound(playWarning);
-        props.setCurrentPhase(3);
+        props.setCurrentPhase(WARNING);
     }
 
     function isRestFinished() {
-        const isRestPhase = props.currentPhase === 4;
-        const isRestFinished = props.intervalCount === props.currTimer.restTime;
-        const isRestNotSet = props.currTimer.restTime === 0;
+        const isRestPhase = props.currentPhase === REST;
+        const isRestFinished = props.intervalCount === props.currTimer.restTime.time;
+        const isRestNotSet = props.currTimer.restTime.time === 0;
         return isRestPhase && (isRestFinished || isRestNotSet);
     }
 
     function warningFinished() {
-        const isWarningPhase = props.currentPhase === 3;
-        const isRoundFinished = props.intervalCount === props.currTimer.roundTime;
+        const isWarningPhase = props.currentPhase === WARNING;
+        const isRoundFinished = props.intervalCount === props.currTimer.roundTime.time;
         return isWarningPhase && isRoundFinished;
     }
 
     function roundFinished() {
-        return isRoundPhase() && props.currTimer.roundTime === 0
+        return isRoundPhase() && props.currTimer.roundTime.time === 0
     }
 
     return (
@@ -179,14 +177,14 @@ const Timer = props => {
                 <Col md={7}>
                     <div className={'timer-big full-time full-time' + getPhaseColor(props.currentPhase)}>
                         <span className="timer-big__text">
-                            { props.currentPhase === 0
+                            { props.currentPhase === DEFAULT
                                 ? 'Full Time:'
                                 : `${PHASES[props.currentPhase]} time`
                             }
                         </span>
                         <span className="timer-big__count">
-                            { props.currentPhase === 0
-                                ? msToHMS(props.fullTime)
+                            { props.currentPhase === DEFAULT
+                                ? msToHMS(getTotalTime(props.currTimer))
                                 : msToHMS(props.phaseTime)
                             }
                         </span>
@@ -196,10 +194,10 @@ const Timer = props => {
             <Row md={12} className="d-none d-sm-block mb-4">
                 <Col className="d-flex justify-content-between">
                     <TimerInfo type='total' label='Total time' val={props.currTimer}/>
-                    <TimerInfo type='warning' label='Prepare time' val={props.currTimer.prepareTime}/>
-                    <TimerInfo type='info' label='Round Time' val={props.currTimer.roundTime}/>
-                    <TimerInfo type='primary' label='Rest time' val={props.currTimer.restTime}/>
-                    <TimerInfo type='warning' label='Last seconds alert' val={props.currTimer.warningTime}/>
+                    <TimerInfo type='warning' label='Prepare time' val={props.currTimer.prepareTime.time}/>
+                    <TimerInfo type='info' label='Round Time' val={props.currTimer.roundTime.time}/>
+                    <TimerInfo type='primary' label='Rest time' val={props.currTimer.restTime.time}/>
+                    <TimerInfo type='warning' label='Last seconds alert' val={props.currTimer.warningTime.time}/>
                 </Col>
             </Row>
             <Row className="mb-4">
@@ -267,7 +265,6 @@ function mapDispatchToProps(dispatch) {
         countPhaseTime: time => dispatch(countPhaseTime(time)),
         setCurrentPhase: phase => dispatch(setCurrentPhase(phase)),
         setCurrentRound: () => dispatch(setCurrentRound()),
-        setFullTime: fullTime => dispatch(setFullTime(fullTime)),
     }
 }
 
