@@ -97,7 +97,7 @@ const TimerEdit = props => {
 
             <div className="edit-form__total text-center my-2">Total time: {msToHMS(props.editTimerData.fullTime)}</div>
 
-            <ButtonGroup className="d-flex mt-2 timer-actions-btn">
+            <ButtonGroup className="d-flex mt-2 control-btn">
                 <Button variant="success" className="me-2" onClick={saveFormData}>
                         Save Settings
                     </Button>
