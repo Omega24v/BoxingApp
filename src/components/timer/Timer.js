@@ -17,7 +17,7 @@ import {
 } from "../../store/actions/timerActions";
 import {getPhaseColor, getTotalTime} from "../../utils/common";
 import {Button, ButtonGroup, Col, Row} from 'react-bootstrap';
-import {PHASES} from "../../constatns/timerDefaultValues";
+import {DEFAULT, PHASES, PREPARE, REST, ROUND, WARNING} from "../../constatns/timerDefaultValues";
 import {msToHMS} from "../../utils/timeConverter";
 import ModalEdit from '../modals/ModalEdit';
 import TimersList from '../timersList/TimersList';
@@ -75,12 +75,12 @@ const Timer = props => {
 
         props.start();
 
-        if (props.currentPhase === 0) {
+        if (props.currentPhase === DEFAULT) {
             if (props.currTimer.prepareTime.time === 0) {
-                props.setCurrentPhase(2);
+                props.setCurrentPhase(ROUND);
                 props.setPhaseTime(props.currTimer.roundTime.time);
             } else {
-                props.setCurrentPhase(1);
+                props.setCurrentPhase(PREPARE);
                 props.setPhaseTime(props.currTimer.prepareTime.time);
             }
         }
@@ -94,18 +94,18 @@ const Timer = props => {
     }
 
     function preparationFinished() {
-        return props.currentPhase === 1 && props.intervalCount === props.currTimer.prepareTime.time
+        return props.currentPhase === PREPARE && props.intervalCount === props.currTimer.prepareTime.time
     }
 
     function startFight() {
         props.setIntervalCount(0);
         props.setPhaseTime(props.currTimer.roundTime.time);
-        props.setCurrentPhase(2);
+        props.setCurrentPhase(ROUND);
         playSound(playBell1x);
     }
 
     function isRoundPhase() {
-        return props.currentPhase === 2;
+        return props.currentPhase === ROUND;
     }
 
     function isLastRound() {
@@ -115,14 +115,14 @@ const Timer = props => {
     function startRest() {
         props.setIntervalCount(0);
         props.setPhaseTime(props.currTimer.restTime.time);
-        props.setCurrentPhase(4);
+        props.setCurrentPhase(REST);
         playSound(playBell3x);
     }
 
     function startRound() {
         props.setIntervalCount(0);
         props.setPhaseTime(props.currTimer.roundTime.time);
-        props.setCurrentPhase(2);
+        props.setCurrentPhase(ROUND);
         props.setCurrentRound();
         playSound(playBell1x);
     }
@@ -141,18 +141,18 @@ const Timer = props => {
 
     function startWarning() {
         playSound(playWarning);
-        props.setCurrentPhase(3);
+        props.setCurrentPhase(WARNING);
     }
 
     function isRestFinished() {
-        const isRestPhase = props.currentPhase === 4;
+        const isRestPhase = props.currentPhase === REST;
         const isRestFinished = props.intervalCount === props.currTimer.restTime.time;
         const isRestNotSet = props.currTimer.restTime.time === 0;
         return isRestPhase && (isRestFinished || isRestNotSet);
     }
 
     function warningFinished() {
-        const isWarningPhase = props.currentPhase === 3;
+        const isWarningPhase = props.currentPhase === WARNING;
         const isRoundFinished = props.intervalCount === props.currTimer.roundTime.time;
         return isWarningPhase && isRoundFinished;
     }
@@ -177,13 +177,13 @@ const Timer = props => {
                 <Col lg={7}>
                     <div className={'timer-big full-time full-time' + getPhaseColor(props.currentPhase)}>
                         <span className="timer-big__text">
-                            { props.currentPhase === 0
+                            { props.currentPhase === DEFAULT
                                 ? 'Full Time:'
                                 : `${PHASES[props.currentPhase]} time`
                             }
                         </span>
                         <span className="timer-big__count">
-                            { props.currentPhase === 0
+                            { props.currentPhase === DEFAULT
                                 ? msToHMS(getTotalTime(props.currTimer))
                                 : msToHMS(props.phaseTime)
                             }

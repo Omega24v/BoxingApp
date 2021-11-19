@@ -1,4 +1,4 @@
-import {TIMER_DV} from "../../../constatns/timerDefaultValues";
+import {DEFAULT, TIMER_DV} from "../../../constatns/timerDefaultValues";
 import {
     ADD_TIMER, COUNT_PHASE_TIME, DELETE_TIMER, ON_CHANGE_EDIT_DATA,
     PAUSE, RESET_TIMER,
@@ -27,7 +27,7 @@ const initialState = {
     isAdd: false,
     isSound: true,
     currentRound: 1,
-    currentPhase: 0,
+    currentPhase: DEFAULT,
     intervalCount: 0,
     intervalId: 0,
     editTimerData: {},
@@ -87,7 +87,7 @@ export default function timerReducer(state = initialState, action) {
                 ...state,
                 isRunning: false,
                 currentRound: 1,
-                currentPhase: 0,
+                currentPhase: DEFAULT,
                 phaseTime: state.currTimer.prepareTime,
                 intervalCount: 0,
                 intervalId: 0,

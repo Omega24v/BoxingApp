@@ -75,10 +75,16 @@ export const TIMER_MMA = new TimerDV(
     10
 );
 
+export const DEFAULT = 'DEFAULT';
+export const PREPARE = 'PREPARE';
+export const ROUND = 'ROUND';
+export const WARNING = 'WARNING';
+export const REST = 'REST';
+
 export const PHASES = {
-    0: 'Default',
-    1: 'Prepare',
-    2: 'Round',
-    3: 'Warning',
-    4: 'Rest'
+    DEFAULT: 'Default',
+    PREPARE: 'Prepare',
+    ROUND: 'Round',
+    WARNING: 'Warning',
+    REST: 'Rest'
 }

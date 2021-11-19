@@ -1,3 +1,5 @@
+import {PREPARE, REST, ROUND, WARNING} from "../constatns/timerDefaultValues";
+
 export const getTotalTime = currTimer => {
     if (!currTimer) {return 0}
     return ((currTimer.roundTime.time + currTimer.restTime.time)
@@ -8,13 +10,13 @@ export const getTotalTime = currTimer => {
 
 export const getPhaseColor = phase => {
     switch (phase) {
-        case 1:
+        case PREPARE:
             return '__prepare'
-        case 2:
+        case ROUND:
             return '__round'
-        case 3:
+        case WARNING:
             return '__warning'
-        case 4:
+        case REST:
             return '__rest'
         default:
             return '__default'
