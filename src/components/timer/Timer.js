@@ -165,7 +165,7 @@ const Timer = props => {
         <>
             <Row className="mb-4">
                 <Col xs={12}><h2 className="timer-title mb-2">{props.currTimer.name}</h2></Col>
-                <Col md={5} className="current-round-col">
+                <Col md={5} className="current-round-col mb-md-0 mb-2">
                     <div className="timer-big current-round">
                         <span className="timer-big__text">Current Round: </span>
                         <span className="timer-big__count">
