@@ -2,7 +2,7 @@ import {
     ADD_TIMER, COUNT_PHASE_TIME, DELETE_TIMER, ON_CHANGE_EDIT_DATA,
     PAUSE, RESET_TIMER,
     SAVE_EDIT_DATA, SET_CURRENT_PHASE, SET_CURRENT_ROUND,
-    SET_DEFAULT_VALUES, SET_FULL_TIME, SET_INTERVAL_COUNT, SET_INTERVAL_ID, SET_PHASE_TIME,
+    SET_DEFAULT_VALUES, SET_INTERVAL_COUNT, SET_INTERVAL_ID, SET_PHASE_TIME,
     SET_TIMER,
     START,
     STOP, TOGGLE_ADD_TIMER,
@@ -116,13 +116,6 @@ export const setCurrentPhase = data => {
 export const setCurrentRound = () => {
     return {
         type: SET_CURRENT_ROUND,
-    }
-}
-
-export const setFullTime = data => {
-    return {
-        type: SET_FULL_TIME,
-        payload: data
     }
 }
 

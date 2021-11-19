@@ -7,7 +7,6 @@ export const SET_INTERVAL_ID = 'SET_INTERVAL_ID';
 export const SET_PHASE_TIME = 'SET_PHASE_TIME';
 export const SET_CURRENT_PHASE = 'SET_CURRENT_PHASE';
 export const SET_CURRENT_ROUND = 'SET_CURRENT_ROUND';
-export const SET_FULL_TIME = 'SET_FULL_TIME';
 export const SET_DEFAULT_VALUES = 'SET_DEFAULT_VALUES';
 export const SET_TIMER = 'SET_TIMER';
 
