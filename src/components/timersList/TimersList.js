@@ -53,7 +53,7 @@ const TimersList = props => {
                     onClick={() => selectTimer(timer)}
                     key={timer.id}>
                     <Row>
-                        <Col xs={9}>
+                        <Col xs={10}>
                             <div className="timer-list__item item-title mb-2">{timer.name}</div>
                             <div className="timer-list__item">
                                 <i className="text-success">&#9632;</i> Rounds: {timer.rounds}
@@ -71,7 +71,7 @@ const TimersList = props => {
                                 <i className="text-warning">&#9632;</i> Last seconds alert: { msToHMS((timer.warningTime)) }
                             </div>
                         </Col>
-                        <Col xs={3} className="d-flex flex-column align-items-end">
+                        <Col xs={2} className="d-flex flex-column align-items-end">
                             <span className="mb-2" onClick={() => {props.setTimer(timer); props.toggleEditTimer()}}>
                                 <IconEdit  />
                             </span>
