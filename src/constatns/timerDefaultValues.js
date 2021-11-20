@@ -18,7 +18,7 @@ class TimerDV {
         this.restTime = new Time(restTime);
         this.prepareTime = new Time(prepareTime);
         this.warningTime = new Time(warningTime);
-        this.innerAlerts = '2, 4, 6';
+        this.innerAlerts = '';
     }
 }
 

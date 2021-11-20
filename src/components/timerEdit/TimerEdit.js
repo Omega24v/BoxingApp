@@ -101,7 +101,7 @@ const TimerEdit = props => {
                     type="number" min="0"/>
             </InputGroup>
             <InputGroup className="edit-form__group my-3">
-                <InputGroup.Text className="rounds">Circle inner alerts: </InputGroup.Text>
+                <InputGroup.Text className="rounds">Circle inner alerts (use comma: 10, 20, 30): </InputGroup.Text>
                 <Form.Control name='innerAlerts'
                               placeholder='10, 20, 30'
                               onChange={setTimerData}

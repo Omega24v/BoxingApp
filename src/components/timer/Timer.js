@@ -50,12 +50,14 @@ const Timer = props => {
     }
 
     useEffect(() => {
-        
+
         if (innerAlerts) {
             if (isInnerAlertsCircleFinished()) {
                 resetInnerAlerts();
             }
-            playInnerAlertSound();
+            if (!isLastRoundSecond()) {
+                playInnerAlertSound();
+            }
         }
 
         if (preparationFinished()) {
@@ -87,8 +89,7 @@ const Timer = props => {
 
         if (props.currentPhase === DEFAULT) {
             if (props.currTimer.prepareTime.time === 0) {
-                props.setCurrentPhase(ROUND);
-                props.setPhaseTime(props.currTimer.roundTime.time);
+                startFight();
             } else {
                 props.setCurrentPhase(PREPARE);
                 props.setPhaseTime(props.currTimer.prepareTime.time);
@@ -166,6 +167,10 @@ const Timer = props => {
         const isWarningPhase = props.currentPhase === WARNING;
         const isRoundFinished = props.intervalCount === props.currTimer.roundTime.time;
         return isWarningPhase && isRoundFinished;
+    }
+
+    function isLastRoundSecond() {
+        return props.intervalCount === props.currTimer.roundTime.time;
     }
 
     function roundFinished() {
