@@ -12,7 +12,7 @@ const Modals = props => {
         <Modal.Title>
           Edit {timerName}
         </Modal.Title>
-        <CloseButton aria-label="Close"><IconClose/></CloseButton>
+        <CloseButton aria-label="Close" onClick={props.onHide}><IconClose/></CloseButton>
       </Modal.Header>
       <Modal.Body>
         <TimerEdit/>
