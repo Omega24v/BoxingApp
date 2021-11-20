@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import {
     countPhaseTime,
@@ -26,6 +26,7 @@ import useSound from 'use-sound';
 import bell1x from '../../sounds/bell-1x.mp3';
 import bell3x from '../../sounds/bell-3x.mp3';
 import warning from '../../sounds/warning.mp3';
+import innerAlert from '../../sounds/innerAlert.mp3';
 import TimerInfo from "../timerInfo/TimerInfo";
 
 
@@ -34,7 +35,9 @@ const Timer = props => {
     const [playBell1x] = useSound(bell1x);
     const [playBell3x] = useSound(bell3x);
     const [playWarning] = useSound(warning);
-
+    const [playInnerAlert] = useSound(innerAlert);
+    const [innerAlerts, setInnerAlerts] = useState(null);
+    
     const playSound = cb => {
         if (!cb) {return}
         return props.isSound ? cb() : null;
@@ -47,6 +50,15 @@ const Timer = props => {
     }
 
     useEffect(() => {
+
+        if (innerAlerts) {
+            if (isInnerAlertsCircleFinished()) {
+                resetInnerAlerts();
+            }
+            if (!isLastRoundSecond()) {
+                playInnerAlertSound();
+            }
+        }
 
         if (preparationFinished()) {
             startFight();
@@ -77,8 +89,7 @@ const Timer = props => {
 
         if (props.currentPhase === DEFAULT) {
             if (props.currTimer.prepareTime.time === 0) {
-                props.setCurrentPhase(ROUND);
-                props.setPhaseTime(props.currTimer.roundTime.time);
+                startFight();
             } else {
                 props.setCurrentPhase(PREPARE);
                 props.setPhaseTime(props.currTimer.prepareTime.time);
@@ -98,6 +109,7 @@ const Timer = props => {
     }
 
     function startFight() {
+        setInnerAlerts(getInnerAlerts() ? getFilteredAndMapInnerAlerts() : '');
         props.setIntervalCount(0);
         props.setPhaseTime(props.currTimer.roundTime.time);
         props.setCurrentPhase(ROUND);
@@ -157,8 +169,54 @@ const Timer = props => {
         return isWarningPhase && isRoundFinished;
     }
 
+    function isLastRoundSecond() {
+        return props.intervalCount === props.currTimer.roundTime.time;
+    }
+
     function roundFinished() {
         return isRoundPhase() && props.currTimer.roundTime.time === 0
+    }
+    
+    function getFilteredAndMapInnerAlerts() {
+        return getInnerAlerts().filter(item => item && +item > 0).map(item => {
+            return {time: parseInt(item, 10), isActivated: false}
+        })
+    }
+    
+    function isInnerAlerts(alert, prevAlertTime) {
+        return props.intervalCount !== 0
+            && (props.currentPhase === ROUND || props.currentPhase === WARNING)
+            && !alert.isActivated
+            && (props.intervalCount / 1000) % (alert.time + (prevAlertTime || 0)) === 0
+    }
+
+    function getInnerAlerts() {
+        return props.currTimer.innerAlerts ? props.currTimer.innerAlerts.split(',') : null;
+    }
+
+    function resetInnerAlerts() {
+        if (!innerAlerts) {return}
+        let mapAlerts = innerAlerts.map(item => {
+            return {...item, isActivated: false}
+        });
+        setInnerAlerts(mapAlerts);
+    }
+    
+    function isInnerAlertsCircleFinished() {
+        return innerAlerts.filter(alert => {
+            return !alert.isActivated;
+        }).length === 0;
+    }
+    
+    function playInnerAlertSound() {
+        if (!innerAlerts) {return}
+        innerAlerts.reduce((prevAlertTime, alert) => {
+            if (isInnerAlerts(alert, prevAlertTime)) {
+                alert.isActivated = true;
+                playSound(playInnerAlert);
+            }
+            return innerAlerts.length > 1 ? alert.time + prevAlertTime : 0;
+        }, 0);
     }
 
     return (

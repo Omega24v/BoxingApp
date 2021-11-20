@@ -100,6 +100,15 @@ const TimerEdit = props => {
                     value={props.editTimerData.warningTime.sec}
                     type="number" min="0"/>
             </InputGroup>
+            <InputGroup className="edit-form__group my-3">
+                <InputGroup.Text className="rounds">Circle inner alerts (use comma: 10, 20, 30): </InputGroup.Text>
+                <Form.Control name='innerAlerts'
+                              placeholder='10, 20, 30'
+                              onChange={setTimerData}
+                              value={props.editTimerData.innerAlerts}
+                              type="text"
+                              min="0"/>
+            </InputGroup>
 
             <div className="edit-form__total text-center my-2">
                 Total time: {msToHMS(getTotalTime(props.editTimerData))}
