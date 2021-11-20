@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, Modal} from "react-bootstrap";
+import { FormattedMessage } from 'react-intl';
 
 const ConfirmAlert = props => {
     const { itemName, confirmAction, ...rest } = props;
@@ -7,15 +8,15 @@ const ConfirmAlert = props => {
         <Modal className="edit-modal" {...rest} size="md" aria-labelledby="modal-title" centered>
             <Modal.Header closeButton>
                 <Modal.Title>
-                    Please confirm
+                    <FormattedMessage id='pleaceConfirm' />
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                Do you really want to delete {itemName} ?
+                <FormattedMessage id='wantDelete' /> {itemName} ?
             </Modal.Body>
             <Modal.Footer>
-                <Button type="button" size="md" variant="primary" onClick={props.onHide}>Close</Button>
-                <Button type="button" size="md" variant="danger" onClick={confirmAction}>Delete</Button>
+                <Button type="button" size="md" variant="primary" onClick={props.onHide}><FormattedMessage id='close'/></Button>
+                <Button type="button" size="md" variant="danger" onClick={confirmAction}><FormattedMessage id='delete'/></Button>
             </Modal.Footer>
         </Modal>
     )

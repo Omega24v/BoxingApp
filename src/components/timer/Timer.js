@@ -28,7 +28,7 @@ import bell3x from '../../sounds/bell-3x.mp3';
 import warning from '../../sounds/warning.mp3';
 import innerAlert from '../../sounds/innerAlert.mp3';
 import TimerInfo from "../timerInfo/TimerInfo";
-
+import { FormattedMessage } from 'react-intl';
 
 const Timer = props => {
 
@@ -225,18 +225,18 @@ const Timer = props => {
                 <Col xs={12}><h2 className="timer-title mb-2">{props.currTimer.name}</h2></Col>
                 <Col md={5} className="current-round-col">
                     <div className="timer-big current-round">
-                        <span className="timer-big__text">Current Round: </span>
+                        <span className="timer-big__text"><FormattedMessage id='currentRound'/></span>
                         <span className="timer-big__count">
                             { props.currentRound > 9 ? props.currentRound : `0${props.currentRound}`}
                         </span>
-                        <span className="timer-big__text">OF {props.currTimer.rounds} ROUNDS</span>
+                        <span className="timer-big__text"><FormattedMessage id='of'/> {props.currTimer.rounds} <FormattedMessage id='rounds'/></span>
                     </div>
                 </Col>
                 <Col md={7}>
                     <div className={'timer-big full-time full-time' + getPhaseColor(props.currentPhase)}>
                         <span className="timer-big__text">
                             { props.currentPhase === DEFAULT
-                                ? 'Full Time:'
+                                ? <FormattedMessage id='totalTime'/>
                                 : `${PHASES[props.currentPhase]} time`
                             }
                         </span>
@@ -251,11 +251,11 @@ const Timer = props => {
             </Row>
             <Row md={12} className="d-none d-sm-block mb-4">
                 <Col className="d-flex justify-content-between">
-                    <TimerInfo type='total' label='Total time' val={props.currTimer}/>
-                    <TimerInfo type='warning' label='Prepare time' val={props.currTimer.prepareTime.time}/>
-                    <TimerInfo type='info' label='Round Time' val={props.currTimer.roundTime.time}/>
-                    <TimerInfo type='primary' label='Rest time' val={props.currTimer.restTime.time}/>
-                    <TimerInfo type='warning' label='Last seconds alert' val={props.currTimer.warningTime.time}/>
+                    <TimerInfo type='total' label={<FormattedMessage id='totalTime'/>} val={props.currTimer}/>
+                    <TimerInfo type='warning' label={<FormattedMessage id='prepareTime'/>} val={props.currTimer.prepareTime.time}/>
+                    <TimerInfo type='info' label={<FormattedMessage id='roundTime'/>} val={props.currTimer.roundTime.time}/>
+                    <TimerInfo type='primary' label={<FormattedMessage id='restTime'/>} val={props.currTimer.restTime.time}/>
+                    <TimerInfo type='warning' label={<FormattedMessage id='warningTime'/>} val={props.currTimer.warningTime.time}/>
                 </Col>
             </Row>
             <Row className="mb-4">
@@ -266,15 +266,15 @@ const Timer = props => {
                             <Button variant="danger"
                                     className="me-3"
                                     onClick={stopResetAndTimer}>
-                                Stop
+                                <FormattedMessage id='stop'/>
                             </Button>
                             :
                             ''
                         }
                         <Button variant="success" className="me-3 btn-start" onClick={handleTimer}>
-                            {props.isRunning ? 'Pause' : 'Start'}
+                            {props.isRunning ? <FormattedMessage id='pause'/> : <FormattedMessage id='start'/>}
                         </Button>
-                        <Button variant="warning" onClick={() => {props.toggleEditTimer()}}>Edit/Add</Button>
+                        <Button variant="warning" onClick={() => {props.toggleEditTimer()}}><FormattedMessage id='editAdd'/></Button>
                     </ButtonGroup>
                 </Col>
             </Row>
