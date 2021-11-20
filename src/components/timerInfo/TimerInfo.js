@@ -1,17 +1,15 @@
 import React from 'react';
-import {msToMAS} from "../../utils/timeConverter";
+import {msToHMS} from "../../utils/timeConverter";
 import {getTotalTime} from "../../utils/common";
 
 const TimerInfo = ({label, type, val}) => {
 
     let formattedVal;
 
-    if (type === 'success') {
-        formattedVal = msToMAS(getTotalTime(val))
-    }   else if (type === 'danger') {
-        formattedVal = val
+    if (type === 'total') {
+        formattedVal = msToHMS(getTotalTime(val))
     } else {
-        formattedVal = msToMAS(val)
+        formattedVal = msToHMS(val)
     }
 
     return (

@@ -1,42 +1,91 @@
 import {getMinAndSecFromMs} from "../utils/timeConverter";
-import {getTotalTime} from "../utils/common";
+import {getRandomId} from "../utils/getRandomId";
 
 class TimerDV {
-    constructor() {
-        this.name = 'Default Timer';
-        this.isActive = true;
-        this.isRunning = false;
-        this.rounds = 3;
-        this.roundTime = 3000; // 3 minutes = 180000 ms
-        this.roundTimeSec = getMinAndSecFromMs(this.roundTime).sec;
-        this.roundTimeMin = getMinAndSecFromMs(this.roundTime).min;
-        this.restTime = 2000; // 1 minutes = 60000 ms
-        this.restTimeSec = getMinAndSecFromMs(this.restTime).sec;
-        this.restTimeMin = getMinAndSecFromMs(this.restTime).min;
-        this.prepareTime = 1000; // 10 seconds = 10000 ms
-        this.prepareTimeSec = getMinAndSecFromMs(this.prepareTime).sec;
-        this.prepareTimeMin = getMinAndSecFromMs(this.prepareTime).min;
-        this.warningTime = 2000; // 10 seconds = 10000 ms
-        this.warningTimeSec = getMinAndSecFromMs(this.warningTime).sec;
-        this.warningTimeMin = getMinAndSecFromMs(this.warningTime).min;
-        this.currentTime = 0;
-        this.currentRound = 1;
-        this.remainingTime = 0;
-        this.fullTime = getTotalTime({
-            roundTime: this.roundTime,
-            restTime: this.restTime,
-            rounds: this.rounds,
-            prepareTime: this.prepareTime,
-        })
+    constructor(
+        id,
+        name,
+        rounds,
+        roundTime,
+        restTime,
+        prepareTime,
+        warningTime,
+    ) {
+        this.id = id;
+        this.name = name;
+        this.rounds = rounds;
+        this.roundTime = new Time(roundTime);
+        this.restTime = new Time(restTime);
+        this.prepareTime = new Time(prepareTime);
+        this.warningTime = new Time(warningTime);
+        this.innerAlerts = '';
     }
 }
 
-export const TIMER_DV = new TimerDV();
+export class Time {
+    constructor(
+        time
+    ) {
+        this.time = time * 1000;
+    }
+
+    get sec() {
+        return this.getSec();
+    }
+
+    get min() {
+        return this.getMin();
+    }
+
+    getSec() {
+        return getMinAndSecFromMs(this.time).sec;
+    }
+
+    getMin() {
+        return getMinAndSecFromMs(this.time).min;
+    }
+
+}
+
+export const TIMER_DV = new TimerDV(
+    getRandomId(),
+    'Boxing Timer',
+    12,
+    3 * 60,
+    60,
+    10,
+    10,
+);
+
+export const TIMER_BOXING_AMATEUR = new TimerDV(
+    getRandomId(),
+    'Amateur Boxing Timer',
+    8,
+    2 * 60,
+    60,
+    10,
+    10
+);
+export const TIMER_MMA = new TimerDV(
+    getRandomId(),
+    'MMA Timer',
+    5,
+    5 * 60,
+    60,
+    10,
+    10
+);
+
+export const DEFAULT = 'DEFAULT';
+export const PREPARE = 'PREPARE';
+export const ROUND = 'ROUND';
+export const WARNING = 'WARNING';
+export const REST = 'REST';
 
 export const PHASES = {
-    0: 'Default',
-    1: 'Prepare',
-    2: 'Round',
-    3: 'Warning',
-    4: 'Rest'
+    DEFAULT: 'Default',
+    PREPARE: 'Prepare',
+    ROUND: 'Round',
+    WARNING: 'Warning',
+    REST: 'Rest'
 }
