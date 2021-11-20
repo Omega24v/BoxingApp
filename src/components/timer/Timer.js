@@ -197,7 +197,7 @@ const Timer = props => {
                     <TimerInfo type='warning' label='Prepare time' val={props.currTimer.prepareTime.time}/>
                     <TimerInfo type='info' label='Round Time' val={props.currTimer.roundTime.time}/>
                     <TimerInfo type='primary' label='Rest time' val={props.currTimer.restTime.time}/>
-                    <TimerInfo type='warning' label='Last seconds alert' val={props.currTimer.warningTime.time}/>
+                    <TimerInfo type='warning' label='Warning time' val={props.currTimer.warningTime.time}/>
                 </Col>
             </Row>
             <Row className="mb-4">
@@ -229,7 +229,7 @@ const Timer = props => {
             <ModalEdit
                 show={props.isEdit}
                 timerName={props.currTimer.name}
-                onHide={() => props.toggleEditTimer()}
+                onHide={props.toggleEditTimer}
             />
         </>
     );

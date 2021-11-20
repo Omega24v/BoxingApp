@@ -68,7 +68,7 @@ const TimersList = props => {
                                 <i className="text-primary">&#9632;</i> Rest Time: { msToHMS((timer.restTime.time)) }
                             </div>
                             <div className="timer-list__item">
-                                <i className="text-warning">&#9632;</i> Last seconds alert: { msToHMS((timer.warningTime.time)) }
+                                <i className="text-warning">&#9632;</i> Warning time: { msToHMS((timer.warningTime.time)) }
                             </div>
                         </Col>
                         <Col xs={2} className="d-flex flex-column align-items-end">
