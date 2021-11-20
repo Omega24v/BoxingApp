@@ -30,9 +30,6 @@ const TimerEdit = props => {
         editableTimer.prepareTime.time = getInputsTime(editableTimer, 'prepareTime');
         editableTimer.warningTime.time = getInputsTime(editableTimer, 'warningTime');
 
-        console.log('editableTimer');
-        console.log(editableTimer);
-
         props.onChangeEditData(editableTimer);
     }
 
