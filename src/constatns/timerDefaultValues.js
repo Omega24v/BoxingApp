@@ -9,7 +9,7 @@ class TimerDV {
         roundTime,
         restTime,
         prepareTime,
-        warningTime
+        warningTime,
     ) {
         this.id = id;
         this.name = name;
@@ -18,6 +18,7 @@ class TimerDV {
         this.restTime = new Time(restTime);
         this.prepareTime = new Time(prepareTime);
         this.warningTime = new Time(warningTime);
+        this.innerAlerts = '2, 4, 6';
     }
 }
 
