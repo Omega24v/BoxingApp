@@ -1,24 +1,36 @@
-import React from "react";
-import Timer from "./components/timer/Timer";
+import React, { useState } from "react";
 import {Container, Row, Col} from "react-bootstrap";
-import ToggleTheme from "./components/theme/ToggleTheme";
-import './App.sass';
-import SoundSwitcher from "./components/soundSwitcher/SoundSwitcher";
 import { IntlProvider } from "react-intl";
-import { LOCALES } from './translation/locales'
-import { messages } from './translation/messages'
+import Timer from "./components/timer/Timer";
+import ToggleTheme from "./components/theme/ToggleTheme";
+import SoundSwitcher from "./components/soundSwitcher/SoundSwitcher";
+import { LOCALES } from './translation/locales';
+import { messages } from './translation/messages';
+import LangSwitcher from "./components/langSwitcher/LangSwitcher";
+import './App.sass';
 
 function App() {
-  console.dir(IntlProvider)
-  const locale = LOCALES.ENGLISH
+
+  const [currentLocale, setCurrentLocale] =  useState(getInitialLocal());
+  
+  const handleChange = (e) => {
+    setCurrentLocale(e.target.dataset.value);
+    localStorage.setItem("lang", e.target.dataset.value);
+  }
+
+  function getInitialLocal() {
+    const savedLocale = localStorage.getItem("lang");
+    return savedLocale || LOCALES.ENGLISH;
+  }
 
   return (
-    <IntlProvider messages={messages[locale]} locale={locale} defaultLocale={LOCALES.ENGLISH}>
+    <IntlProvider messages={messages[currentLocale]} locale={currentLocale} defaultLocale={LOCALES.ENGLISH}>
       <div className="App">
         <Container>
           <Row className="mt-2">
-            <Col lg={12} className="d-flex justify-content-between">
+            <Col lg={12} className="d-flex justify-content-between align-items-center">
               <ToggleTheme/>
+              <LangSwitcher currentLocale={currentLocale} handleChange={handleChange}/>
               <SoundSwitcher/>
             </Col>
           </Row>
