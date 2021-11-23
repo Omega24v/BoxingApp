@@ -8,7 +8,7 @@ const ConfirmAlert = props => {
         <Modal className="edit-modal" {...rest} size="md" aria-labelledby="modal-title" centered>
             <Modal.Header closeButton>
                 <Modal.Title>
-                    <FormattedMessage id='pleaceConfirm' />
+                    <FormattedMessage id='pleaseConfirm' />
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
