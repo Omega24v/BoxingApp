@@ -225,7 +225,9 @@ const Timer = props => {
                 <Col xs={12}><h2 className="timer-title mb-2">{props.currTimer.name}</h2></Col>
                 <Col md={5} className="current-round-col mb-md-0 mb-2">
                     <div className="timer-big current-round">
-                        <span className="timer-big__text"><FormattedMessage id='currentRound'/></span>
+                        <span className="timer-big__text">
+                            <FormattedMessage id='currentRound'/>
+                        </span>
                         <span className="timer-big__count">
                             { props.currentRound > 9 ? props.currentRound : `0${props.currentRound}`}
                         </span>
@@ -237,7 +239,7 @@ const Timer = props => {
                         <span className="timer-big__text">
                             { props.currentPhase === DEFAULT
                                 ? <FormattedMessage id='totalTime'/>
-                                : `${PHASES[props.currentPhase]} time`
+                                : <FormattedMessage id={PHASES[props.currentPhase].toLowerCase()}/>
                             }
                         </span>
                         <span className="timer-big__count">

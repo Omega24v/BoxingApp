@@ -1,7 +1,7 @@
 import { LOCALES } from './locales'
 
 export const messages = {
-  [LOCALES.GB.code]: {
+  [LOCALES.EN.code]: {
     close: "Close",
     currentRound: "Current round",
     circleAlerts: "Circle inner alerts (use comma: 10, 20, 30)",
@@ -30,7 +30,7 @@ export const messages = {
     warning: "Warning",
     editAdd: "Edit/Add",
   },
-  [LOCALES.UA.code]: {
+  [LOCALES.UK.code]: {
     rest: "Відпочинок",
     totalTime:"Увесь час",
     of: "з",
@@ -49,7 +49,7 @@ export const messages = {
     currentRound: "Поточний раунд",
     circleAlerts: "Циклічні оповіщення (ставте кому: 10, 20, 30)",
     round: "Раунд",
-    rounds: "К-ть раундів",
+    rounds: "Раундів",
     restTime: "Час відпочинку",
     edit: "Редагувати",
     createTimer: "Створити таймер",
