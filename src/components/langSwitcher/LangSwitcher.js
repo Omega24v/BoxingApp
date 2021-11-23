@@ -23,8 +23,8 @@ const LangSwitcher = (props) => {
 
           <Dropdown.Menu>
             {Object.keys(LOCALES).map((lang) => (
-              <Dropdown.Item onClick={() => {handleChange(LOCALES[lang].code)}}>
-                <div className="d-flex align-items-center"><FlagImg code={lang}/><span class="switcher-title">{LOCALES[lang].name}</span></div>
+              <Dropdown.Item key={lang} onClick={() => {handleChange(LOCALES[lang].code)}}>
+                <div className="d-flex align-items-center"><FlagImg code={lang}/><span className="switcher-title">{LOCALES[lang].name}</span></div>
               </Dropdown.Item>
             ))}
           </Dropdown.Menu>

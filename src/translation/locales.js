@@ -1,11 +1,11 @@
 export const LOCALES = {
-  GB: {
+  EN: {
     name: 'English',
-    code: 'GB',
+    code: 'EN',
   },
-  UA: {
+  UK: {
     name: 'Українська',
-    code: 'UA',
+    code: 'UK',
   },
   ES: {
     name: 'Español',

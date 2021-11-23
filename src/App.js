@@ -15,11 +15,11 @@ function App() {
 
   function getInitialLocal() {
     const savedLocale = localStorage.getItem("lang");
-    return savedLocale || LOCALES.GB.code;
+    return savedLocale || LOCALES.EN.code;
   }
 
   return (
-    <IntlProvider messages={messages[currentLocale]} locale={currentLocale} defaultLocale={LOCALES.GB.code}>
+    <IntlProvider messages={messages[currentLocale]} locale={currentLocale} defaultLocale={LOCALES.EN.code}>
       <div className="App">
         <Container>
           <Row className="mt-2">

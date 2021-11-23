@@ -7,9 +7,9 @@ import { Image } from 'react-bootstrap';
   function FlagImg({code}) {
     const getSvg = (code) => {
       switch(code) {
-        case 'UA' : 
+        case 'UK' : 
           return FlagUA
-        case 'GB' :
+        case 'EN' :
           return FlagGB
         case 'ES' :
           return FlagES
