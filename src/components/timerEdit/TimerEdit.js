@@ -6,6 +6,7 @@ import {getRandomId} from "../../utils/getRandomId";
 import {getMsFromMinAndSec, msToHMS} from "../../utils/timeConverter";
 import './TimerEdit.sass'
 import {getTotalTime} from "../../utils/common";
+import { FormattedMessage } from 'react-intl';
 
 const TimerEdit = props => {
 
@@ -42,12 +43,12 @@ const TimerEdit = props => {
     return (
         <Form className="edit-form d-flex flex-column">
             <Form.Label>
-                <div className="mb-2">Timer Name:</div>
+                <div className="mb-2"><FormattedMessage id='timerName'/>:</div>
                 <Form.Control name='name' onChange={setTimerData} value={props.editTimerData.name} type="text"/>
             </Form.Label>
 
             <InputGroup className="edit-form__group my-3">
-                <InputGroup.Text className="rounds">Rounds:</InputGroup.Text>
+                <InputGroup.Text className="rounds"><FormattedMessage id='rounds'/>:</InputGroup.Text>
                 <Form.Control name='rounds'
                     onChange={setTimerData}
                     value={props.editTimerData.rounds}
@@ -55,7 +56,7 @@ const TimerEdit = props => {
                     min="0"/>
             </InputGroup>
             <InputGroup className="edit-form__group mb-3">
-                <InputGroup.Text>Round Time</InputGroup.Text>
+                <InputGroup.Text><FormattedMessage id='roundTime'/></InputGroup.Text>
                 <Form.Control name='roundTimeMin'
                     onChange={setTimerData}
                     value={props.editTimerData.roundTime.min}
@@ -66,7 +67,7 @@ const TimerEdit = props => {
                     type="number" min="0"/>
             </InputGroup>
             <InputGroup className="edit-form__group mb-3">
-                <InputGroup.Text className="group-item">Rest Time</InputGroup.Text>
+                <InputGroup.Text className="group-item"><FormattedMessage id='restTime'/></InputGroup.Text>
                 <Form.Control name='restTimeMin'
                     onChange={setTimerData}
                     value={props.editTimerData.restTime.min}
@@ -77,7 +78,7 @@ const TimerEdit = props => {
                     type="number" min="0"/>
             </InputGroup>
             <InputGroup className="edit-form__group mb-3">
-                <InputGroup.Text className="group-item">Prepare Time</InputGroup.Text>
+                <InputGroup.Text className="group-item"><FormattedMessage id='prepareTime'/></InputGroup.Text>
                 <Form.Control 
                     name='prepareTimeMin'
                     onChange={setTimerData}
@@ -90,7 +91,7 @@ const TimerEdit = props => {
                     type="number" min="0"/>
             </InputGroup>
             <InputGroup className="edit-form__group mb-3">
-                <InputGroup.Text>Warning Time</InputGroup.Text>
+                <InputGroup.Text><FormattedMessage id='warningTime'/></InputGroup.Text>
                 <Form.Control name='warningTimeMin'
                     onChange={setTimerData}
                     value={props.editTimerData.warningTime.min}
@@ -101,7 +102,7 @@ const TimerEdit = props => {
                     type="number" min="0"/>
             </InputGroup>
             <InputGroup className="edit-form__group my-3">
-                <InputGroup.Text className="rounds">Circle inner alerts (use comma: 10, 20, 30): </InputGroup.Text>
+                <InputGroup.Text className="rounds"><FormattedMessage id='circleAlerts'/>: </InputGroup.Text>
                 <Form.Control name='innerAlerts'
                               placeholder='10, 20, 30'
                               onChange={setTimerData}
@@ -116,14 +117,14 @@ const TimerEdit = props => {
 
             <ButtonGroup className="d-flex mt-2 control-btn">
                 <Button variant="success" className="me-2" onClick={saveFormData}>
-                        Save Settings
+                <FormattedMessage id='saveSettings'/>
                     </Button>
                 <Button variant="warning"
                     onClick={() => {
                         props.toggleEditTimer();
                         props.addTimer({...props.editTimerData, id: getRandomId()});
                     }}>
-                    Save as new timer
+                    <FormattedMessage id='saveAsNewTimer'/>
                 </Button>
             </ButtonGroup>
         </Form>
