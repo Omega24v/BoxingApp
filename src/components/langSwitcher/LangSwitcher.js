@@ -1,31 +1,35 @@
 import React from 'react';
-import { DropdownButton, Dropdown, Image } from 'react-bootstrap';
+import { Dropdown, Form } from 'react-bootstrap';
 import { LOCALES } from '../../translation/locales';
-import './LangSwitcher.sass'
+import FlagImg from '../icons/FlagImg';
+import './LangSwitcher.sass';
 
-const LangSwitcher = ({ currentLocale, handleChange }) => {
+const LangSwitcher = (props) => {
+  const { currentLocale, setCurrentLocale} = props;
 
-  const languages = [
-    { name: 'English', code: LOCALES.ENGLISH },
-    { name: 'Ukranian', code: LOCALES.UKRAINIAN },
-  ]
-
-  const flags = (lang) => {
-    const lg = lang.substring(lang.length - 2)
-    return `http://purecatamphetamine.github.io/country-flag-icons/3x2/${lg}.svg`
+  const handleChange = (code) => {
+    props.setCurrentLocale(code)
+    localStorage.setItem("lang", code);
   }
 
   return (
     <>
-      <Dropdown value={currentLocale}>
-        <DropdownButton id="dropdown-basic-button" title="Change language">
-          {languages.map(({ name, code }) => (
-            <Dropdown.Item onClick={handleChange} key={code} data-value={code} >
-              <Image src={flags(code)} className="switcher-flag" />{name}
-            </Dropdown.Item>
-          ))}
-        </DropdownButton>
-      </Dropdown> 
+      <Form>
+        <Dropdown className="lang-switcher" value={currentLocale}>
+
+          <Dropdown.Toggle variant="light" className="lang-switcher__toggler p-2 d-flex align-items-center">
+            <div className="d-flex align-items-center"><FlagImg code={currentLocale}/><span className="switcher-title">{LOCALES[currentLocale].name}</span></div>
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            {Object.keys(LOCALES).map((lang) => (
+              <Dropdown.Item onClick={() => {handleChange(LOCALES[lang].code)}}>
+                <div className="d-flex align-items-center"><FlagImg code={lang}/><span class="switcher-title">{LOCALES[lang].name}</span></div>
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown>
+      </Form>
     </>
   )
 }

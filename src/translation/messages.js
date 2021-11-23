@@ -1,7 +1,7 @@
 import { LOCALES } from './locales'
 
 export const messages = {
-  [LOCALES.ENGLISH]: {
+  [LOCALES.GB.code]: {
     close: "Close",
     currentRound: "Current round",
     circleAlerts: "Circle inner alerts (use comma: 10, 20, 30)",
@@ -31,7 +31,7 @@ export const messages = {
     warning: "Warning",
     editAdd: "Edit/Add",
   },
-  [LOCALES.UKRAINIAN]: {
+  [LOCALES.UA.code]: {
     rest: "Відпочинок",
     totalTime:"Увесь час",
     of: "з",
@@ -59,5 +59,34 @@ export const messages = {
     roundTime: "Час раунду",
     close: "Закрити",
     editAdd: "Редагувати/додати",
+  },
+  [LOCALES.ES.code]: {
+    close: "Cerrar",
+    currentRound: "Ronda actual",
+    circleAlerts: "Alertas internas del círculo (usar coma: 10, 20, 30)",
+    default: "Por defecto",
+    edit: "Editar",
+    fullTime: "Tiempo completo",
+    of: "de",
+    phase: "Fase",
+    prepareTime: "Tiempo de preparación",
+    prepare: "Preparar",
+    pleaceConfirm: "Confirmar por favor",
+    restTime: "Tiempo de descanso",
+    rest: "Descanso",
+    restTime: "Tiempo de descanso",
+    roundTime: "Tiempo de ronda",
+    round: "Ronda",
+    rounds: "Rondas",
+    saveAsNewTimer: "Guardar como nuevo temporizador",
+    saveSettings: "Guardar configuración",
+    start: "Start",
+    stop: "Stop",
+    timerName: "Nombre del temporizador",
+    totalTime: "Tiempo total",
+    warningTime: "Tiempo de advertencia",
+    wantDelete: "Realmente quieres borrar",
+    warning: "Advertencia",
+    editAdd: "Editar/Añadir",
   },
 }

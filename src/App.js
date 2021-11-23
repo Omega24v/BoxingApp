@@ -12,25 +12,20 @@ import './App.sass';
 function App() {
 
   const [currentLocale, setCurrentLocale] =  useState(getInitialLocal());
-  
-  const handleChange = (e) => {
-    setCurrentLocale(e.target.dataset.value);
-    localStorage.setItem("lang", e.target.dataset.value);
-  }
 
   function getInitialLocal() {
     const savedLocale = localStorage.getItem("lang");
-    return savedLocale || LOCALES.ENGLISH;
+    return savedLocale || LOCALES.GB.code;
   }
 
   return (
-    <IntlProvider messages={messages[currentLocale]} locale={currentLocale} defaultLocale={LOCALES.ENGLISH}>
+    <IntlProvider messages={messages[currentLocale]} locale={currentLocale} defaultLocale={LOCALES.GB.code}>
       <div className="App">
         <Container>
           <Row className="mt-2">
             <Col lg={12} className="d-flex justify-content-between align-items-center">
               <ToggleTheme/>
-              <LangSwitcher currentLocale={currentLocale} handleChange={handleChange}/>
+              <LangSwitcher currentLocale={currentLocale} setCurrentLocale={setCurrentLocale} />
               <SoundSwitcher/>
             </Col>
           </Row>
