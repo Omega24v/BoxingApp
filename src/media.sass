@@ -25,6 +25,9 @@
 
 @include media-breakpoint-down(lg)
 
+  .timer-list
+    width: auto
+
   .edit-form
     &__total
       font-size: 3vw
@@ -56,21 +59,19 @@
   .btn
     font-size: 3vw
     letter-spacing: 1px
-  
-  .timer
-    .btn
-      width: 100px
-      height: auto
 
   .edit-form
     &__total
       font-size: 3.5vw
     .input-group-text
-      flex-grow: 0
       flex-basis: 130px
 
   .timer-big
     &__text
       font-size: 3.5vw
+
+  .switch__label::before, 
+  .switch__label::after
+    font-weight: 1vw
 
 @include media-breakpoint-down(xs)

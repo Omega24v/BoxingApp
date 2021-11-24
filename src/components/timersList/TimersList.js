@@ -48,7 +48,7 @@ const TimersList = (props) => {
     <div className="d-flex flex-wrap gap-3">
       {props.timers.map((timer) => (
         <div
-          className={`timer-list flex-grow-1 flex-md-grow-0 p-2 ${
+          className={`timer-list flex-grow-1 flex-lg-grow-0 p-2 ${
             timer.id === props.currTimer.id ? 'active text-danger' : ''
           }`}
           onClick={() => selectTimer(timer)}
