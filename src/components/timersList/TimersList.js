@@ -48,7 +48,7 @@ const TimersList = (props) => {
     <div className="d-flex flex-wrap gap-3">
       {props.timers.map((timer) => (
         <div
-          className={`timer-list flex-grow-1 flex-md-grow-0 p-2 ${
+          className={`timer-list flex-grow-1 flex-lg-grow-0 p-2 ${
             timer.id === props.currTimer.id ? 'active text-danger' : ''
           }`}
           onClick={() => selectTimer(timer)}
@@ -60,24 +60,24 @@ const TimersList = (props) => {
                 {timer.name}
               </div>
               <div className="timer-list__item">
-                <i className="text-success">&#9632;</i> <FormattedMessage id='rounds'/>: {timer.rounds}
+                <i className="text-success me-1">&#9632;</i> 
+                {timer.rounds} <FormattedMessage id='rounds'/> <FormattedMessage id='of'/> {msToHMS(timer.roundTime.time)}
+              </div>
+              <div className="timer-list__item">
+                <i className="text-primary me-1">&#9632;</i><FormattedMessage id='restTime'/>:{' '}
+                {msToHMS(timer.restTime.time)}
               </div>
               <div className="timer-list__item">
                 <i className="text-warning">&#9632;</i> <FormattedMessage id='prepareTime'/>:{' '}
                 {msToHMS(timer.prepareTime.time)}
               </div>
-              <div className="timer-list__item">
-                <i className="text-info">&#9632;</i> <FormattedMessage id='roundTime'/>:{' '}
-                {msToHMS(timer.roundTime.time)}
-              </div>
-              <div className="timer-list__item">
-                <i className="text-primary">&#9632;</i> <FormattedMessage id='restTime'/>:{' '}
-                {msToHMS(timer.restTime.time)}
-              </div>
-              <div className="timer-list__item">
-                <i className="text-warning">&#9632;</i> <FormattedMessage id='warningTime'/>:{' '}
-                {msToHMS(timer.warningTime.time)}
-              </div>
+              { timer.innerAlerts
+                ? <div className="timer-list__item">
+                    <i className="text-danger">&#9632;</i> <FormattedMessage id='circleAlerts'/>:{' '}
+                    {timer.innerAlerts}
+                  </div> 
+                : ''
+              }
             </Col>
             <Col xs={3} className="d-flex flex-column align-items-end">
               <span

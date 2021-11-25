@@ -102,7 +102,7 @@ const TimerEdit = props => {
                     type="number" min="0"/>
             </InputGroup>
             <InputGroup className="edit-form__group my-3">
-                <InputGroup.Text className="rounds"><FormattedMessage id='circleAlerts'/>: </InputGroup.Text>
+                <InputGroup.Text className="rounds"><FormattedMessage id='circleAlertsForm'/>: </InputGroup.Text>
                 <Form.Control name='innerAlerts'
                               placeholder='10, 20, 30'
                               onChange={setTimerData}

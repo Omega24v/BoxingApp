@@ -266,14 +266,14 @@ const Timer = props => {
                         {props.isRunning
                             ?
                             <Button variant="danger"
-                                    className="me-1 me-sm-3"
+                                    className="me-2"
                                     onClick={stopResetAndTimer}>
                                 <FormattedMessage id='stop'/>
                             </Button>
                             :
                             ''
                         }
-                        <Button variant="success" className="me-3 btn-start" onClick={handleTimer}>
+                        <Button variant="success" className="me-2 btn-start" onClick={handleTimer}>
                             {props.isRunning ? <FormattedMessage id='pause'/> : <FormattedMessage id='start'/>}
                         </Button>
                         <Button variant="warning" onClick={() => {props.toggleEditTimer()}}><FormattedMessage id='editAdd'/></Button>
