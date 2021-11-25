@@ -6,10 +6,15 @@ import './LangSwitcher.sass';
 
 const LangSwitcher = (props) => {
 
-  const { currentLocale, setCurrentLocale} = props;
+  const { currentLocale, setCurrentLocale, defaultLoc} = props;
   const handleChange = (code) => {
-    setCurrentLocale(code);
-    localStorage.setItem("lang", code);
+    if (!code) {
+      setCurrentLocale(defaultLoc); 
+      localStorage.setItem("lang", defaultLoc);
+    } else {
+      setCurrentLocale(code);
+      localStorage.setItem("lang", code);
+    }
   }
 
   return (
