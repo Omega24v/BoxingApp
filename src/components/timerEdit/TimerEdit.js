@@ -1,5 +1,5 @@
 import React from 'react';
-import {ButtonGroup, Button, Form, InputGroup} from 'react-bootstrap';
+import {ButtonGroup, Button, Form, InputGroup, OverlayTrigger, Popover} from 'react-bootstrap';
 import {connect} from "react-redux";
 import {addTimer, startTimer, saveEditData, onChangeEditData, toggleEditTimer} from "../../store/actions/timerActions";
 import {getRandomId} from "../../utils/getRandomId";
@@ -33,6 +33,16 @@ const TimerEdit = props => {
 
         props.onChangeEditData(editableTimer);
     }
+
+    const popover = (props) => (
+        <Popover {...props}>
+            <Popover.Header as="h3">What is circle alerts?</Popover.Header>
+            <Popover.Body>
+            And here's some <strong>amazing</strong> content. It's very engaging.
+            right?
+            </Popover.Body>
+        </Popover>
+    );
 
     function getInputsTime(timer, timeType) {
         const min = timer[timeType + 'Min'] || timer[timeType + 'Min'] === 0 ? timer[timeType + 'Min'] : timer[timeType].min;
@@ -101,18 +111,27 @@ const TimerEdit = props => {
                     value={props.editTimerData.warningTime.sec}
                     type="number" min="0"/>
             </InputGroup>
-            <InputGroup className="edit-form__group my-3">
-                <InputGroup.Text className="rounds"><FormattedMessage id='circleAlertsForm'/>: </InputGroup.Text>
+            <InputGroup className="edit-form__group inner-alerts mb-3">
+                <InputGroup.Text className="rounds">
+                    <FormattedMessage id='circleAlertsForm'/>
+                    <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={popover}>
+                        <div className="popover-text ms-1 badge bg-warning">?</div>
+                    </OverlayTrigger>
+                </InputGroup.Text>
                 <Form.Control name='innerAlerts'
-                              placeholder='10, 20, 30'
-                              onChange={setTimerData}
-                              value={props.editTimerData.innerAlerts}
-                              type="text"
-                              min="0"/>
+                    placeholder='10, 20, 30'
+                    onChange={setTimerData}
+                    value={props.editTimerData.innerAlerts}
+                    type="text"
+                    min="0"/>
             </InputGroup>
 
+
             <div className="edit-form__total text-center my-2">
-                Total time: {msToHMS(getTotalTime(props.editTimerData))}
+            <FormattedMessage id='totalTime'/>: {msToHMS(getTotalTime(props.editTimerData))}
             </div>
 
             <ButtonGroup className="d-flex mt-2 control-btn">
