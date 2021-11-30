@@ -221,7 +221,7 @@ const Timer = props => {
 
     return (
         <>
-            <Row className="mb-4">
+            <Row className="mb-2 mb-sm-4">
                 <Col xs={12}><h2 className="timer-title mb-2">{props.currTimer.name}</h2></Col>
                 <Col md={5} className="current-round-col mb-md-0 mb-2">
                     <div className="timer-big current-round">
@@ -260,7 +260,7 @@ const Timer = props => {
                     <TimerInfo type='warning' label={<FormattedMessage id='warningTime'/>} val={props.currTimer.warningTime.time}/>
                 </Col>
             </Row>
-            <Row className="mb-4">
+            <Row className="mb-2 mb-sm-4">
                 <Col className="d-flex justify-content-center">
                     <ButtonGroup className="control-btn" aria-label="timer buttons">
                         {props.isRunning

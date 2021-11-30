@@ -45,7 +45,7 @@ const TimersList = (props) => {
   };
 
   return (
-    <div className="d-flex flex-wrap gap-3">
+    <div className="d-flex flex-wrap gap-2 gap-md-3">
       {props.timers.map((timer) => (
         <div
           className={`timer-list flex-grow-1 flex-lg-grow-0 p-2 ${
@@ -55,7 +55,7 @@ const TimersList = (props) => {
           key={timer.id}
         >
           <Row>
-            <Col xs={9}>
+            <Col xs={10} lg={9}>
               <div className="timer-list__item item-title mb-2">
                 {timer.name}
               </div>
@@ -79,7 +79,7 @@ const TimersList = (props) => {
                 : ''
               }
             </Col>
-            <Col xs={3} className="d-flex flex-column align-items-end">
+            <Col xs={2} lg={3} className="d-flex flex-column align-items-end">
               <span
                 className="mb-2"
                 onClick={() => {
