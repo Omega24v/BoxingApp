@@ -112,7 +112,7 @@ const TimerEdit = props => {
                     type="number" min="0"/>
             </InputGroup>
             <InputGroup className="edit-form__group inner-alerts mb-3">
-                <InputGroup.Text className="rounds">
+                <InputGroup.Text className="inner-alerts__text">
                     <FormattedMessage id='circleAlertsForm'/>
                     <OverlayTrigger
                         placement="top"
@@ -131,7 +131,7 @@ const TimerEdit = props => {
 
 
             <div className="edit-form__total text-center my-2">
-            <FormattedMessage id='totalTime'/>: {msToHMS(getTotalTime(props.editTimerData))}
+                <FormattedMessage id='totalTime'/>: {msToHMS(getTotalTime(props.editTimerData))}
             </div>
 
             <ButtonGroup className="d-flex mt-2 control-btn">
