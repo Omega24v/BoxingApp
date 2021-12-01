@@ -26,7 +26,8 @@
 @include media-breakpoint-down(lg)
 
   .timer-list
-    width: auto
+    &__item
+      font-size: 1.5vw
 
   .edit-form
     &__total
@@ -44,6 +45,11 @@
 
 @include media-breakpoint-down(md)
 
+  .timer-list
+    width: calc(33.33% - .5rem)
+    &__item
+      font-size: 2vw
+
   .edit-form
     &__total
       font-size: 3vw
@@ -52,9 +58,21 @@
     &__count
       font-size: 15vw
     &__text
-      font-size: 2.5vw
+      font-size: 2.8vw
+  .timer-small
+    height: auto
+    padding: 10px 0
+
 
 @include media-breakpoint-down(sm)
+
+  .timer-title
+    font-size: 5vw
+
+  .timer-list
+    width: 100%
+    &__item
+      font-size: 3.5vw
 
   .btn
     font-size: 3vw
@@ -64,14 +82,37 @@
     &__total
       font-size: 3.5vw
     .input-group-text
-      flex-basis: 130px
+      padding: 0
+      flex-basis: 110px
+      font-size: 13px
+    .inner-alerts
+      flex-wrap: wrap
+    .btn
+      padding: 5px
+
+  .inner-alerts
+    .inner-alerts__text
+      padding: 0
+      justify-content: center
+      font-size: 3.5vw
+    .form-control
+      width: 100%
 
   .timer-big
     &__text
       font-size: 3.5vw
 
-  .switch__label::before, 
-  .switch__label::after
-    font-weight: 1vw
+  .switch__label
+    &::before, 
+    &::after
+      font-size: 1rem
+      transform: translate3d(0, -54%, 0)
+    &::before
+      margin-right: 2px
+    &::after
+      margin-left: 2px
+
+  .switcher-flag
+    width: 4vw
 
 @include media-breakpoint-down(xs)
