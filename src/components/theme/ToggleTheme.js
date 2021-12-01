@@ -27,8 +27,8 @@ const ToggleTheme = () => {
 
     return (
         <Switcher isChecked={currTheme === THEME_DARK}
-                  toggle={toggleTheme}
-                  type="theme-switcher"
+            toggle={toggleTheme}
+            type="theme-switcher"
         />
     );
 };
