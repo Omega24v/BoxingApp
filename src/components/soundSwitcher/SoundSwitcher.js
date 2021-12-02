@@ -11,12 +11,13 @@ const SoundSwitcher = props => {
         if (isSound !== undefined && isSound !== props.isSound) {
             props.toggleSound();
         }
-    }, []);
+    }, [props]);
 
     return (
-        <Switcher isChecked={props.isSound}
-                  toggle={props.toggleSound}
-                  type="sound-switcher"
+        <Switcher 
+            isChecked={props.isSound}
+            toggle={props.toggleSound}
+            type="sound-switcher"
         />
     );
 };
