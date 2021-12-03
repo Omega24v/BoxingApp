@@ -101,6 +101,16 @@ body
         background-color: $light
         .switcher-title
           color: $black
+  
+  .popover
+    box-shadow: 0 0 5px #000
+    background-color: $black
+    .popover-header,
+    .popover-body
+      color: $light
+    .popover-arrow
+      &::after
+        border-top-color: $black
 
 body:not([data-theme="dark"])
   .ico

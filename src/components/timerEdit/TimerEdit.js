@@ -36,10 +36,9 @@ const TimerEdit = props => {
 
     const popover = (props) => (
         <Popover {...props}>
-            <Popover.Header as="h3">What is circle alerts?</Popover.Header>
+            <Popover.Header className="text-warning" as="h3"><FormattedMessage id='popupHeaderText'/></Popover.Header>
             <Popover.Body>
-            And here's some <strong>amazing</strong> content. It's very engaging.
-            right?
+                <FormattedMessage id='popupBodyText'/>
             </Popover.Body>
         </Popover>
     );
@@ -52,12 +51,12 @@ const TimerEdit = props => {
 
     return (
         <Form className="edit-form d-flex flex-column">
-            <Form.Label>
+            <Form.Label className="mb-3">
                 <div className="mb-2"><FormattedMessage id='timerName'/>:</div>
                 <Form.Control name='name' onChange={setTimerData} value={props.editTimerData.name} type="text"/>
             </Form.Label>
 
-            <InputGroup className="edit-form__group my-3">
+            <InputGroup className="edit-form__group mb-3">
                 <InputGroup.Text className="rounds"><FormattedMessage id='rounds'/>:</InputGroup.Text>
                 <Form.Control name='rounds'
                     onChange={setTimerData}
@@ -112,11 +111,11 @@ const TimerEdit = props => {
                     type="number" min="0"/>
             </InputGroup>
             <InputGroup className="edit-form__group inner-alerts mb-3">
-                <InputGroup.Text className="inner-alerts__text">
-                    <FormattedMessage id='circleAlertsForm'/>
+                <InputGroup.Text className="inner-alerts__text mb-2 mb-sm-0">
+                    <FormattedMessage id='circleAlerts'/>
                     <OverlayTrigger
                         placement="top"
-                        delay={{ show: 250, hide: 400 }}
+                        delay={{ show: 250, hide: 40000 }}
                         overlay={popover}>
                         <div className="popover-text ms-1 badge bg-warning">?</div>
                     </OverlayTrigger>
@@ -136,8 +135,8 @@ const TimerEdit = props => {
 
             <ButtonGroup className="d-flex mt-2 control-btn">
                 <Button variant="success" className="me-2" onClick={saveFormData}>
-                <FormattedMessage id='saveSettings'/>
-                    </Button>
+                    <FormattedMessage id='saveSettings'/>
+                </Button>
                 <Button variant="warning"
                     onClick={() => {
                         props.toggleEditTimer();
