@@ -36,9 +36,9 @@ const TimerEdit = props => {
 
     const popover = (props) => (
         <Popover {...props}>
-            <Popover.Header className="text-warning" as="h3"><FormattedMessage id='popupHeaderText'/></Popover.Header>
+            <Popover.Header className="text-warning" as="h3"><FormattedMessage id='popoverHeaderText'/></Popover.Header>
             <Popover.Body>
-                <FormattedMessage id='popupBodyText'/>
+                <FormattedMessage id='popoverBodyText'/>
             </Popover.Body>
         </Popover>
     );

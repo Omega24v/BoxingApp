@@ -4,7 +4,6 @@ export const messages = {
   [LOCALES.EN.code]: {
     close: "Close",
     currentRound: "Current round",
-    circleAlertsForm: "Circle inner alerts (use comma: 10, 20, 30)",
     circleAlerts: "Circle inner alerts",
     default: "Default",
     delete: "Delete",
@@ -32,6 +31,8 @@ export const messages = {
     wantDelete: "Do you really want to delete",
     warning: "Warning",
     editAdd: "Edit/Add",
+    popoverHeaderText: "What is inner alerts?",
+    popoverBodyText: "To set an internal alert, simply list the number of seconds to turn on each subsequent alert. For example, if you enter the number 10, the notification will be every 10 seconds. If you enter 10, 20 alerts will be first after ten seconds and then after 20 seconds and so on in a circle throughout the round.",
   },
   [LOCALES.UK.code]: {
     delete: "Видалити",
@@ -51,7 +52,6 @@ export const messages = {
     pause: "Пауза",
     pleaseConfirm: "Будь-ласка підтвердіть",
     currentRound: "Поточний раунд",
-    circleAlertsForm: "Циклічні оповіщення (ставте кому: 10, 20, 30)",
     circleAlerts: "Циклічні оповіщення",
     round: "Раунд",
     rounds: "Раундів",
@@ -63,11 +63,12 @@ export const messages = {
     roundTime: "Час раунду",
     close: "Закрити",
     editAdd: "Редагувати/додати",
+    popoverHeaderText: "Що таке циклічні сповіщення?",
+    popoverBodyText: "Для того щоб задати внутрішнє оповіщення просто перерахуйте через кому через яку кількість секунд вмикати кожне наступне оповіщення. Наприклад якщо ввести число 10 то оповіщення буде кожні 10 секунд. Якщо ввести 10, 20 оповіщення буде спочатку після десяти  секунд, а потім після 20 секунд і так по колу на протязі раунд.",
   },
   [LOCALES.ES.code]: {
     close: "Cerrar",
     currentRound: "Ronda actual",
-    circleAlertsForm: "Alertas internas del círculo (usar coma: 10, 20, 30)",
     circleAlerts: "Alertas internas del círculo",
     default: "Por defecto",
     delete: "Eliminar",
@@ -94,5 +95,7 @@ export const messages = {
     wantDelete: "Realmente quieres borrar",
     warning: "Advertencia",
     editAdd: "Editar/Añadir",
+    popoverHeaderText: "Qué son las alertas internas?",
+    popoverBodyText: "Para configurar una alerta interna, simplemente enumere la cantidad de segundos para activar cada alerta posterior. Por ejemplo, si ingresa el número 10, la notificación será cada 10 segundos. Si ingresa 10, 20 alertas serán primero después de diez segundos y luego después de 20 segundos y así sucesivamente en un círculo a lo largo de la ronda.",
   },
 }
