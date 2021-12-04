@@ -12,6 +12,7 @@ import {
 import {loadData, setData} from "../../../utils/localStorage/localStorage";
 import {defaultCurrTimerModel, defaultTimersModel} from "../../../models/Timer";
 import {transformData} from "../../../utils/localStorage/transformData";
+import { cloneDeep } from 'lodash';
 
 const persistedState = transformData(loadData('data'));
 
@@ -46,11 +47,11 @@ export default function timerReducer(state = initialState, action) {
         case PAUSE:
             return {...state, isRunning: false}
         case TOGGLE_EDIT_TIMER:
-            return {...state, isEdit: !state.isEdit, editTimerData: state.currTimer}
+            return {...state, isEdit: !state.isEdit, editTimerData: cloneDeep(state.currTimer)}
         case TOGGLE_ADD_TIMER:
             return {...state, isAdd: !state.isAdd}
         case ON_CHANGE_EDIT_DATA:
-            return {...state, editTimerData: action.payload}
+            return {...state, editTimerData: cloneDeep(action.payload)}
         case SAVE_EDIT_DATA:
             setData({
                 currTimer: action.payload.timer,
