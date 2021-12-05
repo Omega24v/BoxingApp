@@ -22,15 +22,20 @@
         overflow: hidden;
         box-sizing: border-box;
       }
+      body {
+        padding: 12px;
+      }
       .pre-wrapper { 
+        display: block;
         position: absolute;
         top: 0;
+        left: 0;
         width: 100vw;
         height: 100vh;
+        padding: 16px;
         background-color: #000000;
         opacity: 1;
-        z-index: 1;
-        transition: opacity .2s ease-in;
+        z-index: 2;
       }
       .wrapper-container {
         display: flex;
