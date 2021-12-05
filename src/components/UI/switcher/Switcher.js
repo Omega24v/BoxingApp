@@ -12,7 +12,7 @@ const Switcher = ({isChecked, toggle, type}) => {
                 onChange={() => toggle()}
                 checked={isChecked}
             />
-            <label htmlFor={`sd-switch-${type}`} className="switch__label">
+            <label htmlFor={`sd-switch-${type}`} className="switch__label" aria-label="switch">
                 <span></span>
             </label>
         </div>
