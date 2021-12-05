@@ -1,3 +1,5 @@
+@import "~bootstrap/scss/bootstrap-utilities"
+
 .switch
 	position: relative
 	width: 80px
@@ -82,3 +84,15 @@
 	.switch__label
 		&::after
 			background-image: url('../../../icons/Moon.svg')
+
+@include media-breakpoint-down(sm)
+
+  .switch__label
+    &::before, 
+    &::after
+      font-size: 1rem
+      transform: translate3d(0, -54%, 0)
+    &::before
+      margin-right: 2px
+    &::after
+      margin-left: 2px

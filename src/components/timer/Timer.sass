@@ -76,3 +76,56 @@
   .btn
     padding: 10px
     text-transform: uppercase
+
+@include media-breakpoint-down(xxl)
+  
+  .timer-big
+    &__text
+      font-size: 2vw
+
+  .timer-small
+    &__count
+      font-size: 1.8vw
+    &__text
+      font-size: 1.2vw
+
+@include media-breakpoint-down(xl)
+
+  .timer-small
+    &__count
+      font-size: 1.8vw
+    &__text
+      font-size: 1.4vw
+
+@include media-breakpoint-down(lg)
+
+  .timer-small
+    &__count
+      font-size: 2vw
+    &__text
+      font-size: 1.2vw
+
+@include media-breakpoint-down(md)
+  
+  .timer-big
+    &__count
+      font-size: 15vw
+    &__text
+      font-size: 2.8vw
+
+  .timer-small
+    height: auto
+    padding: 10px 0
+
+@include media-breakpoint-down(sm)
+
+  .timer-big
+    &__text
+      font-size: 3.5vw
+      
+  .timer-title
+    font-size: 5vw
+
+  .btn
+    font-size: 3vw
+    letter-spacing: 1px

@@ -44,3 +44,43 @@
     font-weight: bold
     color: $black
     cursor: pointer
+
+@include media-breakpoint-down(xl)
+  
+  .edit-form
+    &__total
+      font-size: 2vw
+
+@include media-breakpoint-down(lg)
+
+  .edit-form
+    &__total
+      font-size: 1.5vw
+
+@include media-breakpoint-down(md)
+  
+  .edit-form
+    &__total
+      font-size: 3vw
+
+@include media-breakpoint-down(sm)
+
+  .edit-form
+    &__total
+      font-size: 3.5vw
+    .input-group-text
+      padding: 0
+      flex-basis: 110px
+      font-size: 13px
+    .inner-alerts
+      flex-wrap: wrap
+    .btn
+      padding: 5px
+
+  .inner-alerts
+  .inner-alerts__text
+    padding: 0
+    justify-content: center
+    font-size: 3.5vw
+  .form-control
+    width: 100%
