@@ -38,7 +38,7 @@ const TimerEdit = props => {
         <Popover {...props}>
             <Popover.Header className="text-warning" as="h3"><FormattedMessage id='popoverHeaderText'/></Popover.Header>
             <Popover.Body>
-                <FormattedMessage id='popoverBodyText'/>
+                <FormattedMessage id='popoverBodyText' values={{br: <br />}}/>
             </Popover.Body>
         </Popover>
     );
@@ -115,7 +115,7 @@ const TimerEdit = props => {
                     <FormattedMessage id='circleAlerts'/>
                     <OverlayTrigger
                         placement="top"
-                        delay={{ show: 250, hide: 40000 }}
+                        delay={{ show: 250 }}
                         overlay={popover}>
                         <div className="popover-text ms-1 badge bg-warning">?</div>
                     </OverlayTrigger>

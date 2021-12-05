@@ -67,10 +67,6 @@ const TimersList = (props) => {
                 <i className="text-primary me-1">&#9632;</i><FormattedMessage id='restTime'/>:{' '}
                 {msToHMS(timer.restTime.time)}
               </div>
-              <div className="timer-list__item">
-                <i className="text-warning">&#9632;</i> <FormattedMessage id='prepareTime'/>:{' '}
-                {msToHMS(timer.prepareTime.time)}
-              </div>
               { timer.innerAlerts
                 ? <div className="timer-list__item">
                     <i className="text-danger">&#9632;</i> <FormattedMessage id='circleAlerts'/>:{' '}
