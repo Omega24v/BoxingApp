@@ -8,6 +8,7 @@ import { LOCALES } from './translation/locales';
 import { messages } from './translation/messages';
 import LangSwitcher from "./components/langSwitcher/LangSwitcher";
 import './App.sass';
+import Copyright from "./components/copyright/Сopyright";
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
               <Timer/>
             </Col>
           </div>
+          <Copyright/>
         </Container>
       </div>
     </IntlProvider>
