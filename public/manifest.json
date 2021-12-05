@@ -1,6 +1,6 @@
 {
-  "name": "Boxing Timer App",
-  "short_name": "Boxing Timer",
+  "name": "Boxing Timer",
+  "short_name": "Timer",
   "icons": [
     {
       "src": "./favicon/android-chrome-192x192.png",
