@@ -65,6 +65,10 @@
 
 @include media-breakpoint-down(sm)
 
+  .timer
+    .btn
+      font-size: 3vw
+
   .edit-form
     &__total
       font-size: 3.5vw
@@ -73,14 +77,23 @@
       flex-basis: 110px
       font-size: 13px
     .inner-alerts
+      flex-direction: column
       flex-wrap: wrap
     .btn
+      font-size: 3vw
       padding: 5px
 
-  .inner-alerts
-  .inner-alerts__text
-    padding: 0
-    justify-content: center
-    font-size: 3.5vw
+    .inner-alerts
+      &__text
+        padding: 0
+        flex-basis: none
+        justify-content: center
+        font-size: 3.5vw
+        flex-basis: auto
+      &__input 
+        width: 100%
+      .form-control
+        width: 100%
+
   .form-control
     width: 100%

@@ -124,6 +124,7 @@ const TimerEdit = props => {
                     placeholder='10, 20, 30'
                     onChange={setTimerData}
                     value={props.editTimerData.innerAlerts}
+                    className="inner-alerts__input"
                     type="text"
                     min="0"/>
             </InputGroup>
