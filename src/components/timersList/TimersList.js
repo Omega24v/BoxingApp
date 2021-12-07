@@ -55,7 +55,7 @@ const TimersList = (props) => {
           key={timer.id}
         >
           <Row>
-            <Col xs={10} lg={9}>
+            <Col xs={10}>
               <div className="timer-list__item item-title mb-2">
                 {timer.name}
               </div>
@@ -75,7 +75,7 @@ const TimersList = (props) => {
                 : ''
               }
             </Col>
-            <Col xs={2} lg={3} className="d-flex flex-column align-items-end">
+            <Col xs={2} className="d-flex flex-column align-items-end">
               <span
                 className="mb-2"
                 onClick={() => {

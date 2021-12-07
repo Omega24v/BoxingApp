@@ -251,7 +251,7 @@ const Timer = props => {
                     </div>
                 </Col>
             </Row>
-            <Row md={12} className="d-none d-sm-block mb-4">
+            <Row md={12} className="d-none d-md-block mb-4">
                 <Col className="d-flex justify-content-between">
                     <TimerInfo type='total' label={<FormattedMessage id='totalTime'/>} val={props.currTimer}/>
                     <TimerInfo type='warning' label={<FormattedMessage id='prepareTime'/>} val={props.currTimer.prepareTime.time}/>
