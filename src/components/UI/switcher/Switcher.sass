@@ -71,27 +71,13 @@
 	transform: translate3d(0, -50%, 0) 
 	background-repeat: no-repeat
 
-.sound-switcher
-	.switch__label
-		&::before
-			background-image: url('../../../icons/SoundOff.svg')
-		&::after
-			background-image: url('../../../icons/SoundOn.svg')
-.theme-switcher
-	.switch__label
-		&::before
-			background-image: url('../../../icons/Sun.svg')
-	.switch__label
-		&::after
-			background-image: url('../../../icons/Moon.svg')
-
 @include media-breakpoint-down(sm)
 
   .switch__label
     &::before, 
     &::after
       font-size: 1rem
-      transform: translate3d(0, -54%, 0)
+      transform: translate3d(0, -50%, 0)
     &::before
       margin-right: 2px
     &::after

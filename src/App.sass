@@ -7,7 +7,7 @@ body
   display: flex
   justify-content: center
   align-items: center
-  height: 100%
+  height: 100vh
   color: $light
 
 // Dark Theme
@@ -17,100 +17,8 @@ body
   .App
     background-color: $black
 
-  .timer
-    background-color: $dark
-    color: $light
-    &-title
-      font-weight: bold
-
-  .timer-big
-    background-color: $light
-    &__text
-      color: $red
-    &__count
-      color: $black
-
-  .full-time
-    background-color: $red
-    &__rest
-      background-color: $blue
-    &__prepare
-      background-color: $yellow
-    &__round
-      background-color: $green
-    &__warning
-      background-color: darken($orange, 10%)
-    &__default
-      background-color: $red
-    .timer-big__text
-      color: $light
-    .timer-big__count
-      color: $light
-
-  .timer-small
-    background-color: $gray-800
-    &__text, &__count
-      color: $light
-
-  .timer-list
-    background-color: $gray-800
-    text-shadow: 0 1px 1px #000
-    &__item
-      color: $light
-
-  .modal-header,
-  .modal-content,
-  .modal-footer
-    border-color: $dark
-  .modal-content
-    background-color: $dark
-    color: $light
-
-  .edit-form
-    .input-group-text
-      background-color: transparent
-      color: $light
-    .form-control
-      color: $light
-      &:focus
-        background-color: transparent
-        color: $light
-
   .ico
     fill: $light
-
-  .lang-switcher
-    &__toggler
-      background-color: $black
-      &::after
-        border-top-color: $light
-    &.show
-      .lang-switcher__toggler,
-      .dropdown-menu
-        background-color: $black
-
-    .switcher-title
-      color: $light
-    .dropdown-toggle
-      &:hover
-        background-color: none
-    .dropdown-item
-      &:focus
-        background-color: transparent
-      &:hover
-        background-color: $light
-        .switcher-title
-          color: $black
-  
-  .popover
-    box-shadow: 0 0 5px #000
-    background-color: $black
-    .popover-header,
-    .popover-body
-      color: $light
-    .popover-arrow
-      &::after
-        border-top-color: $black
 
 body:not([data-theme="dark"])
   .ico
@@ -123,3 +31,10 @@ body:not([data-theme="dark"])
   display: none
   opacity: 0
   z-index: 0
+
+@include media-breakpoint-down(lg)
+
+  .App
+    padding-top: 20px
+    justify-content: start
+    height: 100%

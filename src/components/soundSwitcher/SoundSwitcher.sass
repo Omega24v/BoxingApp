@@ -1,0 +1,12 @@
+.sound-switcher
+	.switch__label
+		&::before
+			background-image: url('../../icons/SoundOff.svg')
+		&::after
+			background-image: url('../../icons/SoundOn.svg')
+	
+	.switch__input
+		~ .switch__label
+			background-color: #E30E0E
+		&:checked ~ .switch__label
+			background-color: #008A1C

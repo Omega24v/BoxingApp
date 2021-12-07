@@ -22,3 +22,28 @@
 
   .switcher-flag
     width: 4vw
+
+[data-theme="dark"]
+
+  .lang-switcher
+    &__toggler
+      background-color: $black
+      &::after
+        border-top-color: $light
+    &.show
+      .lang-switcher__toggler,
+      .dropdown-menu
+        background-color: $black
+
+    .switcher-title
+      color: $light
+    .dropdown-toggle
+      &:hover
+        background-color: none
+    .dropdown-item
+      &:focus
+        background-color: transparent
+      &:hover
+        background-color: $light
+        .switcher-title
+          color: $black

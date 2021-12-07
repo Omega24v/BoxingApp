@@ -87,7 +87,7 @@
     &__count
       font-size: 1.8vw
     &__text
-      font-size: 1.2vw
+      font-size: 1.1vw
 
 @include media-breakpoint-down(xl)
 
@@ -95,7 +95,7 @@
     &__count
       font-size: 1.8vw
     &__text
-      font-size: 1.4vw
+      font-size: 1.2vw
 
 @include media-breakpoint-down(lg)
 
@@ -129,3 +129,56 @@
   .btn
     font-size: 3vw
     letter-spacing: 1px
+
+[data-theme="dark"]
+
+  .timer
+    background-color: $dark
+    color: $light
+    &-title
+      font-weight: bold
+
+  .timer-big
+    background-color: $light
+    &__text
+      color: $red
+    &__count
+      color: $black
+
+  .full-time
+    background-color: $red
+    &__rest
+      background-color: $blue
+    &__prepare
+      background-color: $yellow
+    &__round
+      background-color: $green
+    &__warning
+      background-color: darken($orange, 10%)
+    &__default
+      background-color: $red
+    .timer-big__text
+      color: $light
+    .timer-big__count
+      color: $light
+
+  .timer-small
+    background-color: $gray-800
+    &__text, &__count
+      color: $light
+
+  .timer-list
+    background-color: $gray-800
+    text-shadow: 0 1px 1px #000
+    &__item
+      color: $light
+
+  .popover
+    box-shadow: 0 0 5px #000
+    background-color: $black
+    .popover-header,
+    .popover-body
+      color: $light
+    .popover-arrow
+      &::after
+        border-top-color: $black

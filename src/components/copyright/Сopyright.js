@@ -1,8 +1,9 @@
 import React from 'react';
+import style from './Copyright.module.sass';
 
 const Copyright = () => {
   return (
-    <div>
+    <div className={style.copyright}>
       © {new Date().getFullYear()} Timer
     </div>
   );

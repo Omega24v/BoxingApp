@@ -3,6 +3,7 @@ import {loadData, setData} from "../../utils/localStorage/localStorage";
 import {THEME_DARK, THEME_LIGHT} from "../../constatns/theme";
 import Switcher from "../UI/switcher/Switcher";
 import "../UI/switcher/Switcher.sass";
+import "./ToggleTheme.sass";
 
 const ToggleTheme = () => {
     const [currTheme, setCurrTheme] = useState(THEME_DARK);
