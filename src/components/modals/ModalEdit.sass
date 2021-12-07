@@ -10,31 +10,31 @@
       border-radius: 0
       opacity: 1
 
+.modal-open
+  .popover
+    max-width: 230px
+    box-shadow: 0 0 5px #000
+    border-radius: 10px
+    border-color: transparent
+  .popover-header,
+  .popover-body
+    padding: 5px 10px
+    border-radius: 0
+    background: none
+  .popover-body
+    font-size: 12px
+
+@include media-breakpoint-down(sm)
+
+  .modal-open .popover
+    max-width: 200px
+
 [data-theme="dark"]
   
-  .modal-open
-    .popover
-      max-width: 230px
-      box-shadow: 0 0 5px #000
-      border-radius: 10px
-      border-color: transparent
-    .popover-header,
-    .popover-body
-      padding: 5px 10px
-      border-radius: 0
-      background: none
-    .popover-body
-      font-size: 12px
-
-  @include media-breakpoint-down(sm)
-
-    .modal-open .popover
-      max-width: 200px
-
-    .modal-header,
-    .modal-content,
-    .modal-footer
-      border-color: $dark
-    .modal-content
-      background-color: $dark
-      color: $light
+  .modal-header,
+  .modal-content,
+  .modal-footer
+    border-color: $dark
+  .modal-content
+    background-color: $dark
+    color: $light
