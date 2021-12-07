@@ -34,7 +34,10 @@ const Timer = props => {
 
     const [playBell1x] = useSound(bell1x);
     const [playBell3x] = useSound(bell3x);
-    const [playWarning] = useSound(warning);
+    const [playWarning] = useSound(
+            warning,
+            { volume: 2 }
+        );
     const [playInnerAlert] = useSound(innerAlert);
     const [innerAlerts, setInnerAlerts] = useState(null);
     
