@@ -1,7 +1,10 @@
 .theme-switcher
+	margin-right: 5px
 	.switch__label
-		&::before
+			background-color: #1b79f2
 			background-image: url('../../icons/Sun.svg')
-	.switch__label
-		&::after
-			background-image: url('../../icons/Moon.svg')
+			
+	.switch__input
+		&:checked
+			~ .switch__label
+					background-image: url('../../icons/Moon.svg')

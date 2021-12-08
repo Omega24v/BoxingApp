@@ -18,15 +18,14 @@ const LangSwitcher = (props) => {
   }
 
   return (
-    <Form>
+    <Form className="me-2">
       <Dropdown className="lang-switcher" value={currentLocale}>
-        <Dropdown.Toggle variant="light" className="lang-switcher__toggler p-2 d-flex align-items-center">
-          <div className="d-flex align-items-center">
+        <Dropdown.Toggle className="lang-switcher__toggler d-flex align-items-center">
+          <div className="d-flex align-items-center lang-switcher__flag">
             <FlagImg code={currentLocale}/>
-            <span className="switcher-title">{LOCALES[currentLocale].name}</span>
           </div>
         </Dropdown.Toggle>
-        <Dropdown.Menu>
+        <Dropdown.Menu align="end">
           {Object.keys(LOCALES).map((lang) => (
             <Dropdown.Item key={lang} onClick={() => {handleChange(LOCALES[lang].code)}}>
               <div className="d-flex align-items-center">

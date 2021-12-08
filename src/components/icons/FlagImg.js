@@ -19,7 +19,7 @@ import { Image } from 'react-bootstrap';
   }
 
   return (
-    <Image src={getSvg(code)} width="22" height="14" className="switcher-flag" alt="lang-flag" />
+    <Image src={getSvg(code)} width="39" height="39" className="switcher-flag" alt="lang-flag" />
   )
 }
 

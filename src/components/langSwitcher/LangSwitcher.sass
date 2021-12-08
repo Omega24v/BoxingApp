@@ -1,27 +1,49 @@
 @import '~bootstrap/scss/bootstrap'
 
 .lang-switcher
+  border-radius: 30%
   &__toggler
-    border: 1px solid $gray-500
-    background-color: $gray-200
+    width: 26px
+    height: 26px
+    border-radius: 50%
+    padding: 0
+    border: 0
+    opacity: 1
+    transition: opacity .5s ease
+    overflow: hidden
     &::after
-      margin-left: 5px
-  .switcher-title
-    line-height: 0
+      display: none
+    &:hover
+      opacity: .6
+  &__flag
+    width: 26px
+    height: 26px
+  
+  &.show .lang-switcher__toggler
+    opacity: .6
+  
   .dropdown-menu
     padding: 0
+    border: 2px solid rgba(255, 255, 255, .15)
+    border-radius: 10px
+    .switcher-flag
+      width: 20px
+      height: 20px
+      margin-right: 10px
+
+  .switcher-title
+    line-height: 0
   .dropdown-item
     padding: 10px
+  .btn-primary.dropdown-toggle:focus
+    box-shadow: none
 
 .switcher-flag
-  width: 1.7vw
-  margin-right: 5px
+    width: 100%
+    height: 100%
+    transform: scale(1.5)
 
-  
 @include media-breakpoint-down(sm)
-
-  .switcher-flag
-    width: 4vw
 
 [data-theme="dark"]
 

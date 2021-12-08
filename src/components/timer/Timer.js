@@ -28,7 +28,12 @@ import bell3x from '../../sounds/bell-3x.mp3';
 import warning from '../../sounds/warning.mp3';
 import innerAlert from '../../sounds/innerAlert.mp3';
 import TimerInfo from "../timerInfo/TimerInfo";
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, IntlProvider } from 'react-intl';
+import SoundSwitcher from "../../components/soundSwitcher/SoundSwitcher";
+import ToggleTheme from "../../components/theme/ToggleTheme";
+import LangSwitcher from '../langSwitcher/LangSwitcher';
+import { LOCALES } from '../../translation/locales';
+import { messages } from '../../translation/messages';
 
 const Timer = props => {
 
@@ -222,10 +227,25 @@ const Timer = props => {
         }, 0);
     }
 
+    const [currentLocale, setCurrentLocale] =  useState(getInitialLocal());
+    const defaultLoc = LOCALES.EN.code;
+
+    function getInitialLocal() {
+        const savedLocale = localStorage.getItem("lang");
+        return savedLocale || LOCALES.EN.code;
+    }
+
     return (
-        <>
+        <IntlProvider messages={messages[currentLocale]} locale={currentLocale} defaultLocale={defaultLoc}>
+            <Row className="mb-2">
+                <Col xs={7} md={10}><h2 className="timer-title">{props.currTimer.name}</h2></Col>
+                <Col xs={5} md={2} className="d-flex align-items-center justify-content-end">
+                    <LangSwitcher currentLocale={currentLocale} setCurrentLocale={setCurrentLocale} defaultLoc={defaultLoc} />
+                    <ToggleTheme/>
+                    <SoundSwitcher/>
+                </Col>
+            </Row>
             <Row className="mb-2 mb-sm-4">
-                <Col xs={12}><h2 className="timer-title mb-2">{props.currTimer.name}</h2></Col>
                 <Col md={5} className="current-round-col mb-md-0 mb-2">
                     <div className="timer-big current-round">
                         <span className="timer-big__text">
@@ -294,7 +314,7 @@ const Timer = props => {
                 timerName={props.currTimer.name}
                 onHide={props.toggleEditTimer}
             />
-        </>
+        </IntlProvider>
     );
 };
 
