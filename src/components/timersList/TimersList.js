@@ -70,7 +70,7 @@ const TimersList = (props) => {
               { timer.innerAlerts
                 ? <div className="timer-list__item">
                     <i className="text-danger">&#9632;</i> <FormattedMessage id='circleAlerts'/>:{' '}
-                    {timer.innerAlerts}
+                    <span className="no-wrap">{timer.innerAlerts}</span>
                   </div> 
                 : ''
               }
