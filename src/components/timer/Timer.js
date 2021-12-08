@@ -144,6 +144,7 @@ const Timer = props => {
         props.setPhaseTime(props.currTimer.roundTime.time);
         props.setCurrentPhase(ROUND);
         props.setCurrentRound();
+        resetInnerAlerts();
         playSound(playBell1x);
     }
 
