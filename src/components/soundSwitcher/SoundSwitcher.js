@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {connect} from "react-redux";
-import {toggleSound} from "../../store/actions/timerActions";
 import {loadData} from "../../utils/localStorage/localStorage";
 import Switcher from "../UI/switcher/Switcher";
 import "../UI/switcher/Switcher.sass";
 import "./SoundSwitcher.sass";
+import {toggleSound} from "../../store/reducers/timer/timerReducer";
 
 const SoundSwitcher = props => {
     useEffect(() => {
@@ -15,7 +15,7 @@ const SoundSwitcher = props => {
     }, [props]);
 
     return (
-        <Switcher 
+        <Switcher
             isChecked={props.isSound}
             toggle={props.toggleSound}
             type="sound-switcher"

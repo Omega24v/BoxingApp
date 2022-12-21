@@ -1,20 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import {
-    countPhaseTime,
-    pauseTimer,
-    resetTimer,
-    setCurrentPhase,
-    setCurrentRound,
-    setDefaultValues,
-    setIntervalCount,
-    setIntervalId,
-    setPhaseTime,
-    startTimer,
-    stopTimer,
-    toggleAddTimer,
-    toggleEditTimer
-} from "../../store/actions/timerActions";
 import {getPhaseColor, getTotalTime} from "../../utils/common";
 import {Button, ButtonGroup, Col, Row} from 'react-bootstrap';
 import {DEFAULT, PHASES, PREPARE, REST, ROUND, WARNING} from "../../constatns/timerDefaultValues";
@@ -35,6 +20,21 @@ import LangSwitcher from '../langSwitcher/LangSwitcher';
 import { LOCALES } from '../../translation/locales';
 import { messages } from '../../translation/messages';
 import getInitialLocale from "../../utils/lang/getInitialLocale";
+import {
+    countPhaseTime,
+    pauseTimer,
+    resetTimer,
+    setCurrentPhase,
+    setCurrentRound,
+    setDefaultValues,
+    setIntervalCount,
+    setIntervalId,
+    setPhaseTime,
+    startTimer,
+    stopTimer,
+    toggleAddTimer,
+    toggleEditTimer
+} from "../../store/reducers/timer/timerReducer";
 
 const Timer = props => {
 

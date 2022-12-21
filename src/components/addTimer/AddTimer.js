@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from "react-redux";
 import {getRandomId} from "../../utils/getRandomId";
-import {addTimer, startTimer, toggleAddTimer} from "../../store/actions/timerActions";
+import {addTimer, startTimer, toggleAddTimer} from "../../store/reducers/timer/timerReducer";
 
 const AddTimer = props => {
 

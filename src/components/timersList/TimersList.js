@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import {
-  addTimer,
-  deleteTimer,
-  resetTimer,
-  setTimer,
-  startTimer,
-  stopTimer,
-  toggleEditTimer,
-} from '../../store/actions/timerActions';
 import { msToHMS } from '../../utils/timeConverter';
 import IconClose from '../../icons/IconClose';
 import IconEdit from '../../icons/IconEdit';
@@ -19,6 +10,14 @@ import {FormattedMessage, IntlProvider} from 'react-intl';
 import {messages} from "../../translation/messages";
 import {LOCALES} from "../../translation/locales";
 import getInitialLocale from "../../utils/lang/getInitialLocale";
+import {
+  addTimer, deleteTimer,
+  resetTimer,
+  setTimer,
+  startTimer,
+  stopTimer,
+  toggleEditTimer
+} from "../../store/reducers/timer/timerReducer";
 
 const TimersList = (props) => {
   const [isDelete, setIsDelete] = useState(false);

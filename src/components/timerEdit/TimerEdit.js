@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {ButtonGroup, Button, Form, InputGroup, OverlayTrigger, Popover} from 'react-bootstrap';
 import {connect} from "react-redux";
-import {addTimer, startTimer, saveEditData, onChangeEditData, toggleEditTimer} from "../../store/actions/timerActions";
 import {getRandomId} from "../../utils/getRandomId";
 import {getMsFromMinAndSec, msToHMS} from "../../utils/timeConverter";
 import './TimerEdit.sass'
@@ -10,6 +9,13 @@ import {FormattedMessage, IntlProvider} from 'react-intl';
 import {LOCALES} from "../../translation/locales";
 import getInitialLocale from "../../utils/lang/getInitialLocale";
 import {messages} from "../../translation/messages";
+import {
+  addTimer,
+  onChangeEditData,
+  saveEditData,
+  startTimer,
+  toggleEditTimer
+} from "../../store/reducers/timer/timerReducer";
 
 const TimerEdit = props => {
 
