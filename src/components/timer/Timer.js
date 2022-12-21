@@ -34,6 +34,7 @@ import ToggleTheme from "../../components/theme/ToggleTheme";
 import LangSwitcher from '../langSwitcher/LangSwitcher';
 import { LOCALES } from '../../translation/locales';
 import { messages } from '../../translation/messages';
+import getInitialLocale from "../../utils/lang/getInitialLocale";
 
 const Timer = props => {
 
@@ -45,7 +46,7 @@ const Timer = props => {
         );
     const [playInnerAlert] = useSound(innerAlert);
     const [innerAlerts, setInnerAlerts] = useState(null);
-    
+
     const playSound = cb => {
         if (!cb) {return}
         return props.isSound ? cb() : null;
@@ -185,13 +186,13 @@ const Timer = props => {
     function roundFinished() {
         return isRoundPhase() && props.currTimer.roundTime.time === 0
     }
-    
+
     function getFilteredAndMapInnerAlerts() {
         return getInnerAlerts().filter(item => item && +item > 0).map(item => {
             return {time: parseInt(item, 10), isActivated: false}
         })
     }
-    
+
     function isInnerAlerts(alert, prevAlertTime) {
         return props.intervalCount !== 0
             && (props.currentPhase === ROUND || props.currentPhase === WARNING)
@@ -210,13 +211,13 @@ const Timer = props => {
         });
         setInnerAlerts(mapAlerts);
     }
-    
+
     function isInnerAlertsCircleFinished() {
         return innerAlerts.filter(alert => {
             return !alert.isActivated;
         }).length === 0;
     }
-    
+
     function playInnerAlertSound() {
         if (!innerAlerts) {return}
         innerAlerts.reduce((prevAlertTime, alert) => {
@@ -228,13 +229,8 @@ const Timer = props => {
         }, 0);
     }
 
-    const [currentLocale, setCurrentLocale] =  useState(getInitialLocal());
+    const [currentLocale, setCurrentLocale] =  useState(getInitialLocale());
     const defaultLoc = LOCALES.EN.code;
-
-    function getInitialLocal() {
-        const savedLocale = localStorage.getItem("lang");
-        return savedLocale || LOCALES.EN.code;
-    }
 
     return (
         <IntlProvider messages={messages[currentLocale]} locale={currentLocale} defaultLocale={defaultLoc}>

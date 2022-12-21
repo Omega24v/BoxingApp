@@ -13,7 +13,7 @@ export const messages = {
     phase: "Phase",
     prepareTime: "Prepare time",
     prepare: "Prepare",
-    pleaseConfirm: "Pleace confirm",
+    pleaseConfirm: "Please confirm",
     pause: "Pause",
     restTime: "Rest time",
     rest: "Rest",

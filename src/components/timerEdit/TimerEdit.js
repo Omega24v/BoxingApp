@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ButtonGroup, Button, Form, InputGroup, OverlayTrigger, Popover} from 'react-bootstrap';
 import {connect} from "react-redux";
 import {addTimer, startTimer, saveEditData, onChangeEditData, toggleEditTimer} from "../../store/actions/timerActions";
@@ -6,9 +6,14 @@ import {getRandomId} from "../../utils/getRandomId";
 import {getMsFromMinAndSec, msToHMS} from "../../utils/timeConverter";
 import './TimerEdit.sass'
 import {getTotalTime} from "../../utils/common";
-import { FormattedMessage } from 'react-intl';
+import {FormattedMessage, IntlProvider} from 'react-intl';
+import {LOCALES} from "../../translation/locales";
+import getInitialLocale from "../../utils/lang/getInitialLocale";
+import {messages} from "../../translation/messages";
 
 const TimerEdit = props => {
+
+  const [currentLocale, setCurrentLocale] =  useState(getInitialLocale());
 
     const saveFormData = () => {
         let updatedTimers = props.timers.map(t => {
@@ -50,103 +55,107 @@ const TimerEdit = props => {
     }
 
     return (
+      <IntlProvider messages={messages[currentLocale]} locale={currentLocale} defaultLocale={LOCALES.EN.code}>
         <Form className="edit-form d-flex flex-column">
-            <Form.Label className="mb-3">
-                <div className="mb-2"><FormattedMessage id='timerName'/>:</div>
-                <Form.Control name='name' onChange={setTimerData} value={props.editTimerData.name} type="text"/>
-            </Form.Label>
+          <Form.Label className="mb-3">
+            <div className="mb-2"><FormattedMessage id='timerName'/>:</div>
+            <Form.Control name='name' onChange={setTimerData} value={props.editTimerData.name} type="text"/>
+          </Form.Label>
 
-            <InputGroup className="edit-form__group mb-3">
-                <InputGroup.Text className="rounds"><FormattedMessage id='rounds'/>:</InputGroup.Text>
-                <Form.Control name='rounds'
-                    onChange={setTimerData}
-                    value={props.editTimerData.rounds}
-                    type="number"
-                    min="0"/>
-            </InputGroup>
-            <InputGroup className="edit-form__group mb-3">
-                <InputGroup.Text><FormattedMessage id='roundTime'/></InputGroup.Text>
-                <Form.Control name='roundTimeMin'
-                    onChange={setTimerData}
-                    value={props.editTimerData.roundTime.min}
-                    type="number" min="0"/><span className="mx-1">:</span>
-                <Form.Control name='roundTimeSec'
-                    onChange={setTimerData}
-                    value={props.editTimerData.roundTime.sec}
-                    type="number" min="0"/>
-            </InputGroup>
-            <InputGroup className="edit-form__group mb-3">
-                <InputGroup.Text className="group-item"><FormattedMessage id='restTime'/></InputGroup.Text>
-                <Form.Control name='restTimeMin'
-                    onChange={setTimerData}
-                    value={props.editTimerData.restTime.min}
-                    type="number" min="0"/><span className="mx-1">:</span>
-                <Form.Control name='restTimeSec'
-                    onChange={setTimerData}
-                    value={props.editTimerData.restTime.sec}
-                    type="number" min="0"/>
-            </InputGroup>
-            <InputGroup className="edit-form__group mb-3">
-                <InputGroup.Text className="group-item"><FormattedMessage id='prepareTime'/></InputGroup.Text>
-                <Form.Control 
-                    name='prepareTimeMin'
-                    onChange={setTimerData}
-                    value={props.editTimerData.prepareTime.min}
-                    type="number" min="0"/><span className="mx-1">:</span>
-                <Form.Control 
-                    name='prepareTimeSec'
-                    onChange={setTimerData}
-                    value={props.editTimerData.prepareTime.sec}
-                    type="number" min="0"/>
-            </InputGroup>
-            <InputGroup className="edit-form__group mb-3">
-                <InputGroup.Text><FormattedMessage id='warningTime'/></InputGroup.Text>
-                <Form.Control name='warningTimeMin'
-                    onChange={setTimerData}
-                    value={props.editTimerData.warningTime.min}
-                    type="number" min="0"/><span className="mx-1">:</span>
-                <Form.Control name='warningTimeSec'
-                    onChange={setTimerData}
-                    value={props.editTimerData.warningTime.sec}
-                    type="number" min="0"/>
-            </InputGroup>
-            <InputGroup className="edit-form__group inner-alerts mb-3">
-                <InputGroup.Text className="inner-alerts__text mb-2 mb-sm-0">
-                    <FormattedMessage id='circleAlerts'/>
-                    <OverlayTrigger
-                        placement="top"
-                        delay={{ show: 250 }}
-                        overlay={popover}>
-                        <div className="popover-text ms-1 badge bg-warning">?</div>
-                    </OverlayTrigger>
-                </InputGroup.Text>
-                <Form.Control name='innerAlerts'
-                    placeholder='10, 20, 30'
-                    onChange={setTimerData}
-                    value={props.editTimerData.innerAlerts}
-                    className="inner-alerts__input"
-                    type="text"
-                    min="0"/>
-            </InputGroup>
+          <InputGroup className="edit-form__group mb-3">
+            <InputGroup.Text className="rounds"><FormattedMessage id='rounds'/>:</InputGroup.Text>
+            <Form.Control name='rounds'
+                          onChange={setTimerData}
+                          value={props.editTimerData.rounds}
+                          type="number"
+                          min="0"/>
+          </InputGroup>
+          <InputGroup className="edit-form__group mb-3">
+            <InputGroup.Text><FormattedMessage id='roundTime'/></InputGroup.Text>
+            <Form.Control name='roundTimeMin'
+                          onChange={setTimerData}
+                          value={props.editTimerData.roundTime.min}
+                          type="number" min="0"/><span className="mx-1">:</span>
+            <Form.Control name='roundTimeSec'
+                          onChange={setTimerData}
+                          value={props.editTimerData.roundTime.sec}
+                          type="number" min="0"/>
+          </InputGroup>
+          <InputGroup className="edit-form__group mb-3">
+            <InputGroup.Text className="group-item"><FormattedMessage id='restTime'/></InputGroup.Text>
+            <Form.Control name='restTimeMin'
+                          onChange={setTimerData}
+                          value={props.editTimerData.restTime.min}
+                          type="number" min="0"/><span className="mx-1">:</span>
+            <Form.Control name='restTimeSec'
+                          onChange={setTimerData}
+                          value={props.editTimerData.restTime.sec}
+                          type="number" min="0"/>
+          </InputGroup>
+          <InputGroup className="edit-form__group mb-3">
+            <InputGroup.Text className="group-item"><FormattedMessage id='prepareTime'/></InputGroup.Text>
+            <Form.Control
+              name='prepareTimeMin'
+              onChange={setTimerData}
+              value={props.editTimerData.prepareTime.min}
+              type="number" min="0"/><span className="mx-1">:</span>
+            <Form.Control
+              name='prepareTimeSec'
+              onChange={setTimerData}
+              value={props.editTimerData.prepareTime.sec}
+              type="number" min="0"/>
+          </InputGroup>
+          <InputGroup className="edit-form__group mb-3">
+            <InputGroup.Text><FormattedMessage id='warningTime'/></InputGroup.Text>
+            <Form.Control name='warningTimeMin'
+                          onChange={setTimerData}
+                          value={props.editTimerData.warningTime.min}
+                          type="number" min="0"/><span className="mx-1">:</span>
+            <Form.Control name='warningTimeSec'
+                          onChange={setTimerData}
+                          value={props.editTimerData.warningTime.sec}
+                          type="number" min="0"/>
+          </InputGroup>
+          <InputGroup className="edit-form__group inner-alerts mb-3">
+            <InputGroup.Text className="inner-alerts__text mb-2 mb-sm-0">
+              <FormattedMessage id='circleAlerts'/>
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250 }}
+                overlay={popover}>
+                <div className="popover-text ms-1 badge bg-warning">?</div>
+              </OverlayTrigger>
+            </InputGroup.Text>
+            <Form.Control name='innerAlerts'
+                          placeholder='10, 20, 30'
+                          onChange={setTimerData}
+                          value={props.editTimerData.innerAlerts}
+                          className="inner-alerts__input"
+                          type="text"
+                          min="0"/>
+          </InputGroup>
 
 
-            <div className="edit-form__total text-center my-2">
-                <FormattedMessage id='totalTime'/>: {msToHMS(getTotalTime(props.editTimerData))}
-            </div>
+          <div className="edit-form__total text-center my-2">
+            <FormattedMessage id='totalTime'/>: {msToHMS(getTotalTime(props.editTimerData))}
+          </div>
 
-            <ButtonGroup className="d-flex mt-2 control-btn">
-                <Button variant="success" className="me-2" onClick={saveFormData}>
-                    <FormattedMessage id='saveSettings'/>
-                </Button>
-                <Button variant="warning"
+          <ButtonGroup className="d-flex mt-2 control-btn">
+            <Button variant="warning"
+                    className="me-2"
                     onClick={() => {
-                        props.toggleEditTimer();
-                        props.addTimer({...props.editTimerData, id: getRandomId()});
+                      props.toggleEditTimer();
+                      props.addTimer({...props.editTimerData, id: getRandomId()});
                     }}>
-                    <FormattedMessage id='saveAsNewTimer'/>
-                </Button>
-            </ButtonGroup>
+              <FormattedMessage id='saveAsNewTimer'/>
+            </Button>
+            <Button variant="success" onClick={saveFormData}>
+              <FormattedMessage id='saveSettings'/>
+            </Button>
+          </ButtonGroup>
         </Form>
+      </IntlProvider>
+
     );
 };
 

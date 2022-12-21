@@ -6,6 +6,7 @@ const Switcher = ({isChecked, toggle, type}) => {
         <div className={`switch ${type}`}>
             <input
                 type="checkbox"
+                data-testid={`sd-switch-${type}`}
                 id={`sd-switch-${type}`}
                 name="switch"
                 className="switch__input"
@@ -19,4 +20,4 @@ const Switcher = ({isChecked, toggle, type}) => {
     );
 };
 
-export default Switcher;
+export default React.memo(Switcher);

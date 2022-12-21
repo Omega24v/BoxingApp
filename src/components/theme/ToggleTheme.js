@@ -6,6 +6,7 @@ import "../UI/switcher/Switcher.sass";
 import "./ToggleTheme.sass";
 
 const ToggleTheme = () => {
+
     const [currTheme, setCurrTheme] = useState(THEME_DARK);
 
     const setThemeToBody = theme => {
@@ -21,9 +22,9 @@ const ToggleTheme = () => {
     }
 
     useEffect(() => {
-        const theme = loadData('theme');
-        setCurrTheme(theme || THEME_DARK);
-        setThemeToBody(theme || THEME_DARK);
+        const theme = loadData('theme') || THEME_DARK;
+        setCurrTheme(theme);
+        setThemeToBody(theme);
     }, []);
 
     return (
@@ -34,4 +35,4 @@ const ToggleTheme = () => {
     );
 };
 
-export default ToggleTheme;
+export default React.memo(ToggleTheme);

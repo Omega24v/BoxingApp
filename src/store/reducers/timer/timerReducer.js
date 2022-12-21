@@ -15,14 +15,13 @@ import {transformData} from "../../../utils/localStorage/transformData";
 import { cloneDeep } from 'lodash';
 
 const persistedState = transformData(loadData('data'));
-
 const currTimer = persistedState?.currTimer && persistedState?.currTimer !== 'null'
     ? persistedState?.currTimer : defaultCurrTimerModel;
 const timers = persistedState?.timers && persistedState?.timers.length > 0
     ? persistedState?.timers
     : defaultTimersModel
 
-const initialState = {
+export const initialState = {
     isRunning: TIMER_DV.isRunning,
     isEdit: false,
     isAdd: false,

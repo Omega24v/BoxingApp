@@ -15,8 +15,8 @@ const ConfirmAlert = props => {
                 <FormattedMessage id='wantDelete' /> {itemName} ?
             </Modal.Body>
             <Modal.Footer>
-                <Button type="button" size="md" variant="primary" onClick={props.onHide}><FormattedMessage id='close'/></Button>
-                <Button type="button" size="md" variant="danger" onClick={confirmAction}><FormattedMessage id='delete'/></Button>
+                <Button data-testid='close-confirm-modal-btn' type="button" size="md" variant="primary" onClick={props.onHide}><FormattedMessage id='close'/></Button>
+                <Button data-testid='delete-timer-btn' type="button" size="md" variant="danger" onClick={confirmAction}><FormattedMessage id='delete'/></Button>
             </Modal.Footer>
         </Modal>
     )
