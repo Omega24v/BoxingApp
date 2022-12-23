@@ -2,18 +2,19 @@ import {createSlice} from "@reduxjs/toolkit";
 import {transformData} from "../../../utils/localStorage/transformData";
 import {loadData, setData} from "../../../utils/localStorage/localStorage";
 import {defaultCurrTimerModel, defaultTimersModel} from "../../../models/Timer";
-import {DEFAULT, TIMER_DV} from "../../../constatns/timerDefaultValues";
+import {DEFAULT} from "../../../constatns/timerDefaultValues";
 import {cloneDeep} from "lodash";
+import {TimerState} from "../../../dataStructure";
 
 const persistedState = transformData(loadData('data'));
 const currTimer = persistedState?.currTimer && persistedState?.currTimer !== 'null'
   ? persistedState?.currTimer : defaultCurrTimerModel;
 const timers = persistedState?.timers && persistedState?.timers.length > 0
   ? persistedState?.timers
-  : defaultTimersModel
+  : defaultTimersModel;
 
-export const initialState = {
-  isRunning: TIMER_DV.isRunning,
+export const initialState : TimerState = {
+  isRunning: false,
   isEdit: false,
   isAdd: false,
   isSound: true,
@@ -78,7 +79,7 @@ const timerReducer = createSlice({
     },
 
     countPhaseTime(state, action) {
-      state.phaseTime = state.phaseTime - action.payload
+      state.phaseTime -= action.payload
     },
 
     setCurrentPhase(state, action) {
@@ -93,7 +94,7 @@ const timerReducer = createSlice({
       state.isRunning = false;
       state.currentRound = 1;
       state.currentPhase = DEFAULT;
-      state.phaseTime = state.currTimer.prepareTime;
+      state.phaseTime = state.currTimer.prepareTime.time;
       state.intervalCount = 0;
       state.intervalId = 0;
     },

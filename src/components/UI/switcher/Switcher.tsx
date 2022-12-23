@@ -1,6 +1,12 @@
-import React from 'react';
+import React, {MouseEventHandler} from 'react';
 
-const Switcher = ({isChecked, toggle, type}) => {
+type Props = {
+    isChecked: boolean,
+    toggle: () => void,
+    type: string
+}
+
+const Switcher = ({isChecked, toggle, type} : Props) => {
 
     return (
         <div className={`switch ${type}`}>
@@ -10,7 +16,7 @@ const Switcher = ({isChecked, toggle, type}) => {
                 id={`sd-switch-${type}`}
                 name="switch"
                 className="switch__input"
-                onChange={() => toggle()}
+                onChange={toggle}
                 checked={isChecked}
             />
             <label htmlFor={`sd-switch-${type}`} className="switch__label" aria-label="switch">

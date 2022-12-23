@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { msToHMS } from '../../utils/timeConverter';
+import React, {useState} from 'react';
+import {Col, Row} from 'react-bootstrap';
+import {connect} from 'react-redux';
+import {msToHMS} from '../../utils/timeConverter';
 import IconClose from '../../icons/IconClose';
 import IconEdit from '../../icons/IconEdit';
 import './TimersList.sass';
@@ -11,46 +11,64 @@ import {messages} from "../../translation/messages";
 import {LOCALES} from "../../translation/locales";
 import getInitialLocale from "../../utils/lang/getInitialLocale";
 import {
-  addTimer, deleteTimer,
+  addTimer,
+  deleteTimer,
   resetTimer,
   setTimer,
   startTimer,
   stopTimer,
   toggleEditTimer
 } from "../../store/reducers/timer/timerReducer";
+import {Timer} from "../../dataStructure";
+import {AppDispatch} from "../../store/rootReducer";
 
-const TimersList = (props) => {
+interface TimersListProps {
+  currTimer: Timer,
+  timers: [],
+  intervalId: number,
+  stop(): void,
+  setTimer(timer: Timer): void,
+  resetTimer(): void,
+  deleteTimer([]): void,
+  toggleEditTimer(): void
+}
+
+interface TimerObject {
+  name: string
+}
+
+const TimersList = (props: TimersListProps) => {
   const [isDelete, setIsDelete] = useState(false);
-  const [timerToDelete, setTimerToDelete] = useState(null);
-  const [currentLocale, setCurrentLocale] =  useState(getInitialLocale());
+  const [timerToDelete, setTimerToDelete] = useState<Timer | any>({});
+  const [currentLocale, setCurrentLocale] =  useState<string>(getInitialLocale());
 
-  const selectTimer = (timer) => {
+  const selectTimer = (timer: Timer) => {
     props.stop();
     props.setTimer(timer);
     clearInterval(props.intervalId);
     props.resetTimer();
   };
 
-  const showDeleteConfirm = (e, timer) => {
+  const showDeleteConfirm = (e: React.SyntheticEvent, timer: object): void => {
     e.stopPropagation();
     setIsDelete(true);
     setTimerToDelete(timer);
   };
 
-  const deleteTimer = (e, timer) => {
-    let filteredTimers = props.timers.filter((item) => item.id !== timer.id);
+  const deleteTimer = (e: React.SyntheticEvent, timer: Timer) => {
+    let filteredTimers = props.timers.filter((item: Timer) => item.id !== timer.id);
     if (timer.id === props.currTimer.id) {
       props.setTimer(filteredTimers[0]);
     }
     props.deleteTimer(filteredTimers);
     setIsDelete(false);
-    setTimerToDelete(null);
+    setTimerToDelete({});
   };
 
   return (
     <IntlProvider messages={messages[currentLocale]} locale={currentLocale} defaultLocale={LOCALES.EN.code}>
       <div className="d-flex flex-wrap gap-2 gap-md-3">
-        {props.timers.map((timer, index) => (
+        {props.timers.map((timer: Timer, index: number) => (
           <div
             className={`timer-list flex-grow-1 flex-lg-grow-0 p-2 ${
               timer.id === props.currTimer.id ? 'active text-danger' : ''
@@ -104,16 +122,16 @@ const TimersList = (props) => {
         ))}
         <ConfirmAlert
           show={isDelete}
-          itemName={timerToDelete ? timerToDelete.name : ''}
+          itemName={timerToDelete.name ? timerToDelete.name : ''}
           onHide={() => setIsDelete(false)}
-          confirmAction={(e) => deleteTimer(e, timerToDelete)}
+          confirmAction={(e: React.SyntheticEvent) => deleteTimer(e, timerToDelete)}
         />
       </div>
     </IntlProvider>
   );
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
   return {
     currTimer: state.timerReducer.currTimer,
     timers: state.timerReducer.timers,
@@ -121,15 +139,15 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: AppDispatch) {
   return {
     start: () => dispatch(startTimer()),
     stop: () => dispatch(stopTimer()),
     resetTimer: () => dispatch(resetTimer()),
-    addTimer: (timer) => dispatch(addTimer(timer)),
-    setTimer: (timer) => dispatch(setTimer(timer)),
+    addTimer: (timer: Timer) => dispatch(addTimer(timer)),
+    setTimer: (timer: Timer) => dispatch(setTimer(timer)),
     toggleEditTimer: () => dispatch(toggleEditTimer()),
-    deleteTimer: (timers) => dispatch(deleteTimer(timers)),
+    deleteTimer: (timers: []) => dispatch(deleteTimer(timers)),
   };
 }
 

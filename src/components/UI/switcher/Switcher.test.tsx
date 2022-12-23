@@ -8,7 +8,7 @@ describe('tests for switcher', () => {
   it('test true check', () => {
     const type = 'test'
     const {getByTestId} = renderWithProviders(<Switcher isChecked={true} toggle={fn} type={type}/>);
-    const switcher = getByTestId(`sd-switch-${type}`);
+    const switcher = getByTestId(`sd-switch-${type}`) as HTMLInputElement;
     expect(switcher.checked).toEqual(true);
   })
 })
