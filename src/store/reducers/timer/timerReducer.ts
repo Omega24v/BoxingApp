@@ -1,10 +1,10 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {transformData} from "../../../utils/localStorage/transformData";
-import {loadData, setData} from "../../../utils/localStorage/localStorage";
+import {loadData} from "../../../utils/localStorage/localStorage";
 import {defaultCurrTimerModel, defaultTimersModel} from "../../../models/Timer";
 import {DEFAULT} from "../../../constatns/timerDefaultValues";
-import {cloneDeep} from "lodash";
-import {TimerState} from "../../../dataStructure";
+import {fullTimersObj, Timer, AppState} from "../../../dataStructure";
+import {DEFAULT_LOCALE} from "../../../translation/locales";
 
 const persistedState = transformData(loadData('data'));
 const currTimer = persistedState?.currTimer && persistedState?.currTimer !== 'null'
@@ -13,7 +13,7 @@ const timers = persistedState?.timers && persistedState?.timers.length > 0
   ? persistedState?.timers
   : defaultTimersModel;
 
-export const initialState : TimerState = {
+export const initialState : AppState = {
   isRunning: false,
   isEdit: false,
   isAdd: false,
@@ -26,6 +26,7 @@ export const initialState : TimerState = {
   phaseTime: currTimer.prepareTime,
   currTimer: currTimer,
   timers: timers,
+  locale: loadData("lang") || DEFAULT_LOCALE
 }
 
 const timerReducer = createSlice({
@@ -44,50 +45,53 @@ const timerReducer = createSlice({
       state.isRunning = false
     },
 
-    toggleEditTimer(state) {
+    toggleEditTimer(state, action: PayloadAction<Timer>) {
       state.isEdit = !state.isEdit;
-      state.editTimerData = cloneDeep(state.currTimer)
+      state.editTimerData = action.payload;
     },
 
     toggleAddTimer(state) {
       state.isAdd = !state.isAdd
     },
 
-    onChangeEditData(state, action) {
-      state.editTimerData = cloneDeep(action.payload)
+    onChangeEditData(state, action: PayloadAction<AppState>) {
+      state.editTimerData = action.payload;
     },
 
     setDefaultValues(state) {
       state.isRunning = false
     },
 
-    setIntervalCount(state, action) {
+    setIntervalCount(state, action: PayloadAction<number>) {
       state.intervalCount = action.payload === 0 ? 0 : state.intervalCount + action.payload
     },
 
     toggleSound(state) {
-      setData(!state.isSound, 'isSound');
       state.isSound = !state.isSound
     },
 
-    setIntervalId(state, action) {
+    setIntervalId(state, action: PayloadAction<number>) {
       state.intervalId = action.payload
     },
 
-    setPhaseTime(state, action) {
+    setPhaseTime(state, action: PayloadAction<number>) {
       state.phaseTime = action.payload
     },
 
-    countPhaseTime(state, action) {
+    countPhaseTime(state, action: PayloadAction<number>) {
       state.phaseTime -= action.payload
     },
 
-    setCurrentPhase(state, action) {
+    setCurrentPhase(state, action: PayloadAction<string>) {
       state.currentPhase = action.payload
     },
 
     setCurrentRound(state) {
       state.currentRound = state.currentRound + 1
+    },
+
+    setLocale(state, action: PayloadAction<string>) {
+      state.locale = action.payload;
     },
 
     resetTimer(state) {
@@ -99,38 +103,22 @@ const timerReducer = createSlice({
       state.intervalId = 0;
     },
 
-    addTimer(state, action) {
-      setData({
-        currTimer: action.payload,
-        timers: [...state.timers, action.payload]
-      }, 'data');
+    addTimer(state, action: PayloadAction<Timer>) {
       state.currTimer = action.payload;
       state.timers = [...state.timers, action.payload];
       state.isAdd = false;
     },
 
-    deleteTimer(state, action) {
-      setData({
-        currTimer: action.payload.length > 0 ? state.currTimer : null,
-        timers: action.payload
-      }, 'data');
+    deleteTimer(state, action: PayloadAction<Timer[]>) {
       state.timers = action.payload
     },
 
-    saveEditData(state, action) {
-      setData({
-        currTimer: action.payload.timer,
-        timers: action.payload.timers
-      }, 'data');
+    saveEditData(state, action: PayloadAction<fullTimersObj>) {
       state.currTimer = action.payload.timer;
       state.timers = action.payload.timers;
     },
 
-    setTimer(state, action) {
-      setData({
-        timers: state.timers,
-        currTimer: action.payload
-      }, 'data');
+    setTimer(state, action: PayloadAction<Timer>) {
       state.currTimer = action.payload;
     }
   }
@@ -157,4 +145,5 @@ export const {
   setCurrentRound,
   onChangeEditData,
   deleteTimer,
+  setLocale,
 } = timerReducer.actions

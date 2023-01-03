@@ -12,3 +12,5 @@ export const LOCALES = {
     code: 'ES',
   }
 }
+
+export const DEFAULT_LOCALE = 'EN';

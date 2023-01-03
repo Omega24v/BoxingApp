@@ -13,13 +13,11 @@ import bell3x from '../../sounds/bell-3x.mp3';
 import warning from '../../sounds/warning.mp3';
 import innerAlert from '../../sounds/innerAlert.mp3';
 import TimerInfo from "../timerInfo/TimerInfo";
-import { FormattedMessage, IntlProvider } from 'react-intl';
+import {FormattedMessage, IntlProvider} from 'react-intl';
 import SoundSwitcher from "../../components/soundSwitcher/SoundSwitcher";
 import ToggleTheme from "../../components/theme/ToggleTheme";
 import LangSwitcher from '../langSwitcher/LangSwitcher';
-import { LOCALES } from '../../translation/locales';
-import { messages } from '../../translation/messages';
-import getInitialLocale from "../../utils/lang/getInitialLocale";
+import {messages} from '../../translation/messages';
 import {
     countPhaseTime,
     pauseTimer,
@@ -35,6 +33,8 @@ import {
     toggleAddTimer,
     toggleEditTimer
 } from "../../store/reducers/timer/timerReducer";
+import {DEFAULT_LOCALE} from "../../translation/locales";
+import {cloneDeep} from "lodash";
 
 const Timer = props => {
 
@@ -229,15 +229,12 @@ const Timer = props => {
         }, 0);
     }
 
-    const [currentLocale, setCurrentLocale] =  useState(getInitialLocale());
-    const defaultLoc = LOCALES.EN.code;
-
     return (
-        <IntlProvider messages={messages[currentLocale]} locale={currentLocale} defaultLocale={defaultLoc}>
+        <IntlProvider messages={messages[props.locale]} locale={props.locale} defaultLocale={DEFAULT_LOCALE}>
             <Row className="mb-2">
                 <Col xs={7} md={10}><h2 className="timer-title">{props.currTimer.name}</h2></Col>
                 <Col xs={5} md={2} className="d-flex align-items-center justify-content-end">
-                    <LangSwitcher currentLocale={currentLocale} setCurrentLocale={setCurrentLocale} defaultLoc={defaultLoc} />
+                    <LangSwitcher />
                     <ToggleTheme/>
                     <SoundSwitcher/>
                 </Col>
@@ -296,20 +293,20 @@ const Timer = props => {
                         <Button variant="success" className="me-2 btn-start" onClick={handleTimer}>
                             {props.isRunning ? <FormattedMessage id='pause'/> : <FormattedMessage id='start'/>}
                         </Button>
-                        <Button variant="warning" onClick={() => {props.toggleEditTimer()}}><FormattedMessage id='editAdd'/></Button>
+                        <Button variant="warning" onClick={() => {props.toggleEditTimer(cloneDeep(props.currTimer))}}><FormattedMessage id='editAdd'/></Button>
                     </ButtonGroup>
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <TimersList/>
+                    <TimersList />
                 </Col>
             </Row>
 
             <ModalEdit
                 show={props.isEdit}
                 timerName={props.currTimer.name}
-                onHide={props.toggleEditTimer}
+                onHide={() => props.toggleEditTimer(cloneDeep(props.currTimer))}
             />
         </IntlProvider>
     );
@@ -327,6 +324,7 @@ function mapStateToProps(state) {
         fullTime: state.timerReducer.fullTime,
         intervalCount: state.timerReducer.intervalCount,
         intervalId: state.timerReducer.intervalId,
+        locale: state.timerReducer.locale,
     }
 }
 
@@ -335,7 +333,7 @@ function mapDispatchToProps(dispatch) {
         start: () => dispatch(startTimer()),
         pause: () => dispatch(pauseTimer()),
         stop: () => dispatch(stopTimer()),
-        toggleEditTimer: () => dispatch(toggleEditTimer()),
+        toggleEditTimer: timer => dispatch(toggleEditTimer(timer)),
         toggleAddTimer: () => dispatch(toggleAddTimer()),
         setDefaultValues: () => dispatch(setDefaultValues()),
         resetTimer: () => dispatch(resetTimer()),

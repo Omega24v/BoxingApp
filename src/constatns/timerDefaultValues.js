@@ -14,38 +14,32 @@ class TimerDV {
         this.id = id;
         this.name = name;
         this.rounds = rounds;
-        this.roundTime = new Time(roundTime);
-        this.restTime = new Time(restTime);
-        this.prepareTime = new Time(prepareTime);
-        this.warningTime = new Time(warningTime);
+        this.roundTime = getTime(roundTime);
+        this.restTime = getTime(restTime);
+        this.prepareTime = getTime(prepareTime);
+        this.warningTime = getTime(warningTime);
         this.innerAlerts = '';
     }
 }
 
-export class Time {
-    constructor(
-        time
-    ) {
-        this.time = time * 1000;
+export function getTime (time) {
+    time *= 1000;
+    return {
+        time: time,
+        sec: getMinAndSecFromMs(time).sec,
+        min: getMinAndSecFromMs(time).min
     }
-
-    get sec() {
-        return this.getSec();
-    }
-
-    get min() {
-        return this.getMin();
-    }
-
-    getSec() {
-        return getMinAndSecFromMs(this.time).sec;
-    }
-
-    getMin() {
-        return getMinAndSecFromMs(this.time).min;
-    }
-
 }
+
+export const TIMER_EMPTY = new TimerDV(
+  '',
+  '',
+  0,
+  0,
+  0,
+  0,
+  0,
+);
 
 export const TIMER_DV = new TimerDV(
     getRandomId(),

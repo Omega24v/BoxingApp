@@ -1,4 +1,4 @@
-import {Time} from "../../constatns/timerDefaultValues";
+import {getTime} from "../../constatns/timerDefaultValues";
 
 export const transformData = (data) => {
 
@@ -13,10 +13,10 @@ export const transformData = (data) => {
 
     function getTransformedFields(timer) {
         return {
-            roundTime: new Time(timer.roundTime.time / 1000),
-            restTime: new Time(timer.restTime.time / 1000),
-            prepareTime: new Time(timer.prepareTime.time / 1000),
-            warningTime: new Time(timer.warningTime.time / 1000)
+            roundTime: getTime(timer.roundTime.time / 1000),
+            restTime: getTime(timer.restTime.time / 1000),
+            prepareTime: getTime(timer.prepareTime.time / 1000),
+            warningTime: getTime(timer.warningTime.time / 1000)
         }
     }
 

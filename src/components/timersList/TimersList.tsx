@@ -8,48 +8,50 @@ import './TimersList.sass';
 import ConfirmAlert from '../UI/confirmAlert/ConfirmAlert';
 import {FormattedMessage, IntlProvider} from 'react-intl';
 import {messages} from "../../translation/messages";
-import {LOCALES} from "../../translation/locales";
-import getInitialLocale from "../../utils/lang/getInitialLocale";
+import {DEFAULT_LOCALE} from "../../translation/locales";
 import {
   addTimer,
   deleteTimer,
   resetTimer,
   setTimer,
-  startTimer,
   stopTimer,
   toggleEditTimer
 } from "../../store/reducers/timer/timerReducer";
 import {Timer} from "../../dataStructure";
-import {AppDispatch} from "../../store/rootReducer";
+import {AppDispatch, RootState} from "../../store/rootReducer";
+import {cloneDeep} from "lodash";
+import {TIMER_EMPTY} from "../../constatns/timerDefaultValues";
 
-interface TimersListProps {
+interface IConnectedProps {
   currTimer: Timer,
-  timers: [],
+  timers: Timer[],
   intervalId: number,
-  stop(): void,
-  setTimer(timer: Timer): void,
-  resetTimer(): void,
-  deleteTimer([]): void,
-  toggleEditTimer(): void
+  locale: string,
 }
 
-interface TimerObject {
-  name: string
+interface IDispatchProps {
+  stopTimer: () => void;
+  resetTimer: () => void;
+  addTimer: (timer: Timer) => void;
+  setTimer: (timer: Timer) => void;
+  toggleEditTimer: (timer: Timer) => void;
+  deleteTimer: (timer: Timer[]) => void;
 }
 
-const TimersList = (props: TimersListProps) => {
+export type Props = IConnectedProps & IDispatchProps;
+
+const TimersList = (props: Props) => {
   const [isDelete, setIsDelete] = useState(false);
-  const [timerToDelete, setTimerToDelete] = useState<Timer | any>({});
-  const [currentLocale, setCurrentLocale] =  useState<string>(getInitialLocale());
+  const [timerToDelete, setTimerToDelete] = useState<Timer>(TIMER_EMPTY);
 
   const selectTimer = (timer: Timer) => {
-    props.stop();
+    props.stopTimer();
     props.setTimer(timer);
     clearInterval(props.intervalId);
     props.resetTimer();
   };
 
-  const showDeleteConfirm = (e: React.SyntheticEvent, timer: object): void => {
+  const showDeleteConfirm = (e: React.SyntheticEvent, timer: Timer): void => {
     e.stopPropagation();
     setIsDelete(true);
     setTimerToDelete(timer);
@@ -62,11 +64,11 @@ const TimersList = (props: TimersListProps) => {
     }
     props.deleteTimer(filteredTimers);
     setIsDelete(false);
-    setTimerToDelete({});
+    setTimerToDelete(TIMER_EMPTY);
   };
 
   return (
-    <IntlProvider messages={messages[currentLocale]} locale={currentLocale} defaultLocale={LOCALES.EN.code}>
+    <IntlProvider messages={messages[props.locale]} locale={props.locale} defaultLocale={DEFAULT_LOCALE}>
       <div className="d-flex flex-wrap gap-2 gap-md-3">
         {props.timers.map((timer: Timer, index: number) => (
           <div
@@ -102,7 +104,7 @@ const TimersList = (props: TimersListProps) => {
                 data-testid={`edit-timer-${index}`}
                 className="mb-2"
                 onClick={() => {
-                  props.toggleEditTimer();
+                  props.toggleEditTimer(cloneDeep(props.currTimer));
                   props.setTimer(timer);
                 }}
               >
@@ -122,7 +124,7 @@ const TimersList = (props: TimersListProps) => {
         ))}
         <ConfirmAlert
           show={isDelete}
-          itemName={timerToDelete.name ? timerToDelete.name : ''}
+          itemName={timerToDelete?.name ? timerToDelete?.name : ''}
           onHide={() => setIsDelete(false)}
           confirmAction={(e: React.SyntheticEvent) => deleteTimer(e, timerToDelete)}
         />
@@ -131,24 +133,26 @@ const TimersList = (props: TimersListProps) => {
   );
 };
 
-function mapStateToProps(state: any) {
+
+const mapStateToProps = (state: RootState) => {
   return {
     currTimer: state.timerReducer.currTimer,
     timers: state.timerReducer.timers,
     intervalId: state.timerReducer.intervalId,
+    locale: state.timerReducer.locale,
   };
 }
 
-function mapDispatchToProps(dispatch: AppDispatch) {
+const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
-    start: () => dispatch(startTimer()),
-    stop: () => dispatch(stopTimer()),
+    stopTimer: () => dispatch(stopTimer()),
     resetTimer: () => dispatch(resetTimer()),
     addTimer: (timer: Timer) => dispatch(addTimer(timer)),
     setTimer: (timer: Timer) => dispatch(setTimer(timer)),
-    toggleEditTimer: () => dispatch(toggleEditTimer()),
-    deleteTimer: (timers: []) => dispatch(deleteTimer(timers)),
+    toggleEditTimer: (timer: Timer) => dispatch(toggleEditTimer(timer)),
+    deleteTimer: (timers: Timer[]) => dispatch(deleteTimer(timers)),
   };
 }
 
+// export default connect<IConnectedProps, IDispatchProps>(mapStateToProps, mapDispatchToProps)(TimersList);
 export default connect(mapStateToProps, mapDispatchToProps)(TimersList);

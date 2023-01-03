@@ -8,6 +8,10 @@ import {defaultCurrTimerModel} from "../../models/Timer";
 
 describe('timer list tests', () => {
 
+  beforeEach(() => {
+    window.localStorage.clear();
+  });
+
   it('is TimersList render ok', () => {
     renderWithProviders(<TimersList />);
   });

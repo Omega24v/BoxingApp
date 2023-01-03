@@ -16,7 +16,7 @@ export interface Timer {
   innerAlerts: string,
 }
 
-export interface TimerState {
+export interface AppState {
   isRunning: boolean,
   isEdit: boolean,
   isAdd: boolean,
@@ -29,5 +29,11 @@ export interface TimerState {
   phaseTime: number,
   currTimer: Timer,
   timers: Timer[],
+  locale: string
+}
+
+export type fullTimersObj = {
+  timer: Timer
+  timers: Timer[]
 }
 

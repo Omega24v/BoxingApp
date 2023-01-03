@@ -1,28 +1,33 @@
 import React from 'react';
-import { Dropdown, Form } from 'react-bootstrap';
-import { LOCALES } from '../../translation/locales';
+import {Dropdown, Form} from 'react-bootstrap';
+import {DEFAULT_LOCALE, LOCALES} from '../../translation/locales';
 import FlagImg from '../icons/FlagImg';
 import './LangSwitcher.sass';
+import {setLocale} from "../../store/reducers/timer/timerReducer";
+import {setData} from "../../utils/localStorage/localStorage";
+import {useAppDispatch, useAppSelector} from "../../hooks/common/redux-hooks";
 
-const LangSwitcher = (props) => {
+const LangSwitcher = () => {
 
-  const { currentLocale, setCurrentLocale, defaultLoc} = props;
+  const locale = useAppSelector((state) => state.locale);
+  const dispatch = useAppDispatch();
+
   const handleChange = (code) => {
     if (!code) {
-      setCurrentLocale(defaultLoc); 
-      localStorage.setItem("lang", defaultLoc);
+      dispatch(setLocale(DEFAULT_LOCALE));
+      setData("lang", DEFAULT_LOCALE);
     } else {
-      setCurrentLocale(code);
-      localStorage.setItem("lang", code);
+      dispatch(setLocale(code));
+      setData("lang", code);
     }
   }
 
   return (
     <Form className="me-2">
-      <Dropdown className="lang-switcher" value={currentLocale}>
+      <Dropdown className="lang-switcher" value={locale}>
         <Dropdown.Toggle className="lang-switcher__toggler d-flex align-items-center">
           <div className="d-flex align-items-center lang-switcher__flag">
-            <FlagImg code={currentLocale}/>
+            <FlagImg code={locale}/>
           </div>
         </Dropdown.Toggle>
         <Dropdown.Menu align="end">
@@ -40,4 +45,4 @@ const LangSwitcher = (props) => {
   )
 }
 
-export default LangSwitcher
+export default LangSwitcher;
