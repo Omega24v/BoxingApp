@@ -4,10 +4,16 @@ import IconClose from '../../icons/IconClose';
 import TimerEdit from '../timerEdit/TimerEdit';
 import './ModalEdit.sass';
 
-const Modals = props => {
+interface IProps {
+  show: boolean;
+  timerName: string;
+  onHide: () => void
+}
+
+const Modals = (props: IProps) => {
   const { timerName, ...rest } = props;
   return (
-    <Modal className="edit-modal" {...rest} size="md" aria-labelledby="modal-title" centered>
+    <Modal className="edit-modal" {...rest} aria-labelledby="modal-title" centered>
       <Modal.Header>
         <Modal.Title>
           Edit {timerName}

@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {Button, ButtonGroup, Form, InputGroup, OverlayTrigger, Popover} from 'react-bootstrap';
-import {connect} from "react-redux";
 import {getRandomId} from "../../utils/getRandomId";
 import {getMsFromMinAndSec, msToHMS} from "../../utils/timeConverter";
 import './TimerEdit.sass'
@@ -9,31 +8,30 @@ import {FormattedMessage, IntlProvider} from 'react-intl';
 import {LOCALES} from "../../translation/locales";
 import getInitialLocale from "../../utils/lang/getInitialLocale";
 import {messages} from "../../translation/messages";
-import {
-  addTimer,
-  onChangeEditData,
-  saveEditData,
-  startTimer,
-  toggleEditTimer
-} from "../../store/reducers/timer/timerReducer";
 import {cloneDeep} from "lodash";
+import {useAppDispatch, useAppSelector} from "../../hooks/common/redux-hooks";
+import {addTimer, onChangeEditData, saveEditData, toggleEditTimer} from "../../store/reducers/timer/timerReducer";
 
-const TimerEdit = props => {
+const TimerEdit = () => {
 
   const [currentLocale] =  useState(getInitialLocale());
+  const dispatch = useAppDispatch();
+  const currTimer = useAppSelector(state => state.timerReducer.currTimer)
+  const timers = useAppSelector(state => state.timerReducer.timers)
+  const editTimerData = useAppSelector(state => state.timerReducer.editTimerData)
 
   const saveFormData = () => {
-      let updatedTimers = props.timers.map(t => {
-          return t.id !== props.currTimer.id ? t : {...props.editTimerData, id: props.currTimer.id}
+      let updatedTimers = timers.map(t => {
+          return t.id !== currTimer.id ? t : {...editTimerData, id: currTimer.id}
       });
-      props.toggleEditTimer(cloneDeep(props.currTimer));
-      props.saveEditData({timer: {...props.editTimerData, id: props.currTimer.id}, timers: updatedTimers});
+      dispatch(toggleEditTimer(cloneDeep(currTimer)))
+      dispatch(saveEditData({timer: {...editTimerData, id: currTimer.id}, timers: updatedTimers}))
   }
 
-  const setTimerData = e => {
+  const setTimerData = (e: ChangeEvent<HTMLInputElement>) => {
 
-    let editableTimer = {...props.editTimerData}
-    const target = e.target;
+    let editableTimer = {...editTimerData};
+    const target = e.target as HTMLInputElement;
     const value = target.type === 'number' ? +target.value : target.value;
     const name = target.name;
     editableTimer = {...editableTimer, [name]: value};
@@ -43,12 +41,21 @@ const TimerEdit = props => {
     editableTimer.prepareTime = getInputsTime(editableTimer, 'prepareTime');
     editableTimer.warningTime = getInputsTime(editableTimer, 'warningTime');
 
-    props.onChangeEditData(editableTimer);
+    dispatch(onChangeEditData(editableTimer))
   }
 
-  function getInputsTime(timer, timeType) {
-    const min = timer[timeType + 'Min'] || timer[timeType + 'Min'] === 0 ? timer[timeType + 'Min'] : timer[timeType].min;
-    const sec = timer[timeType + 'Sec'] || timer[timeType + 'Sec'] === 0 ? timer[timeType + 'Sec'] : timer[timeType].sec;
+  function getInputsTime(timer: {}, timeType: string) {
+
+    type T = keyof typeof timer;
+
+    const min = timer[timeType + 'Min' as T] || timer[timeType + 'Min' as T] === 0
+    ? timer[timeType + 'Min' as T]
+    : timer[timeType as T]['min'];
+
+    const sec = timer[timeType + 'Sec' as T] || timer[timeType + 'Sec' as T] === 0
+    ? timer[timeType + 'Sec' as T]
+    : timer[timeType as T]['sec'];
+
     return {
       time: getMsFromMinAndSec(min, sec),
       min,
@@ -56,7 +63,7 @@ const TimerEdit = props => {
     };
   }
 
-  const popover = (props) => (
+  const popover = (props: any) => (
       <Popover {...props}>
           <Popover.Header className="text-warning" as="h3"><FormattedMessage id='popoverHeaderText'/></Popover.Header>
           <Popover.Body>
@@ -70,14 +77,14 @@ const TimerEdit = props => {
       <Form className="edit-form d-flex flex-column">
         <Form.Label className="mb-3">
           <div className="mb-2"><FormattedMessage id='timerName'/>:</div>
-          <Form.Control name='name' onChange={setTimerData} value={props.editTimerData.name} type="text"/>
+          <Form.Control name='name' onChange={setTimerData} value={editTimerData.name} type="text"/>
         </Form.Label>
 
         <InputGroup className="edit-form__group mb-3">
           <InputGroup.Text className="rounds"><FormattedMessage id='rounds'/>:</InputGroup.Text>
           <Form.Control name='rounds'
                         onChange={setTimerData}
-                        value={props.editTimerData.rounds}
+                        value={editTimerData.rounds}
                         type="number"
                         min="0"/>
         </InputGroup>
@@ -85,22 +92,22 @@ const TimerEdit = props => {
           <InputGroup.Text><FormattedMessage id='roundTime'/></InputGroup.Text>
           <Form.Control name='roundTimeMin'
                         onChange={setTimerData}
-                        value={props.editTimerData.roundTime.min}
+                        value={editTimerData.roundTime.min}
                         type="number" min="0"/><span className="mx-1">:</span>
           <Form.Control name='roundTimeSec'
                         onChange={setTimerData}
-                        value={props.editTimerData.roundTime.sec}
+                        value={editTimerData.roundTime.sec}
                         type="number" min="0"/>
         </InputGroup>
         <InputGroup className="edit-form__group mb-3">
           <InputGroup.Text className="group-item"><FormattedMessage id='restTime'/></InputGroup.Text>
           <Form.Control name='restTimeMin'
                         onChange={setTimerData}
-                        value={props.editTimerData.restTime.min}
+                        value={editTimerData.restTime.min}
                         type="number" min="0"/><span className="mx-1">:</span>
           <Form.Control name='restTimeSec'
                         onChange={setTimerData}
-                        value={props.editTimerData.restTime.sec}
+                        value={editTimerData.restTime.sec}
                         type="number" min="0"/>
         </InputGroup>
         <InputGroup className="edit-form__group mb-3">
@@ -108,23 +115,23 @@ const TimerEdit = props => {
           <Form.Control
             name='prepareTimeMin'
             onChange={setTimerData}
-            value={props.editTimerData.prepareTime.min}
+            value={editTimerData.prepareTime.min}
             type="number" min="0"/><span className="mx-1">:</span>
           <Form.Control
             name='prepareTimeSec'
             onChange={setTimerData}
-            value={props.editTimerData.prepareTime.sec}
+            value={editTimerData.prepareTime.sec}
             type="number" min="0"/>
         </InputGroup>
         <InputGroup className="edit-form__group mb-3">
           <InputGroup.Text><FormattedMessage id='warningTime'/></InputGroup.Text>
           <Form.Control name='warningTimeMin'
                         onChange={setTimerData}
-                        value={props.editTimerData.warningTime.min}
+                        value={editTimerData.warningTime.min}
                         type="number" min="0"/><span className="mx-1">:</span>
           <Form.Control name='warningTimeSec'
                         onChange={setTimerData}
-                        value={props.editTimerData.warningTime.sec}
+                        value={editTimerData.warningTime.sec}
                         type="number" min="0"/>
         </InputGroup>
         <InputGroup className="edit-form__group inner-alerts mb-3">
@@ -132,7 +139,6 @@ const TimerEdit = props => {
             <FormattedMessage id='circleAlerts'/>
             <OverlayTrigger
               placement="top"
-              delay={{ show: 250 }}
               overlay={popover}>
               <div className="popover-text ms-1 badge bg-warning">?</div>
             </OverlayTrigger>
@@ -140,7 +146,7 @@ const TimerEdit = props => {
           <Form.Control name='innerAlerts'
                         placeholder='10, 20, 30'
                         onChange={setTimerData}
-                        value={props.editTimerData.innerAlerts}
+                        value={editTimerData.innerAlerts}
                         className="inner-alerts__input"
                         type="text"
                         min="0"/>
@@ -148,15 +154,15 @@ const TimerEdit = props => {
 
 
         <div className="edit-form__total text-center my-2">
-          <FormattedMessage id='totalTime'/>: {msToHMS(getTotalTime(props.editTimerData))}
+          <FormattedMessage id='totalTime'/>: {msToHMS(getTotalTime(editTimerData))}
         </div>
 
         <ButtonGroup className="d-flex mt-2 control-btn">
           <Button variant="warning"
                   className="me-2"
                   onClick={() => {
-                    props.toggleEditTimer(cloneDeep(props.currTimer));
-                    props.addTimer({...props.editTimerData, id: getRandomId()});
+                    dispatch(toggleEditTimer(cloneDeep(currTimer)))
+                    dispatch(addTimer({...editTimerData, id: getRandomId()}))
                   }}>
             <FormattedMessage id='saveAsNewTimer'/>
           </Button>
@@ -170,24 +176,4 @@ const TimerEdit = props => {
   );
 };
 
-function mapStateToProps(state) {
-    return {
-        currTimer: state.timerReducer.currTimer,
-        timers: state.timerReducer.timers,
-        isEdit: state.timerReducer.isEdit,
-        editTimerData: state.timerReducer.editTimerData,
-        fullTime: state.timerReducer.fullTime,
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        start: () => dispatch(startTimer()),
-        addTimer: timer => dispatch(addTimer(timer)),
-        saveEditData: timer => dispatch(saveEditData(timer)),
-        onChangeEditData: data => dispatch(onChangeEditData(data)),
-        toggleEditTimer: timer => dispatch(toggleEditTimer(timer)),
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TimerEdit);
+export default TimerEdit;

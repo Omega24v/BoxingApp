@@ -1,7 +1,11 @@
 import React from 'react';
 import './Icon.sass';
 
-function IconEdit(props) {
+interface IProps {
+  className?: string;
+}
+
+const IconEdit = (props: IProps) => {
   return (
     <div className={`ico ico-edit ${props.className || ''}`}>
       <svg

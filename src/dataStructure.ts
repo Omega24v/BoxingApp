@@ -25,7 +25,7 @@ export interface AppState {
   currentPhase: string,
   intervalCount: number,
   intervalId: number,
-  editTimerData: object,
+  editTimerData: Timer,
   phaseTime: number,
   currTimer: Timer,
   timers: Timer[],

@@ -3,7 +3,7 @@ import {transformData} from "../../../utils/localStorage/transformData";
 import {loadData} from "../../../utils/localStorage/localStorage";
 import {defaultCurrTimerModel, defaultTimersModel} from "../../../models/Timer";
 import {DEFAULT} from "../../../constatns/timerDefaultValues";
-import {fullTimersObj, Timer, AppState} from "../../../dataStructure";
+import {AppState, fullTimersObj, Timer} from "../../../dataStructure";
 import {DEFAULT_LOCALE} from "../../../translation/locales";
 
 const persistedState = transformData(loadData('data'));
@@ -22,7 +22,7 @@ export const initialState : AppState = {
   currentPhase: DEFAULT,
   intervalCount: 0,
   intervalId: 0,
-  editTimerData: {},
+  editTimerData: currTimer,
   phaseTime: currTimer.prepareTime,
   currTimer: currTimer,
   timers: timers,
@@ -54,7 +54,7 @@ const timerReducer = createSlice({
       state.isAdd = !state.isAdd
     },
 
-    onChangeEditData(state, action: PayloadAction<AppState>) {
+    onChangeEditData(state, action: PayloadAction<Timer>) {
       state.editTimerData = action.payload;
     },
 

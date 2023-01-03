@@ -9,10 +9,11 @@ import {useAppDispatch, useAppSelector} from "../../hooks/common/redux-hooks";
 
 const LangSwitcher = () => {
 
-  const locale = useAppSelector((state) => state.locale);
+  const locale = useAppSelector((state) => state.timerReducer.locale);
   const dispatch = useAppDispatch();
+  type L = keyof typeof LOCALES;
 
-  const handleChange = (code) => {
+  const handleChange = (code: string) => {
     if (!code) {
       dispatch(setLocale(DEFAULT_LOCALE));
       setData("lang", DEFAULT_LOCALE);
@@ -24,7 +25,7 @@ const LangSwitcher = () => {
 
   return (
     <Form className="me-2">
-      <Dropdown className="lang-switcher" value={locale}>
+      <Dropdown className="lang-switcher">
         <Dropdown.Toggle className="lang-switcher__toggler d-flex align-items-center">
           <div className="d-flex align-items-center lang-switcher__flag">
             <FlagImg code={locale}/>
@@ -32,10 +33,10 @@ const LangSwitcher = () => {
         </Dropdown.Toggle>
         <Dropdown.Menu align="end">
           {Object.keys(LOCALES).map((lang) => (
-            <Dropdown.Item key={lang} onClick={() => {handleChange(LOCALES[lang].code)}}>
+            <Dropdown.Item key={lang} onClick={() => {handleChange(LOCALES[lang as L].code)}}>
               <div className="d-flex align-items-center">
                 <FlagImg code={lang}/>
-                <span className="switcher-title">{LOCALES[lang].name}</span>
+                <span className="switcher-title">{LOCALES[lang as L].name}</span>
               </div>
             </Dropdown.Item>
           ))}

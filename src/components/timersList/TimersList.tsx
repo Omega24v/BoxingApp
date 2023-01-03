@@ -38,7 +38,7 @@ interface IDispatchProps {
   deleteTimer: (timer: Timer[]) => void;
 }
 
-export type Props = IConnectedProps & IDispatchProps;
+type Props = IConnectedProps & IDispatchProps;
 
 const TimersList = (props: Props) => {
   const [isDelete, setIsDelete] = useState(false);

@@ -4,16 +4,20 @@ import FlagGB from '../../icons/GB.svg';
 import FlagES from '../../icons/ES.svg';
 import { Image } from 'react-bootstrap';
 
-  function FlagImg({code}) {
-    const getSvg = (code) => {
+interface IProps {
+  code: string
+}
+
+  function FlagImg({code}: IProps) {
+    const getSvg = (code: string) => {
       switch(code) {
-        case 'UK' : 
+        case 'UK' :
           return FlagUA
         case 'EN' :
           return FlagGB
         case 'ES' :
           return FlagES
-        default : 
+        default :
           return FlagGB
     }
   }

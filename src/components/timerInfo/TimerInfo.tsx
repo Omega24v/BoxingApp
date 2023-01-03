@@ -2,7 +2,13 @@ import React from 'react';
 import {msToHMS} from "../../utils/timeConverter";
 import {getTotalTime} from "../../utils/common";
 
-const TimerInfo = ({label, type, val}) => {
+interface IProps {
+  label: string;
+  type: string;
+  val: number
+}
+
+const TimerInfo = ({label, type, val} : IProps) => {
 
     let formattedVal;
 

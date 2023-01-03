@@ -9,8 +9,9 @@ const ToggleTheme = () => {
 
     const [currTheme, setCurrTheme] = useState(THEME_DARK);
 
-    const setThemeToBody = theme => {
+    const setThemeToBody = (theme: string) => {
         const body = document.querySelector("body");
+        if (!body) return;
         body.setAttribute("data-theme", theme);
     }
 
