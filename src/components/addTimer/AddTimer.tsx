@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import {getRandomId} from "../../utils/getRandomId";
 import {addTimer, toggleAddTimer} from "../../store/reducers/timer/timerReducer";
 import {useAppDispatch, useAppSelector} from "../../hooks/common/redux-hooks";
-import {Timer} from "../../dataStructure";
+import {ITimer} from "../../dataStructure";
 
 const AddTimer = () => {
 
-    const [timer, setTimer] = useState<Timer>();
+    const [timer, setTimer] = useState<ITimer>();
     const isAdd = useAppSelector(state => state.timerReducer.isAdd);
     const dispatch = useAppDispatch();
 

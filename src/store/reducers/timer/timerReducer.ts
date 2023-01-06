@@ -3,17 +3,16 @@ import {transformData} from "../../../utils/localStorage/transformData";
 import {loadData} from "../../../utils/localStorage/localStorage";
 import {defaultCurrTimerModel, defaultTimersModel} from "../../../models/Timer";
 import {DEFAULT} from "../../../constatns/timerDefaultValues";
-import {AppState, fullTimersObj, Timer} from "../../../dataStructure";
+import {IAppState, FullTimersObj, ITimer} from "../../../dataStructure";
 import {DEFAULT_LOCALE} from "../../../translation/locales";
 
 const persistedState = transformData(loadData('data'));
-const currTimer = persistedState?.currTimer && persistedState?.currTimer !== 'null'
-  ? persistedState?.currTimer : defaultCurrTimerModel;
-const timers = persistedState?.timers && persistedState?.timers.length > 0
-  ? persistedState?.timers
+const currTimer: ITimer = persistedState?.currTimer ? persistedState.currTimer : defaultCurrTimerModel;
+const timers: ITimer[] = persistedState?.timers && persistedState.timers.length > 0
+  ? persistedState.timers
   : defaultTimersModel;
 
-export const initialState : AppState = {
+export const initialState : IAppState = {
   isRunning: false,
   isEdit: false,
   isAdd: false,
@@ -22,12 +21,22 @@ export const initialState : AppState = {
   currentPhase: DEFAULT,
   intervalCount: 0,
   intervalId: 0,
+  phaseTime: currTimer.prepareTime.time,
   editTimerData: currTimer,
-  phaseTime: currTimer.prepareTime,
   currTimer: currTimer,
   timers: timers,
   locale: loadData("lang") || DEFAULT_LOCALE
 }
+
+/*
+*
+Type 'TimerDV | { roundTime: Time; restTime: Time; prepareTime: Time; warningTime: Time; id: string; name: string; rounds: number; phaseTime: number; innerAlerts: string; }'
+*  is not assignable to type 'Timer'. Type 'TimerDV' is not assignable to type 'Timer'.
+*  Types of property 'phaseTime' are incompatible.
+*  Type 'number | undefined' is not assignable to type 'number'.
+*  Type 'undefined' is not assignable to type 'number'.  dataStructure.ts(30, 3): The expected type comes from property 'editTimerData' which is declared here on type 'AppState'
+*
+* */
 
 const timerReducer = createSlice({
   name: 'timerReducer',
@@ -45,7 +54,7 @@ const timerReducer = createSlice({
       state.isRunning = false
     },
 
-    toggleEditTimer(state, action: PayloadAction<Timer>) {
+    toggleEditTimer(state, action: PayloadAction<ITimer>) {
       state.isEdit = !state.isEdit;
       state.editTimerData = action.payload;
     },
@@ -54,12 +63,8 @@ const timerReducer = createSlice({
       state.isAdd = !state.isAdd
     },
 
-    onChangeEditData(state, action: PayloadAction<Timer>) {
+    onChangeEditData(state, action: PayloadAction<ITimer>) {
       state.editTimerData = action.payload;
-    },
-
-    setDefaultValues(state) {
-      state.isRunning = false
     },
 
     setIntervalCount(state, action: PayloadAction<number>) {
@@ -103,22 +108,22 @@ const timerReducer = createSlice({
       state.intervalId = 0;
     },
 
-    addTimer(state, action: PayloadAction<Timer>) {
+    addTimer(state, action: PayloadAction<ITimer>) {
       state.currTimer = action.payload;
       state.timers = [...state.timers, action.payload];
       state.isAdd = false;
     },
 
-    deleteTimer(state, action: PayloadAction<Timer[]>) {
+    deleteTimer(state, action: PayloadAction<ITimer[]>) {
       state.timers = action.payload
     },
 
-    saveEditData(state, action: PayloadAction<fullTimersObj>) {
+    saveEditData(state, action: PayloadAction<FullTimersObj>) {
       state.currTimer = action.payload.timer;
       state.timers = action.payload.timers;
     },
 
-    setTimer(state, action: PayloadAction<Timer>) {
+    setTimer(state, action: PayloadAction<ITimer>) {
       state.currTimer = action.payload;
     }
   }
@@ -134,7 +139,6 @@ export const {
   toggleEditTimer,
   toggleAddTimer,
   toggleSound,
-  setDefaultValues,
   setTimer,
   resetTimer,
   setIntervalCount,

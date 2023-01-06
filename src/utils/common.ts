@@ -1,6 +1,7 @@
 import {PREPARE, REST, ROUND, WARNING} from "../constatns/timerDefaultValues";
+import {ITimer} from "../dataStructure";
 
-export const getTotalTime = currTimer => {
+export const getTotalTime = (currTimer: ITimer) => {
     if (!currTimer) {return 0}
     return ((currTimer.roundTime.time + currTimer.restTime.time)
         * currTimer.rounds
@@ -8,7 +9,7 @@ export const getTotalTime = currTimer => {
         - currTimer.restTime.time)
 }
 
-export const getPhaseColor = phase => {
+export const getPhaseColor = (phase: string): string => {
     switch (phase) {
         case PREPARE:
             return '__prepare'

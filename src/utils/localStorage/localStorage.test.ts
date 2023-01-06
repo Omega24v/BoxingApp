@@ -11,7 +11,6 @@ describe('test localstorage functions', () => {
     const mockData = {data: 'test data'};
 
     setData(mockData, mockId);
-
     expect(loadData(mockId)).toEqual(mockData)
   });
 });

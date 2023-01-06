@@ -17,14 +17,13 @@ import {
   stopTimer,
   toggleEditTimer
 } from "../../store/reducers/timer/timerReducer";
-import {Timer} from "../../dataStructure";
+import {ITimer} from "../../dataStructure";
 import {AppDispatch, RootState} from "../../store/rootReducer";
 import {cloneDeep} from "lodash";
-import {TIMER_EMPTY} from "../../constatns/timerDefaultValues";
 
 interface IConnectedProps {
-  currTimer: Timer,
-  timers: Timer[],
+  currTimer: ITimer,
+  timers: ITimer[],
   intervalId: number,
   locale: string,
 }
@@ -32,45 +31,45 @@ interface IConnectedProps {
 interface IDispatchProps {
   stopTimer: () => void;
   resetTimer: () => void;
-  addTimer: (timer: Timer) => void;
-  setTimer: (timer: Timer) => void;
-  toggleEditTimer: (timer: Timer) => void;
-  deleteTimer: (timer: Timer[]) => void;
+  addTimer: (timer: ITimer) => void;
+  setTimer: (timer: ITimer) => void;
+  toggleEditTimer: (timer: ITimer) => void;
+  deleteTimer: (timer: ITimer[]) => void;
 }
 
 type Props = IConnectedProps & IDispatchProps;
 
 const TimersList = (props: Props) => {
   const [isDelete, setIsDelete] = useState(false);
-  const [timerToDelete, setTimerToDelete] = useState<Timer>(TIMER_EMPTY);
+  const [timerToDelete, setTimerToDelete] = useState<ITimer | undefined>();
 
-  const selectTimer = (timer: Timer) => {
+  const selectTimer = (timer: ITimer) => {
     props.stopTimer();
     props.setTimer(timer);
     clearInterval(props.intervalId);
     props.resetTimer();
   };
 
-  const showDeleteConfirm = (e: React.SyntheticEvent, timer: Timer): void => {
+  const showDeleteConfirm = (e: React.SyntheticEvent, timer: ITimer): void => {
     e.stopPropagation();
     setIsDelete(true);
     setTimerToDelete(timer);
   };
 
-  const deleteTimer = (e: React.SyntheticEvent, timer: Timer) => {
-    let filteredTimers = props.timers.filter((item: Timer) => item.id !== timer.id);
+  const deleteTimer = (e: React.SyntheticEvent, timer: ITimer | undefined) => {
+    if (!timer) return;
+    let filteredTimers = props.timers.filter((item: ITimer) => item.id !== timer.id);
     if (timer.id === props.currTimer.id) {
       props.setTimer(filteredTimers[0]);
     }
     props.deleteTimer(filteredTimers);
     setIsDelete(false);
-    setTimerToDelete(TIMER_EMPTY);
   };
 
   return (
     <IntlProvider messages={messages[props.locale]} locale={props.locale} defaultLocale={DEFAULT_LOCALE}>
       <div className="d-flex flex-wrap gap-2 gap-md-3">
-        {props.timers.map((timer: Timer, index: number) => (
+        {props.timers.map((timer: ITimer, index: number) => (
           <div
             className={`timer-list flex-grow-1 flex-lg-grow-0 p-2 ${
               timer.id === props.currTimer.id ? 'active text-danger' : ''
@@ -147,12 +146,11 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
     stopTimer: () => dispatch(stopTimer()),
     resetTimer: () => dispatch(resetTimer()),
-    addTimer: (timer: Timer) => dispatch(addTimer(timer)),
-    setTimer: (timer: Timer) => dispatch(setTimer(timer)),
-    toggleEditTimer: (timer: Timer) => dispatch(toggleEditTimer(timer)),
-    deleteTimer: (timers: Timer[]) => dispatch(deleteTimer(timers)),
+    addTimer: (timer: ITimer) => dispatch(addTimer(timer)),
+    setTimer: (timer: ITimer) => dispatch(setTimer(timer)),
+    toggleEditTimer: (timer: ITimer) => dispatch(toggleEditTimer(timer)),
+    deleteTimer: (timers: ITimer[]) => dispatch(deleteTimer(timers)),
   };
 }
 
-// export default connect<IConnectedProps, IDispatchProps>(mapStateToProps, mapDispatchToProps)(TimersList);
 export default connect(mapStateToProps, mapDispatchToProps)(TimersList);

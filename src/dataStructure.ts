@@ -1,22 +1,14 @@
+import {TimerDV} from "./constatns/timerDefaultValues";
 
-export interface Time {
+export interface ITime {
   time: number,
   min: number,
   sec: number,
 }
 
-export interface Timer {
-  id: string,
-  name: string,
-  rounds: number,
-  roundTime: Time,
-  restTime: Time,
-  prepareTime: Time,
-  warningTime: Time,
-  innerAlerts: string,
-}
+export interface ITimer extends TimerDV{}
 
-export interface AppState {
+export interface IAppState {
   isRunning: boolean,
   isEdit: boolean,
   isAdd: boolean,
@@ -25,15 +17,20 @@ export interface AppState {
   currentPhase: string,
   intervalCount: number,
   intervalId: number,
-  editTimerData: Timer,
   phaseTime: number,
-  currTimer: Timer,
-  timers: Timer[],
-  locale: string
+  editTimerData: ITimer,
+  currTimer: ITimer,
+  timers: ITimer[],
+  locale: string,
 }
 
-export type fullTimersObj = {
-  timer: Timer
-  timers: Timer[]
+export type FullTimersObj = {
+  timer: ITimer
+  timers: ITimer[]
+}
+
+export type Alert = {
+  isActivated: boolean,
+  time: number
 }
 

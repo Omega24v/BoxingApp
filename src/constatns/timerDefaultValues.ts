@@ -1,28 +1,38 @@
 import {getMinAndSecFromMs} from "../utils/timeConverter";
 import {getRandomId} from "../utils/getRandomId";
+import {ITime} from "../dataStructure";
 
-class TimerDV {
+export class TimerDV {
+
+    roundTime: ITime;
+    restTime: ITime;
+    prepareTime: ITime;
+    warningTime: ITime;
+
     constructor(
-        id,
-        name,
-        rounds,
-        roundTime,
-        restTime,
-        prepareTime,
-        warningTime,
+        public id: string,
+        public name: string,
+        public rounds: number,
+        public roundTimeSec?: number,
+        public restTimeSec?: number,
+        public prepareTimeSec?: number,
+        public warningTimeSec?: number,
+        public phaseTime?: number,
+        public innerAlerts?: string,
     ) {
         this.id = id;
         this.name = name;
         this.rounds = rounds;
-        this.roundTime = getTime(roundTime);
-        this.restTime = getTime(restTime);
-        this.prepareTime = getTime(prepareTime);
-        this.warningTime = getTime(warningTime);
+        this.roundTime = getTime(roundTimeSec || 0);
+        this.restTime = getTime(restTimeSec || 0);
+        this.prepareTime = getTime(prepareTimeSec || 0);
+        this.warningTime = getTime(warningTimeSec || 0);
+        this.phaseTime = this.prepareTime.time;
         this.innerAlerts = '';
     }
 }
 
-export function getTime (time) {
+export function getTime (time: number): ITime {
     time *= 1000;
     return {
         time: time,
@@ -60,6 +70,7 @@ export const TIMER_BOXING_AMATEUR = new TimerDV(
     10,
     10
 );
+
 export const TIMER_MMA = new TimerDV(
     getRandomId(),
     'MMA Timer',
@@ -82,4 +93,22 @@ export const PHASES = {
     ROUND: 'Round',
     WARNING: 'Warning',
     REST: 'Rest'
+}
+
+export const TEST_TIMER = {...TIMER_EMPTY,
+    roundTime: {
+        ...getTime(30)
+    },
+    restTime: {
+        ...getTime(10)
+    },
+    prepareTime: {
+        ...getTime(5)
+    },
+    warningTime: {
+        ...getTime(0)
+    },
+    phaseTime: 0,
+    rounds: 12,
+    innerAlerts: ''
 }

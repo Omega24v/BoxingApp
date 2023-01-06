@@ -1,21 +1,23 @@
 import React from 'react';
 import {msToHMS} from "../../utils/timeConverter";
 import {getTotalTime} from "../../utils/common";
+import {ITimer} from "../../dataStructure";
 
 interface IProps {
-  label: string;
+  label: string | React.ReactElement;
   type: string;
-  val: number
+  time?: number
+  timer?: ITimer
 }
 
-const TimerInfo = ({label, type, val} : IProps) => {
+const TimerInfo = ({label, type, time, timer} : IProps) => {
 
     let formattedVal;
 
     if (type === 'total') {
-        formattedVal = msToHMS(getTotalTime(val))
+        formattedVal = msToHMS(getTotalTime(timer!))
     } else {
-        formattedVal = msToHMS(val)
+        formattedVal = msToHMS(time!)
     }
 
     return (

@@ -1,6 +1,7 @@
 import {getTime} from "../../constatns/timerDefaultValues";
+import {IAppState, ITimer} from "../../dataStructure";
 
-export const transformData = (data) => {
+export const transformData = (data: IAppState) => {
 
     if (!data) {return}
 
@@ -11,7 +12,7 @@ export const transformData = (data) => {
 
     const newCurrTimer = {...data.currTimer, ...getTransformedFields(data.currTimer)}
 
-    function getTransformedFields(timer) {
+    function getTransformedFields(timer: ITimer) {
         return {
             roundTime: getTime(timer.roundTime.time / 1000),
             restTime: getTime(timer.restTime.time / 1000),
