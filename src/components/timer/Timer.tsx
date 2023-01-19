@@ -254,7 +254,7 @@ const Timer = () => {
                 </Col>
             </Row>
             <Row className="mb-2 mb-sm-4">
-                <Col md={5} className="current-round-col mb-md-0 mb-2">
+                <Col data-testid='current-round-col' md={5} className="current-round-col mb-md-0 mb-2">
                     <div className="timer-big current-round">
                         <span className="timer-big__text">
                             <FormattedMessage id='currentRound'/>
@@ -266,7 +266,8 @@ const Timer = () => {
                     </div>
                 </Col>
                 <Col md={7}>
-                    <div className={'timer-big full-time full-time' + getPhaseColor(currentPhase)}>
+                    <div data-testid='timer-big-full-time'
+                        className={'timer-big full-time full-time' + getPhaseColor(currentPhase)}>
                         <span className="timer-big__text">
                             { currentPhase === DEFAULT
                                 ? <FormattedMessage id='totalTime'/>
@@ -304,10 +305,10 @@ const Timer = () => {
                             :
                             ''
                         }
-                        <Button variant="success" className="me-2 btn-start" onClick={handleTimer}>
+                        <Button data-testid='btn-start' variant="success" className="me-2 btn-start" onClick={handleTimer}>
                             {isRunning ? <FormattedMessage id='pause'/> : <FormattedMessage id='start'/>}
                         </Button>
-                        <Button variant="warning" onClick={() => {dispatch(toggleEditTimer(cloneDeep(currTimer)))}}><FormattedMessage id='editAdd'/></Button>
+                        <Button data-testid="openEditAddModalBtn" variant="warning" onClick={() => {dispatch(toggleEditTimer(cloneDeep(currTimer)))}}><FormattedMessage id='editAdd'/></Button>
                     </ButtonGroup>
                 </Col>
             </Row>

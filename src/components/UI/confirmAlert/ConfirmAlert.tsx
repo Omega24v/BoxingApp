@@ -12,7 +12,7 @@ interface IProps {
 const ConfirmAlert = (props: IProps) => {
     const { itemName, confirmAction, ...rest } = props;
     return (
-        <Modal className="edit-modal" {...rest} aria-labelledby="modal-title" centered>
+        <Modal data-testid="edit-modal" className="edit-modal" {...rest} aria-labelledby="modal-title" centered>
             <Modal.Header closeButton>
                 <Modal.Title>
                     <FormattedMessage id='pleaseConfirm' />

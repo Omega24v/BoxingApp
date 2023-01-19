@@ -51,6 +51,16 @@ export const TIMER_EMPTY = new TimerDV(
   0,
 );
 
+export const TEST_TIMER2 = new TimerDV(
+  getRandomId(),
+  'Test Timer',
+  2,
+  5,
+  5,
+  5,
+  2,
+);
+
 export const TIMER_DV = new TimerDV(
     getRandomId(),
     'Boxing Timer',

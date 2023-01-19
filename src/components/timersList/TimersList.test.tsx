@@ -22,27 +22,23 @@ describe('timer list tests', () => {
     const timersCount = initialState.timers.length;
     const deleteBtn = screen.getByTestId('delete-timer-1');
 
-    // click on cross-delete btn on timer
-    expect(container.getElementsByClassName('timer-list').length).toBe(timersCount);
-    fireEvent.click(deleteBtn);
-    expect(await screen.findByText(/Please confirm/i)).toBeInTheDocument();
+    checkTimersListCount(container, timersCount);
+    await toggleAndCheckDeleteModal(deleteBtn, 'show');
     const closeConfirmBtn = screen.getByTestId('close-confirm-modal-btn');
 
-    // click on close btn in delete timer modal
     fireEvent.click(closeConfirmBtn);
     expect(await screen.findByText(/Please confirm/i)).not.toBeInTheDocument();
-    expect(container.getElementsByClassName('timer-list').length).toBe(timersCount);
+    checkTimersListCount(container, timersCount);
 
-    // click on cross-delete btn on timer and then click delete timer
-    fireEvent.click(deleteBtn);
+    await toggleAndCheckDeleteModal(deleteBtn, 'show');
     const deleteConfirmBtn = screen.getByTestId('delete-timer-btn');
-    fireEvent.click(deleteConfirmBtn);
-    expect(await screen.findByText(/Please confirm/i)).not.toBeInTheDocument();
-    expect(container.getElementsByClassName('timer-list').length).toBe(timersCount - 1);
+    await toggleAndCheckDeleteModal(deleteConfirmBtn, 'close');
+    checkTimersListCount(container, timersCount - 1);
 
   });
 
   it ('test on click edit timer', async () => {
+
     renderWithProviders(<TimersList />);
     const editBtn = screen.getByTestId('edit-timer-1');
     fireEvent.click(editBtn);
@@ -54,6 +50,21 @@ describe('timer list tests', () => {
     });
     expect(await screen.findByText(/Save settings/i)).toBeInTheDocument();
   });
+
+  async function toggleAndCheckDeleteModal(btn: HTMLElement, method: string) {
+
+    fireEvent.click(btn);
+    if (method === 'show') {
+      expect(await screen.findByText(/Please confirm/i)).toBeInTheDocument();
+    } else {
+      expect(await screen.findByText(/Please confirm/i)).not.toBeInTheDocument();
+    }
+  }
+
+  function checkTimersListCount(container: HTMLElement, count: number) {
+    expect(container.getElementsByClassName('timer-list').length).toBe(count);
+  }
+
 });
 
 

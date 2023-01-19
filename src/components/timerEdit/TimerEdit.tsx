@@ -73,11 +73,19 @@ const TimerEdit = () => {
   );
 
   return (
-    <IntlProvider messages={messages[currentLocale]} locale={currentLocale} defaultLocale={LOCALES.EN.code}>
+    <IntlProvider
+      messages={messages[currentLocale]}
+      locale={currentLocale}
+      defaultLocale={LOCALES.EN.code}>
       <Form className="edit-form d-flex flex-column">
         <Form.Label className="mb-3">
           <div className="mb-2"><FormattedMessage id='timerName'/>:</div>
-          <Form.Control name='name' onChange={setTimerData} value={editTimerData.name} type="text"/>
+          <Form.Control
+            data-testid="edit-timer-name-input"
+            name="name"
+            onChange={setTimerData}
+            value={editTimerData.name}
+            type="text"/>
         </Form.Label>
 
         <InputGroup className="edit-form__group mb-3">
@@ -158,7 +166,7 @@ const TimerEdit = () => {
         </div>
 
         <ButtonGroup className="d-flex mt-2 control-btn">
-          <Button variant="warning"
+          <Button data-testid="saveAsNewTimerBtn" variant="warning"
                   className="me-2"
                   onClick={() => {
                     dispatch(toggleEditTimer(cloneDeep(currTimer)))
@@ -166,7 +174,7 @@ const TimerEdit = () => {
                   }}>
             <FormattedMessage id='saveAsNewTimer'/>
           </Button>
-          <Button variant="success" onClick={saveFormData}>
+          <Button data-testid="saveEditTimerBtn" variant="success" onClick={saveFormData}>
             <FormattedMessage id='saveSettings'/>
           </Button>
         </ButtonGroup>
