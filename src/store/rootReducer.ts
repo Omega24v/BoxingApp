@@ -3,12 +3,18 @@ import {combineReducers, configureStore, PreloadedState} from "@reduxjs/toolkit"
 
 export const rootReducer = combineReducers(reducers);
 export const store = configureStore({
-    reducer: rootReducer
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: false
+    })
 });
 export function setupStore(preloadedState?: PreloadedState<RootState>) {
     return configureStore({
         reducer: rootReducer,
-        preloadedState
+        preloadedState,
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+            serializableCheck: false
+        })
     })
 }
 

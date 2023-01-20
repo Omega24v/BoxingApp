@@ -297,7 +297,8 @@ const Timer = () => {
                     <ButtonGroup className="control-btn" aria-label="timer buttons">
                         {isRunning
                             ?
-                            <Button variant="danger"
+                            <Button data-testid='btn-stop'
+                                    variant="danger"
                                     className="me-2"
                                     onClick={stopResetAndTimer}>
                                 <FormattedMessage id='stop'/>
@@ -308,7 +309,11 @@ const Timer = () => {
                         <Button data-testid='btn-start' variant="success" className="me-2 btn-start" onClick={handleTimer}>
                             {isRunning ? <FormattedMessage id='pause'/> : <FormattedMessage id='start'/>}
                         </Button>
-                        <Button data-testid="openEditAddModalBtn" variant="warning" onClick={() => {dispatch(toggleEditTimer(cloneDeep(currTimer)))}}><FormattedMessage id='editAdd'/></Button>
+                        <Button data-testid="openEditAddModalBtn"
+                            variant="warning"
+                            onClick={() => {dispatch(toggleEditTimer(cloneDeep(currTimer)))}}>
+                            <FormattedMessage id='editAdd'/>
+                        </Button>
                     </ButtonGroup>
                 </Col>
             </Row>

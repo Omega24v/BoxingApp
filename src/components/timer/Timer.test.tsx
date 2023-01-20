@@ -23,7 +23,7 @@ describe('test main timer functionality', () => {
     ['TOTAL TIME', 2000]
   ];
 
-  it('test Timer render', async () => {
+  it('test timer phases main functionality', async () => {
 
     renderWithProviders(<Timer/>, {
       preloadedState: {
@@ -31,8 +31,7 @@ describe('test main timer functionality', () => {
       }
     });
 
-    checkIsElementOnPage('timer-big-full-time', '00:20');
-    checkIsElementOnPage('timer-big-full-time', 'TOTAL TIME');
+    checkDefaultTimerState();
 
     fireEvent.click(screen.getByTestId('btn-start'));
     checkIsElementOnPage('timer-big-full-time', 'PREPARE');
@@ -44,12 +43,65 @@ describe('test main timer functionality', () => {
 
   });
 
+  it('test timer stop button', async () => {
+
+    renderWithProviders(<Timer/>, {
+      preloadedState: {
+        timerReducer
+      }
+    });
+
+    checkDefaultTimerState();
+    fireEvent.click(screen.getByTestId('btn-start'));
+    checkIsElementOnPage('timer-big-full-time', 'PREPARE');
+
+    await promiseTimeout(6000);
+    checkIsElementOnPage('timer-big-full-time', 'ROUND');
+    fireEvent.click(screen.getByTestId('btn-stop'));
+    checkDefaultTimerState();
+  });
+
+  it('test timer pause button', async () => {
+
+    renderWithProviders(<Timer/>, {
+      preloadedState: {
+        timerReducer
+      }
+    });
+
+    checkDefaultTimerState();
+    fireEvent.click(screen.getByTestId('btn-start'));
+    checkIsElementOnPage('timer-big-full-time', 'PREPARE');
+
+    await checkIsPauseBtnWorks();
+
+    fireEvent.click(screen.getByTestId('btn-stop'));
+    checkDefaultTimerState();
+
+  });
+
   function checkIsElementOnPage(id: string, text: string) {
     expect(within(screen.getByTestId(id)).getByText(new RegExp(text, "i")));
   }
 
   async function promiseTimeout(ms: number) {
     await new Promise((r) => setTimeout(r, ms));
+  }
+
+  function checkDefaultTimerState() {
+    checkIsElementOnPage('timer-big-full-time', '00:20');
+    checkIsElementOnPage('timer-big-full-time', 'TOTAL TIME');
+  }
+
+  async function checkIsPauseBtnWorks() {
+    await promiseTimeout(6000);
+    checkIsElementOnPage('timer-big-full-time', 'ROUND');
+    fireEvent.click(screen.getByTestId('btn-start'));
+    await promiseTimeout(6000);
+    checkIsElementOnPage('timer-big-full-time', 'ROUND');
+    fireEvent.click(screen.getByTestId('btn-start'));
+    await promiseTimeout(4000);
+    checkIsElementOnPage('timer-big-full-time', 'WARNING');
   }
 
 });
